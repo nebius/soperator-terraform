@@ -35,6 +35,10 @@ locals {
       node_memory = var.k8s_cluster_node_group_non_gpu.memory
       disk_type   = var.k8s_cluster_node_group_non_gpu.disk_type
       disk_size   = max(ceil(var.slurm_cluster_filestores.controller_spool.size / (1000 * 1000 * 1000)), 64) # GB
+      node_locations = [{
+        zone      = var.k8s_cluster_zone_id
+        subnet_id = nebius_vpc_subnet.this.id
+      }]
       node_labels = {
         "group" = "non-gpu"
       }
@@ -56,6 +60,10 @@ locals {
       node_gpus       = var.k8s_cluster_node_group_gpu.gpus
       disk_type       = var.k8s_cluster_node_group_gpu.disk_type
       disk_size       = max(ceil(var.slurm_cluster_filestores.jail.size / (1000 * 1000 * 1000)), 64) # GB
+      node_locations = [{
+        zone      = var.k8s_cluster_zone_id
+        subnet_id = nebius_vpc_subnet.this.id
+      }]
       node_labels = {
         "group"                                                           = "${var.k8s_cluster_node_group_gpu.platform}-${var.k8s_cluster_node_group_gpu.gpus}gpu"
         "nebius.com/gpu"                                                  = upper(var.k8s_cluster_node_group_gpu.platform)
