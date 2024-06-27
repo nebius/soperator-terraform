@@ -6,7 +6,7 @@ resource "nebius_compute_filesystem" "filestores" {
 
   name       = "k8s-${local.k8s_cluster_normalized_name}-${each.key}-filestore"
   folder_id  = var.k8s_folder_id
-  size       = ceil(each.value / (1000 * 1000 * 1000)) # convert to GB
+  size       = ceil(each.value / local.unit_gb)
   block_size = var.k8s_cluster_filestore_block_size
   zone       = var.k8s_cluster_zone_id
   type       = "network-ssd"

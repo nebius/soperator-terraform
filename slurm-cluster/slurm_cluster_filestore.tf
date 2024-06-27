@@ -1,6 +1,6 @@
 locals {
-  slurm_cluster_jail_size             = "${ceil(var.slurm_cluster_filestores.jail.size / (1024 * 1024 * 1024))}Gi"
-  slurm_cluster_controller_spool_size = "${ceil(var.slurm_cluster_filestores.controller_spool.size / (1024 * 1024 * 1024))}Gi"
+  slurm_cluster_jail_size             = "${ceil(var.slurm_cluster_filestores.jail.size / local.unit_gib)}Gi"
+  slurm_cluster_controller_spool_size = "${ceil(var.slurm_cluster_filestores.controller_spool.size / local.unit_gib)}Gi"
 }
 
 resource "helm_release" "slurm_cluster_filestore" {
@@ -15,7 +15,7 @@ resource "helm_release" "slurm_cluster_filestore" {
     null_resource.filestore_attachment
   ]
 
-  namespace        = local.slurm_cluster_name
+  namespace        = local.slurm_cluster_normalized_name
   create_namespace = true
 
   set {
