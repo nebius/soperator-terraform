@@ -1,14 +1,17 @@
 resource "nebius_compute_filesystem" "filestores" {
-  for_each = var.slurm_cluster_filestores
+  for_each = {
+    for f in [var.slurm_cluster_filestores.jail, var.slurm_cluster_filestores.controller_spool] :
+    f.name => f.size
+  }
 
-  name       = "k8s-${local.k8s_cluster_normalized_name}-${each.value.name}-filestore"
+  name       = "k8s-${local.k8s_cluster_normalized_name}-${each.key}-filestore"
   folder_id  = var.k8s_folder_id
-  size       = each.value.size
+  size       = ceil(each.value / (1000 * 1000 * 1000)) # convert to GB
   block_size = var.k8s_cluster_filestore_block_size
   zone       = var.k8s_cluster_zone_id
   type       = "network-ssd"
   labels = {
-    "slurm-filestore" = each.value.name
+    "slurm-filestore" = each.key
   }
 }
 
@@ -22,7 +25,7 @@ resource "null_resource" "filestore_attachment" {
   ]
 
   provisioner "local-exec" {
-    # language=bash
+    # language=basha
     command = <<EOF
       # Define the subnet_id to filter the instances
       subnet_id="${nebius_vpc_subnet.this.id}"

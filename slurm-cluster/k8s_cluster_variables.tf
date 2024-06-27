@@ -47,26 +47,40 @@ variable "k8s_cluster_master_maintenance_windows" {
   }]
 }
 
-variable "k8s_cluster_gpu_node_groups" {
-  description = "GPU node group specifications."
-  type = list(object({
+variable "k8s_cluster_node_group_non_gpu" {
+  description = "Non-GPU node group specification."
+  type = object({
+    size      = number
+    cores     = number
+    memory    = number
+    disk_type = string
+  })
+  default = {
+    size      = 3
+    cores     = 56
+    memory    = 128
+    disk_type = "network-ssd"
+  }
+}
+
+variable "k8s_cluster_node_group_gpu" {
+  description = "GPU node group specification."
+  type = object({
     platform  = string
     size      = number
     cores     = number
     memory    = number
     gpus      = number
     disk_type = string
-    disk_size = number
-  }))
-  default = [{
+  })
+  default = {
     platform  = "h100"
     size      = 2
     cores     = 160
     memory    = 1280
     gpus      = 8
-    disk_type = "network-ssd-nonreplicated"
-    disk_size = 372
-  }]
+    disk_type = "network-ssd"
+  }
 }
 
 # region ssh
