@@ -41,3 +41,17 @@ resource "nebius_vpc_subnet" "this" {
   network_id     = nebius_vpc_network.this.id
   route_table_id = nebius_vpc_route_table.this.id
 }
+
+resource "nebius_vpc_address" "this" {
+  name = "k8s-${local.k8s_cluster_normalized_name}-slurm-address-subnet"
+
+  depends_on = [
+    nebius_vpc_subnet.this
+  ]
+
+  folder_id = var.k8s_folder_id
+
+  external_ipv4_address {
+    zone_id = var.k8s_cluster_zone_id
+  }
+}
