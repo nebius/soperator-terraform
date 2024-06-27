@@ -13,6 +13,8 @@ resource "helm_release" "slurm_cluster" {
   depends_on = [
     helm_release.slurm_operator,
     helm_release.slurm_cluster_filestore,
+    helm_release.k8s_cluster_operator_network,
+    helm_release.k8s_cluster_operator_gpu
   ]
 
   namespace        = local.slurm_cluster_normalized_name
