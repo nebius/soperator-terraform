@@ -51,14 +51,10 @@ variable "k8s_cluster_node_group_non_gpu" {
   description = "Non-GPU node group specification."
   type = object({
     size      = number
-    cores     = number
-    memory    = number
     disk_type = string
   })
   default = {
     size      = 3
-    cores     = 56
-    memory    = 128
     disk_type = "network-ssd"
   }
 }
@@ -68,16 +64,12 @@ variable "k8s_cluster_node_group_gpu" {
   type = object({
     platform  = string
     size      = number
-    cores     = number
-    memory    = number
     gpus      = number
     disk_type = string
   })
   default = {
     platform  = "h100"
     size      = 2
-    cores     = 160
-    memory    = 1280
     gpus      = 8
     disk_type = "network-ssd"
   }

@@ -23,7 +23,7 @@ variable "slurm_cluster_filestores" {
     }
     controller_spool = {
       name = "controller-spool"
-      size = 100 * (1024 * 1024 * 1024)
+      size = 64 * (1024 * 1024 * 1024)
     }
   }
 }
