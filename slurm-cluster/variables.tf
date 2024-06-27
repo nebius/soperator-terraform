@@ -5,21 +5,27 @@ variable "slurm_cluster_name" {
 }
 
 variable "slurm_cluster_filestores" {
-  description = "Shared filestores of the Slurm cluster. Sizes specified in GB."
-  type = list(object({
-    name = string
-    size = number
-  }))
-  default = [
-    {
+  description = "Shared filestores of the Slurm cluster. Sizes specified in bytes."
+  type = object({
+    jail = object({
+      name = string
+      size = number
+    })
+    controller_spool = object({
+      name = string
+      size = number
+    })
+  })
+  default = {
+    jail = {
       name = "jail"
-      size = 2000
-    },
-    {
-      name = "controller-spool"
-      size = 100
+      size = 128 * (1024 * 1024 * 1024)
     }
-  ]
+    controller_spool = {
+      name = "controller-spool"
+      size = 100 * (1024 * 1024 * 1024)
+    }
+  }
 }
 
 variable "slurm_operator_version" {
