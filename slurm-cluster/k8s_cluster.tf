@@ -31,10 +31,33 @@ locals {
       fixed_scale = {
         size = var.k8s_cluster_node_group_non_gpu.size
       }
-      node_cores  = var.k8s_cluster_node_group_non_gpu.cores
-      node_memory = var.k8s_cluster_node_group_non_gpu.memory
-      disk_type   = var.k8s_cluster_node_group_non_gpu.disk_type
-      disk_size   = max(ceil(var.slurm_cluster_filestores.controller_spool.size / local.unit_gb), 64)
+      node_cores = sum([
+        var.slurm_cluster_node_controller_slurmctld_resources.cpu_cores,
+        var.slurm_cluster_node_controller_munge_resources.cpu_cores,
+        var.slurm_cluster_node_login_sshd_resources.cpu_cores,
+        var.slurm_cluster_node_login_munge_resources.cpu_cores,
+        2
+      ])
+      node_memory = ceil(sum([
+        var.slurm_cluster_node_controller_slurmctld_resources.memory_bytes,
+        var.slurm_cluster_node_controller_munge_resources.memory_bytes,
+        var.slurm_cluster_node_login_sshd_resources.memory_bytes,
+        var.slurm_cluster_node_login_munge_resources.memory_bytes,
+        2 * local.unit_gib
+        ]) / local.unit_gb
+      )
+      disk_type = var.k8s_cluster_node_group_non_gpu.disk_type
+      disk_size = max(
+        ceil(sum([
+          var.slurm_cluster_filestores.controller_spool.size,
+          var.slurm_cluster_node_controller_slurmctld_resources.ephemeral_storage_bytes,
+          var.slurm_cluster_node_controller_munge_resources.ephemeral_storage_bytes,
+          var.slurm_cluster_node_login_sshd_resources.ephemeral_storage_bytes,
+          var.slurm_cluster_node_login_munge_resources.ephemeral_storage_bytes,
+          2 * local.unit_gib
+        ]) / local.unit_gb),
+        64
+      )
       node_locations = [{
         zone      = var.k8s_cluster_zone_id
         subnet_id = nebius_vpc_subnet.this.id
@@ -55,11 +78,29 @@ locals {
       gpu_cluster_id  = nebius_compute_gpu_cluster.this.id
       platform_id     = "gpu-${var.k8s_cluster_node_group_gpu.platform}"
       gpu_environment = "runc"
-      node_cores      = var.k8s_cluster_node_group_gpu.cores
-      node_memory     = var.k8s_cluster_node_group_gpu.memory
       node_gpus       = var.k8s_cluster_node_group_gpu.gpus
       disk_type       = var.k8s_cluster_node_group_gpu.disk_type
-      disk_size       = max(ceil(var.slurm_cluster_filestores.jail.size / local.unit_gb), 64)
+      node_cores = sum([
+        var.slurm_cluster_node_worker_slurmd_resources.cpu_cores,
+        var.slurm_cluster_node_worker_munge_resources.cpu_cores,
+        2
+      ])
+      node_memory = ceil(sum([
+        var.slurm_cluster_node_worker_slurmd_resources.memory_bytes,
+        var.slurm_cluster_node_worker_munge_resources.memory_bytes,
+        2 * local.unit_gib
+        ]) / local.unit_gb
+      )
+      disk_type = var.k8s_cluster_node_group_non_gpu.disk_type
+      disk_size = max(
+        ceil(sum([
+          var.slurm_cluster_filestores.jail.size,
+          var.slurm_cluster_node_worker_slurmd_resources.ephemeral_storage_bytes,
+          var.slurm_cluster_node_worker_munge_resources.ephemeral_storage_bytes,
+          2 * local.unit_gib
+        ]) / local.unit_gb),
+        64
+      )
       node_locations = [{
         zone      = var.k8s_cluster_zone_id
         subnet_id = nebius_vpc_subnet.this.id
