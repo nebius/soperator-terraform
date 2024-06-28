@@ -1,3 +1,9 @@
+variable "slurm_cluster_create_cr" {
+  description = "Whether to create a Slurm cluster"
+  type = bool
+  default = true
+}
+
 variable "slurm_cluster_name" {
   description = "Name of the Slurm cluster"
   type        = string
@@ -12,10 +18,6 @@ variable "slurm_cluster_filestores" {
       size = number
     })
     controller_spool = object({
-      name = string
-      size = number
-    })
-    jail_snapshot = object({
       name = string
       size = number
     })
@@ -34,9 +36,27 @@ variable "slurm_cluster_filestores" {
       name = "controller-spool"
       size = 30 * (1024 * 1024 * 1024) # 30Gi
     }
-    jail_snapshot = null
     jail_submounts = []
   }
+}
+
+variable "slurm_cluster_jail_snapshot" {
+  description = "A disk with the initial content for populating the jail filesystem."
+  type = object({
+    name = string
+    size = number
+  })
+  default = null
+}
+
+locals {
+  slurm_cluster_jail_submounts_filestores = [
+      for sm in var.slurm_cluster_filestores.jail_submounts : {
+        name                = sm.name
+        filestoreDeviceName = sm.name
+        size                = "${ceil(sm.size / local.unit_gib)}Gi"
+      }
+  ]
 }
 
 variable "slurm_cluster_worker_volume_spool_size" {

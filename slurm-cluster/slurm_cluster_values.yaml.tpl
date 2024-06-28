@@ -38,10 +38,10 @@ volumeSources:
       claimName: "${slurm_cluster_filestores.controller_spool.name}-pvc"
       readOnly: false
 
-  %{ if slurm_cluster_filestores.jail_snapshot != null }
-  - name: "${slurm_cluster_filestores.jail_snapshot.name}"
+  %{ if slurm_cluster_jail_snapshot != null }
+  - name: "${slurm_cluster_jail_snapshot.name}"
     persistentVolumeClaim:
-      claimName: "${slurm_cluster_filestores.jail_snapshot.name}-pvc"
+      claimName: "${slurm_cluster_jail_snapshot.name}-pvc"
       readOnly: true
   %{ endif }
 
@@ -58,9 +58,9 @@ secrets:
 
 populateJail:
   k8sNodeFilterName: "${slurm_cluster_k8s_node_filters.gpu}"
-  %{ if slurm_cluster_filestores.jail_snapshot != null }
+  %{ if slurm_cluster_jail_snapshot != null }
   jailSnapshotVolume:
-    volumeSourceName: "${slurm_cluster_filestores.jail_snapshot.name}"
+    volumeSourceName: "${slurm_cluster_jail_snapshot.name}"
   %{ endif }
 
 periodicChecks:
