@@ -18,6 +18,7 @@ locals {
 
     slurm_cluster_name = var.slurm_cluster_name,
     slurm_cluster_filestores = var.slurm_cluster_filestores,
+    slurm_cluster_jail_snapshot = var.slurm_cluster_jail_snapshot,
     slurm_cluster_nccl_benchmark_schedule = var.slurm_cluster_nccl_benchmark_schedule,
     slurm_cluster_nccl_benchmark_settings = var.slurm_cluster_nccl_benchmark_settings,
     slurm_cluster_nccl_benchmark_drain_nodes = var.slurm_cluster_nccl_benchmark_drain_nodes,
@@ -37,8 +38,10 @@ locals {
 }
 
 resource "helm_release" "slurm_cluster" {
+  count = var.slurm_cluster_create_cr ? 1 : 0
+
   chart   = "${local.slurm_chart_path}/${local.slurm_chart_cluster}"
-  name    = "${local.slurm_chart_cluster}-${var.slurm_operator_version}"
+  name    = local.slurm_chart_cluster
   version = var.slurm_operator_version
 
   depends_on = [

@@ -3,9 +3,22 @@ locals {
   slurm_cluster_controller_spool_size = "${ceil(var.slurm_cluster_filestores.controller_spool.size / local.unit_gib)}Gi"
 }
 
+locals {
+  slurm_cluster_filestore_values_yaml = templatefile("${path.module}/slurm_cluster_filestore_values.yaml.tpl", {
+    slurm_cluster_jail_size = local.slurm_cluster_jail_size,
+    slurm_cluster_controller_spool_size = local.slurm_cluster_controller_spool_size,
+    unit_gib = local.unit_gib,
+
+    kube_node_group_gpu = data.nebius_kubernetes_node_group.gpu,
+    kube_node_group_non_gpu = data.nebius_kubernetes_node_group.non_gpu,
+
+    slurm_cluster_filestores = var.slurm_cluster_filestores,
+  })
+}
+
 resource "helm_release" "slurm_cluster_filestore" {
-  chart   = "${local.slurm_chart_path}}/${local.slurm_chart_filestore}"
-  name    = "${local.slurm_chart_filestore}-${var.slurm_operator_version}"
+  chart   = "${local.slurm_chart_path}/${local.slurm_chart_filestore}"
+  name    = local.slurm_chart_filestore
   version = var.slurm_operator_version
 
   depends_on = [
@@ -18,40 +31,7 @@ resource "helm_release" "slurm_cluster_filestore" {
   namespace        = local.slurm_cluster_normalized_name
   create_namespace = true
 
-  set {
-    name  = "volume.jail.name"
-    value = var.slurm_cluster_filestores.jail.name
-  }
-  set {
-    name  = "volume.jail.filestoreDeviceName"
-    value = var.slurm_cluster_filestores.jail.name
-  }
-  set {
-    name  = "volume.jail.size"
-    value = local.slurm_cluster_jail_size
-  }
-
-  set {
-    name  = "volume.controllerSpool.name"
-    value = var.slurm_cluster_filestores.controller_spool.name
-  }
-  set {
-    name  = "volume.controllerSpool.filestoreDeviceName"
-    value = var.slurm_cluster_filestores.controller_spool.name
-  }
-  set {
-    name  = "volume.controllerSpool.size"
-    value = local.slurm_cluster_controller_spool_size
-  }
-
-  set {
-    name  = "nodeGroup.gpu.id"
-    value = data.nebius_kubernetes_node_group.gpu.id
-  }
-  set {
-    name  = "nodeGroup.nonGpu.id"
-    value = data.nebius_kubernetes_node_group.non_gpu.id
-  }
+  values = [local.slurm_cluster_filestore_values_yaml]
 
   wait          = true
   wait_for_jobs = true

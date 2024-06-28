@@ -1,7 +1,14 @@
+locals {
+  all_filestores = concat(
+    [var.slurm_cluster_filestores.jail],
+    [var.slurm_cluster_filestores.controller_spool],
+    var.slurm_cluster_filestores.jail_submounts
+  )
+}
+
 resource "nebius_compute_filesystem" "filestores" {
   for_each = {
-    for f in [var.slurm_cluster_filestores.jail, var.slurm_cluster_filestores.controller_spool] :
-    f.name => f.size
+    for f in local.all_filestores : f.name => f.size
   }
 
   name       = "k8s-${local.k8s_cluster_normalized_name}-${each.key}-filestore"
@@ -47,7 +54,7 @@ resource "null_resource" "filestore_attachment" {
           echo "Filesystem attached to instance $id"
       done
 
-      echo "All operations have been initiated.""
+      echo "All operations have been initiated."
     EOF
   }
 }
