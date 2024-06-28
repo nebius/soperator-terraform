@@ -20,7 +20,7 @@ variable "k8s_cluster_description" {
 variable "k8s_cluster_version" {
   description = "Version of the k8s cluster."
   type        = string
-  default     = "1.27"
+  default     = "1.28"
 }
 
 # endregion meta
@@ -50,28 +50,50 @@ variable "k8s_cluster_master_maintenance_windows" {
 variable "k8s_cluster_node_group_non_gpu" {
   description = "Non-GPU node group specification."
   type = object({
-    size      = number
-    disk_type = string
+    size         = number
+    cpu_cores    = number
+    memory_gb    = number
+    disk_type    = string
+    disk_size_gb = number
   })
   default = {
-    size      = 3
-    disk_type = "network-ssd"
+    size         = 2
+    cpu_cores    = 8
+    memory_gb    = 32
+    disk_type    = "network-ssd"
+    disk_size_gb = 128
   }
 }
 
 variable "k8s_cluster_node_group_gpu" {
   description = "GPU node group specification."
   type = object({
-    platform  = string
-    size      = number
-    gpus      = number
-    disk_type = string
+    platform     = string
+    size         = number
+    cpu_cores    = number
+    memory_gb    = number
+    gpus         = number
+    interconnect_type = string
+    interconnect_physical_cluster = string
+    disk_type         = string
+    disk_size_gb      = number
+    gke_accelerator   = string
+    driver_config     = string
+    preemptible = bool
   })
   default = {
-    platform  = "h100"
-    size      = 2
-    gpus      = 8
-    disk_type = "network-ssd"
+    platform          = "h100"
+    size              = 2
+    cpu_cores         = 160
+    memory_gb         = 1280
+    gpus              = 8
+    interconnect_type = "InfiniBand"
+    interconnect_physical_cluster = "fabric-1"
+    disk_type         = "network-ssd"
+    disk_size_gb      = 128
+    gke_accelerator   = "nvidia-h100-80gb"
+    driver_config     = "535"
+    preemptible       = false
   }
 }
 

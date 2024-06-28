@@ -1,6 +1,6 @@
 resource "helm_release" "slurm_operator" {
-  chart   = "${local.slurm_chart_path}}/${local.slurm_chart_operator}"
-  name    = "${local.slurm_chart_operator}-${var.slurm_operator_version}"
+  chart   = "${local.slurm_chart_path}/${local.slurm_chart_operator}"
+  name    = local.slurm_chart_operator
   version = var.slurm_operator_version
 
   depends_on = [
@@ -9,6 +9,11 @@ resource "helm_release" "slurm_operator" {
 
   namespace        = local.slurm_chart_operator
   create_namespace = true
+
+  set {
+    name = "watchNamespaces"
+    value = "*"
+  }
 
   wait = true
 }

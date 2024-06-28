@@ -47,7 +47,7 @@ resource "null_resource" "filestore_attachment" {
           echo "Filesystem attached to instance $id"
       done
 
-      echo "All operations have been initiated.""
+      echo "All operations have been initiated."
     EOF
   }
 }
