@@ -73,6 +73,7 @@ periodicChecks:
       stepFactor: "${slurm_cluster_nccl_benchmark_settings.step_factor}"
       timeout: "${slurm_cluster_nccl_benchmark_settings.timeout}"
       thresholdMoreThan: "${slurm_cluster_nccl_benchmark_settings.threshold_more_than}"
+      useInfiniband: "${slurm_cluster_nccl_benchmark_settings.use_infiniband}"
     failureActions:
       setSlurmNodeDrainState: ${slurm_cluster_nccl_benchmark_drain_nodes}
     k8sNodeFilterName: "${slurm_cluster_k8s_node_filters.non_gpu}"
