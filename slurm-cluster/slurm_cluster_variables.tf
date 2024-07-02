@@ -84,6 +84,7 @@ variable "slurm_cluster_nccl_benchmark_settings" {
     step_factor         = string
     timeout             = string
     threshold_more_than = string
+    use_infiniband      = bool
   })
   default = {
     min_bytes           = "512Mb"
@@ -91,6 +92,7 @@ variable "slurm_cluster_nccl_benchmark_settings" {
     step_factor         = "2"
     timeout             = "20:00"
     threshold_more_than = "42"
+    use_infiniband      = false
   }
 }
 
