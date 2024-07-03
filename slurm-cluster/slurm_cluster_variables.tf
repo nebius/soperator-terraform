@@ -207,5 +207,5 @@ variable "slurm_cluster_node_login_munge_resources" {
 variable "slurm_operator_version" {
   description = "Version of Slurm operator Helm chart."
   type        = string
-  default     = "0.1.12"
+  default     = "0.1.13"
 }
