@@ -19,6 +19,7 @@ locals {
     slurm_cluster_name = var.slurm_cluster_name,
     slurm_cluster_filestores = var.slurm_cluster_filestores,
     slurm_cluster_jail_snapshot = var.slurm_cluster_jail_snapshot,
+    slurm_cluster_nccl_settings = var.slurm_cluster_nccl_settings,
     slurm_cluster_nccl_benchmark_schedule = var.slurm_cluster_nccl_benchmark_schedule,
     slurm_cluster_nccl_benchmark_settings = var.slurm_cluster_nccl_benchmark_settings,
     slurm_cluster_nccl_benchmark_drain_nodes = var.slurm_cluster_nccl_benchmark_drain_nodes,
