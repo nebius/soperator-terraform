@@ -17,7 +17,7 @@ locals {
     nebius_vpc_external_ipv4_address = nebius_vpc_address.this.external_ipv4_address,
 
     slurm_cluster_name = var.slurm_cluster_name,
-    slurm_cluster_filestores = var.slurm_cluster_filestores,
+    slurm_cluster_storages = var.slurm_cluster_storages,
     slurm_cluster_jail_snapshot = var.slurm_cluster_jail_snapshot,
     slurm_cluster_nccl_benchmark_schedule = var.slurm_cluster_nccl_benchmark_schedule,
     slurm_cluster_nccl_benchmark_settings = var.slurm_cluster_nccl_benchmark_settings,
@@ -46,7 +46,7 @@ resource "helm_release" "slurm_cluster" {
 
   depends_on = [
     helm_release.slurm_operator,
-    helm_release.slurm_cluster_filestore,
+    helm_release.slurm_cluster_storage,
     helm_release.k8s_cluster_operator_network,
     helm_release.k8s_cluster_operator_gpu
   ]
