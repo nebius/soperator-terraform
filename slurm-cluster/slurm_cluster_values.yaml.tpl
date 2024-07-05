@@ -28,14 +28,14 @@ k8sNodeFilters:
                     - "${kube_node_group_non_gpu.id}"
 
 volumeSources:
-  - name: "${slurm_cluster_filestores.jail.name}"
+  - name: "${slurm_cluster_storages.jail.name}"
     persistentVolumeClaim:
-      claimName: "${slurm_cluster_filestores.jail.name}-pvc"
+      claimName: "${slurm_cluster_storages.jail.name}-pvc"
       readOnly: false
 
-  - name: "${slurm_cluster_filestores.controller_spool.name}"
+  - name: "${slurm_cluster_storages.controller_spool.name}"
     persistentVolumeClaim:
-      claimName: "${slurm_cluster_filestores.controller_spool.name}-pvc"
+      claimName: "${slurm_cluster_storages.controller_spool.name}-pvc"
       readOnly: false
 
   %{ if slurm_cluster_jail_snapshot != null }
@@ -45,10 +45,10 @@ volumeSources:
       readOnly: true
   %{ endif }
 
-  %{ for filestore in slurm_cluster_filestores.jail_submounts }
-  - name: "${filestore.name}"
+  %{ for storage in slurm_cluster_storages.jail_submounts }
+  - name: "${storage.name}"
     persistentVolumeClaim:
-      claimName: "${filestore.name}-pvc"
+      claimName: "${storage.name}-pvc"
       readOnly: false
   %{ endfor }
 
@@ -94,9 +94,9 @@ slurmNodes:
         ephemeralStorage: "${ceil(slurm_cluster_node_controller_munge_resources.ephemeral_storage_bytes / unit_gib)}Gi"
     volumes:
       spool:
-        volumeSourceName: "${slurm_cluster_filestores.controller_spool.name}"
+        volumeSourceName: "${slurm_cluster_storages.controller_spool.name}"
       jail:
-        volumeSourceName: "${slurm_cluster_filestores.jail.name}"
+        volumeSourceName: "${slurm_cluster_storages.jail.name}"
   worker:
     size: ${slurm_cluster_node_worker_count}
     k8sNodeFilterName: "${slurm_cluster_k8s_node_filters.gpu}"
@@ -120,13 +120,13 @@ slurmNodes:
             requests:
               storage: "${ceil(slurm_cluster_worker_volume_spool_size / unit_gib)}Gi"
       jail:
-        volumeSourceName: "${slurm_cluster_filestores.jail.name}"
-      %{ if length(slurm_cluster_filestores.jail_submounts) > 0 }
+        volumeSourceName: "${slurm_cluster_storages.jail.name}"
+      %{ if length(slurm_cluster_storages.jail_submounts) > 0 }
       jailSubMounts:
-        %{ for filestore in slurm_cluster_filestores.jail_submounts }
-        - name: "${filestore.name}"
-          mountPath: "${filestore.mountPath}"
-          volumeSourceName: "${filestore.name}"
+        %{ for storage in slurm_cluster_storages.jail_submounts }
+        - name: "${storage.name}"
+          mountPath: "${storage.mountPath}"
+          volumeSourceName: "${storage.name}"
         %{ endfor }
       %{ else }
       jailSubMounts: []
@@ -152,13 +152,13 @@ slurmNodes:
         ephemeralStorage: "${ceil(slurm_cluster_node_login_munge_resources.ephemeral_storage_bytes / unit_gib)}Gi"
     volumes:
       jail:
-        volumeSourceName: "${slurm_cluster_filestores.jail.name}"
-      %{ if length(slurm_cluster_filestores.jail_submounts) > 0 }
+        volumeSourceName: "${slurm_cluster_storages.jail.name}"
+      %{ if length(slurm_cluster_storages.jail_submounts) > 0 }
       jailSubMounts:
-        %{ for filestore in slurm_cluster_filestores.jail_submounts }
-        - name: "${filestore.name}"
-          mountPath: "${filestore.mountPath}"
-          volumeSourceName: "${filestore.name}"
+        %{ for storage in slurm_cluster_storages.jail_submounts }
+        - name: "${storage.name}"
+          mountPath: "${storage.mountPath}"
+          volumeSourceName: "${storage.name}"
         %{ endfor }
       %{ else }
       jailSubMounts: []
