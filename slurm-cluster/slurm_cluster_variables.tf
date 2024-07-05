@@ -10,12 +10,13 @@ variable "slurm_cluster_name" {
   default     = "slurm"
 }
 
-variable "slurm_cluster_filestores" {
-  description = "Shared filestores of the Slurm cluster. Sizes specified in bytes."
+variable "slurm_cluster_storages" {
+  description = "Shared storages of the Slurm cluster. Sizes specified in bytes."
   type = object({
     jail = object({
       name = string
       size = number
+      type = string
     })
     controller_spool = object({
       name = string
@@ -30,7 +31,8 @@ variable "slurm_cluster_filestores" {
   default = {
     jail = {
       name = "jail"
-      size = 2 * (1024 * 1024 * 1024 * 1024) # 2Ti
+      size = 1115 * (1024 * 1024 * 1024) # 1115Gi
+      type = "glusterfs"
     }
     controller_spool = {
       name = "controller-spool"
@@ -50,8 +52,8 @@ variable "slurm_cluster_jail_snapshot" {
 }
 
 locals {
-  slurm_cluster_jail_submounts_filestores = [
-      for sm in var.slurm_cluster_filestores.jail_submounts : {
+  slurm_cluster_jail_submounts_storages = [
+      for sm in var.slurm_cluster_storages.jail_submounts : {
         name                = sm.name
         filestoreDeviceName = sm.name
         size                = "${ceil(sm.size / local.unit_gib)}Gi"
@@ -91,7 +93,7 @@ variable "slurm_cluster_nccl_benchmark_settings" {
     max_bytes           = "8Gb"
     step_factor         = "2"
     timeout             = "20:00"
-    threshold_more_than = "400"
+    threshold_more_than = "420"
     use_infiniband      = false
   }
 }
