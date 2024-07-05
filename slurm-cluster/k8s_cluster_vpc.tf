@@ -5,7 +5,7 @@ resource "nebius_vpc_network" "this" {
 }
 
 locals {
-  k8s_cluster_network_id = try(var.k8s_network_id, nebius_vpc_network.this[0].id)
+  k8s_cluster_network_id = coalesce(var.k8s_network_id, nebius_vpc_network.this[0].id)
 }
 
 resource "nebius_vpc_gateway" "this" {
