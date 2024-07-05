@@ -3,6 +3,12 @@ variable "k8s_folder_id" {
   type        = string
 }
 
+variable "k8s_network_id" {
+  description = "ID of the existing VPC network to crate subnet into."
+  type        = string
+  default     = ""
+}
+
 # region meta
 
 variable "k8s_cluster_name" {
@@ -68,32 +74,32 @@ variable "k8s_cluster_node_group_non_gpu" {
 variable "k8s_cluster_node_group_gpu" {
   description = "GPU node group specification."
   type = object({
-    platform     = string
-    size         = number
-    cpu_cores    = number
-    memory_gb    = number
-    gpus         = number
-    interconnect_type = string
+    platform                      = string
+    size                          = number
+    cpu_cores                     = number
+    memory_gb                     = number
+    gpus                          = number
+    interconnect_type             = string
     interconnect_physical_cluster = string
-    disk_type         = string
-    disk_size_gb      = number
-    gke_accelerator   = string
-    driver_config     = string
-    preemptible = bool
+    disk_type                     = string
+    disk_size_gb                  = number
+    gke_accelerator               = string
+    driver_config                 = string
+    preemptible                   = bool
   })
   default = {
-    platform          = "h100"
-    size              = 2
-    cpu_cores         = 160
-    memory_gb         = 1280
-    gpus              = 8
-    interconnect_type = "InfiniBand"
+    platform                      = "h100"
+    size                          = 2
+    cpu_cores                     = 160
+    memory_gb                     = 1280
+    gpus                          = 8
+    interconnect_type             = "InfiniBand"
     interconnect_physical_cluster = "fabric-1"
-    disk_type         = "network-ssd"
-    disk_size_gb      = 128
-    gke_accelerator   = "nvidia-h100-80gb"
-    driver_config     = "535"
-    preemptible       = false
+    disk_type                     = "network-ssd"
+    disk_size_gb                  = 128
+    gke_accelerator               = "nvidia-h100-80gb"
+    driver_config                 = "535"
+    preemptible                   = false
   }
 }
 

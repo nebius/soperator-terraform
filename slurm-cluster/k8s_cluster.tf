@@ -18,10 +18,10 @@ locals {
       fixed_scale = {
         size = var.k8s_cluster_node_group_non_gpu.size
       }
-      node_cores = var.k8s_cluster_node_group_non_gpu.cpu_cores
+      node_cores  = var.k8s_cluster_node_group_non_gpu.cpu_cores
       node_memory = var.k8s_cluster_node_group_non_gpu.memory_gb
-      disk_type = var.k8s_cluster_node_group_non_gpu.disk_type
-      disk_size = var.k8s_cluster_node_group_non_gpu.disk_size_gb
+      disk_type   = var.k8s_cluster_node_group_non_gpu.disk_type
+      disk_size   = var.k8s_cluster_node_group_non_gpu.disk_size_gb
       node_locations = [{
         zone      = var.k8s_cluster_zone_id
         subnet_id = nebius_vpc_subnet.this.id
@@ -37,7 +37,7 @@ locals {
       fixed_scale = {
         size = var.k8s_cluster_node_group_gpu.size
       }
-      preemptible = var.k8s_cluster_node_group_gpu.preemptible
+      preemptible     = var.k8s_cluster_node_group_gpu.preemptible
       gpu_cluster_id  = nebius_compute_gpu_cluster.this.id
       platform_id     = "gpu-${var.k8s_cluster_node_group_gpu.platform}"
       gpu_environment = "runc"
@@ -55,7 +55,7 @@ locals {
       ]
       node_labels = {
         "cloud.google.com/gke-accelerator" = var.k8s_cluster_node_group_gpu.gke_accelerator
-        "driver.config" = var.k8s_cluster_node_group_gpu.driver_config
+        "driver.config"                    = var.k8s_cluster_node_group_gpu.driver_config
       }
     }
   }
@@ -65,14 +65,14 @@ module "k8s_cluster" {
   source = "github.com/nebius/terraform-nb-kubernetes.git?ref=1.0.7"
 
   depends_on = [
-    nebius_vpc_network.this,
+    local.k8s_cluster_network_id,
     nebius_vpc_subnet.this,
     nebius_compute_gpu_cluster.this,
     local.k8s_cluster_node_group_gpu
   ]
 
   folder_id  = var.k8s_folder_id
-  network_id = nebius_vpc_network.this.id
+  network_id = local.k8s_cluster_network_id
 
   cluster_name    = var.k8s_cluster_name
   description     = var.k8s_cluster_description
@@ -90,7 +90,7 @@ module "k8s_cluster" {
   }
 
   enable_cilium_policy = true
-  pod_mtu = null
+  pod_mtu              = null
 
   ssh_username        = var.k8s_cluster_ssh_username
   ssh_public_key      = var.k8s_cluster_ssh_public_key

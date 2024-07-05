@@ -1,7 +1,7 @@
 variable "slurm_cluster_create_cr" {
   description = "Whether to create a Slurm cluster"
-  type = bool
-  default = true
+  type        = bool
+  default     = true
 }
 
 variable "slurm_cluster_name" {
@@ -23,8 +23,8 @@ variable "slurm_cluster_storages" {
       size = number
     })
     jail_submounts = list(object({
-      name = string
-      size = number
+      name      = string
+      size      = number
       mountPath = string
     }))
   })
@@ -53,11 +53,11 @@ variable "slurm_cluster_jail_snapshot" {
 
 locals {
   slurm_cluster_jail_submounts_storages = [
-      for sm in var.slurm_cluster_storages.jail_submounts : {
-        name                = sm.name
-        filestoreDeviceName = sm.name
-        size                = "${ceil(sm.size / local.unit_gib)}Gi"
-      }
+    for sm in var.slurm_cluster_storages.jail_submounts : {
+      name                = sm.name
+      filestoreDeviceName = sm.name
+      size                = "${ceil(sm.size / local.unit_gib)}Gi"
+    }
   ]
 }
 
