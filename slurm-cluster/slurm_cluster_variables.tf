@@ -85,7 +85,7 @@ variable "slurm_cluster_nccl_settings" {
     topology_data       = string
   })
   default = {
-    topology_type           = "H100 GPU cluster"
+    topology_type           = "auto"
     topology_data           = ""
   }
 }
