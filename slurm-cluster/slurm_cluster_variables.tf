@@ -78,6 +78,18 @@ variable "slurm_cluster_nccl_benchmark_schedule" {
   default     = "0 */3 * * *"
 }
 
+variable "slurm_cluster_nccl_settings" {
+  description = "NCCL settings."
+  type = object({
+    topology_type       = string
+    topology_data       = string
+  })
+  default = {
+    topology_type           = "H100 GPU cluster"
+    topology_data           = ""
+  }
+}
+
 variable "slurm_cluster_nccl_benchmark_settings" {
   description = "NCCL test benchmark settings."
   type = object({
@@ -209,5 +221,5 @@ variable "slurm_cluster_node_login_munge_resources" {
 variable "slurm_operator_version" {
   description = "Version of Slurm operator Helm chart."
   type        = string
-  default     = "0.1.13"
+  default     = "0.1.14"
 }

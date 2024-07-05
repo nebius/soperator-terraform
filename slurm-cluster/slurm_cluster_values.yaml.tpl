@@ -63,11 +63,15 @@ populateJail:
     volumeSourceName: "${slurm_cluster_jail_snapshot.name}"
   %{ endif }
 
+ncclSettings:
+  topologyType: "${slurm_cluster_nccl_settings.topology_type}"
+  topologyData: "${slurm_cluster_nccl_settings.topology_data}"
+
 periodicChecks:
   ncclBenchmark:
     enabled: true
     schedule: "${slurm_cluster_nccl_benchmark_schedule}"
-    ncclSettings:
+    periodicCheckNCCLSettings:
       minBytes: "${slurm_cluster_nccl_benchmark_settings.min_bytes}"
       maxBytes: "${slurm_cluster_nccl_benchmark_settings.max_bytes}"
       stepFactor: "${slurm_cluster_nccl_benchmark_settings.step_factor}"
