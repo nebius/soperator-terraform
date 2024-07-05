@@ -1,8 +1,10 @@
 locals {
+  jail_filestore = var.slurm_cluster_storages.jail.type == "filestore" ? [var.slurm_cluster_storages.jail] : []
+
   all_filestores = concat(
-    [var.slurm_cluster_filestores.jail],
-    [var.slurm_cluster_filestores.controller_spool],
-    var.slurm_cluster_filestores.jail_submounts
+    local.jail_filestore,
+    [var.slurm_cluster_storages.controller_spool],
+    var.slurm_cluster_storages.jail_submounts
   )
 }
 
