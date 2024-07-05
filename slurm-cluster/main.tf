@@ -1,8 +1,8 @@
 locals {
-  slurm_chart_path      = "../../helm"
-  slurm_chart_operator  = "slurm-operator"
-  slurm_chart_storage   = "slurm-cluster-storage"
-  slurm_chart_cluster   = "slurm-cluster"
+  slurm_chart_path     = "../../helm"
+  slurm_chart_operator = "slurm-operator"
+  slurm_chart_storage  = "slurm-cluster-storage"
+  slurm_chart_cluster  = "slurm-cluster"
 
   slurm_cluster_normalized_name = trimsuffix(substr(replace(trimspace(var.slurm_cluster_name), " ", "-"), 0, 63), "-")
 

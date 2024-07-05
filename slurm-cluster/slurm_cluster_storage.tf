@@ -5,15 +5,15 @@ locals {
 
 locals {
   slurm_cluster_storage_values_yaml = templatefile("${path.module}/slurm_cluster_storage_values.yaml.tpl", {
-    slurm_cluster_jail_size = local.slurm_cluster_jail_size,
+    slurm_cluster_jail_size             = local.slurm_cluster_jail_size,
     slurm_cluster_controller_spool_size = local.slurm_cluster_controller_spool_size,
-    unit_gib = local.unit_gib,
+    unit_gib                            = local.unit_gib,
 
-    kube_node_group_gpu = data.nebius_kubernetes_node_group.gpu,
+    kube_node_group_gpu     = data.nebius_kubernetes_node_group.gpu,
     kube_node_group_non_gpu = data.nebius_kubernetes_node_group.non_gpu,
 
     slurm_cluster_storages = var.slurm_cluster_storages,
-    glusterfs_hostname = length(module.gluster-module) > 0 ? module.gluster-module[0].glusterfs-host : "",
+    glusterfs_hostname     = length(module.gluster-module) > 0 ? module.gluster-module[0].glusterfs-host : "",
   })
 }
 
