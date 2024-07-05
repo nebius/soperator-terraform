@@ -5,6 +5,9 @@
 # Folder ID to create K8S cluster in.
 k8s_folder_id    = "bje82q7sm8njm3c4rrlq"
 
+# ID of the existing VPC network to crate subnet into.
+k8s_network_id = "btce08cojgqubmtiqp9j"
+
 # K8S cluster name. A short random suffix will be added.
 k8s_cluster_name = "slurm-dev"
 
