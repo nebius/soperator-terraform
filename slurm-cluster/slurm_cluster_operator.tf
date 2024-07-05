@@ -11,7 +11,7 @@ resource "helm_release" "slurm_operator" {
   create_namespace = true
 
   set {
-    name = "watchNamespaces"
+    name  = "watchNamespaces"
     value = "*"
   }
 
