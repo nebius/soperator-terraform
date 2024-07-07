@@ -14,29 +14,34 @@ variable "slurm_cluster_storages" {
   description = "Shared storages of the Slurm cluster. Sizes specified in bytes."
   type = object({
     jail = object({
-      name = string
-      size = number
-      type = string
+      name         = string
+      size         = number
+      type         = string
+      filestore_id = string
     })
     controller_spool = object({
-      name = string
-      size = number
+      name         = string
+      size         = number
+      filestore_id = string
     })
     jail_submounts = list(object({
-      name      = string
-      size      = number
-      mountPath = string
+      name         = string
+      size         = number
+      mountPath    = string
+      filestore_id = string
     }))
   })
   default = {
     jail = {
-      name = "jail"
-      size = 1115 * (1024 * 1024 * 1024) # 1115Gi
-      type = "glusterfs"
+      name         = "jail"
+      size         = 1115 * (1024 * 1024 * 1024) # 1115Gi
+      type         = "glusterfs"
+      filestore_id = null
     }
     controller_spool = {
-      name = "controller-spool"
-      size = 30 * (1024 * 1024 * 1024) # 30Gi
+      name         = "controller-spool"
+      size         = 30 * (1024 * 1024 * 1024) # 30Gi
+      filestore_id = null
     }
     jail_submounts = []
   }

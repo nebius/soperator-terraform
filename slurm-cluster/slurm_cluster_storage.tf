@@ -26,7 +26,8 @@ resource "helm_release" "slurm_cluster_storage" {
     module.k8s_cluster,
     data.nebius_kubernetes_node_group.non_gpu,
     data.nebius_kubernetes_node_group.gpu,
-    null_resource.filestore_attachment
+    null_resource.created_filestore_attachment,
+    null_resource.existing_filestore_attachment
   ]
 
   namespace        = local.slurm_cluster_normalized_name
