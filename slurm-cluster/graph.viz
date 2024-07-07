@@ -9,15 +9,16 @@ digraph G {
   "helm_release.slurm_cluster" [label="helm_release.slurm_cluster"];
   "helm_release.slurm_cluster_storage" [label="helm_release.slurm_cluster_storage"];
   "helm_release.slurm_operator" [label="helm_release.slurm_operator"];
-  "nebius_compute_filesystem.filestores" [label="nebius_compute_filesystem.filestores"];
+  "nebius_compute_filesystem.created_filestores" [label="nebius_compute_filesystem.created_filestores"];
   "nebius_compute_gpu_cluster.this" [label="nebius_compute_gpu_cluster.this"];
   "nebius_vpc_address.this" [label="nebius_vpc_address.this"];
   "nebius_vpc_gateway.this" [label="nebius_vpc_gateway.this"];
   "nebius_vpc_network.this" [label="nebius_vpc_network.this"];
   "nebius_vpc_route_table.this" [label="nebius_vpc_route_table.this"];
   "nebius_vpc_subnet.this" [label="nebius_vpc_subnet.this"];
+  "null_resource.created_filestore_attachment" [label="null_resource.created_filestore_attachment"];
   "null_resource.entrypoint" [label="null_resource.entrypoint"];
-  "null_resource.filestore_attachment" [label="null_resource.filestore_attachment"];
+  "null_resource.existing_filestore_attachment" [label="null_resource.existing_filestore_attachment"];
   subgraph "cluster_module.gluster-module" {
     label = "module.gluster-module"
     fontname = "sans-serif"
@@ -80,7 +81,7 @@ digraph G {
   "helm_release.slurm_cluster_storage" -> "data.nebius_client_config.client";
   "helm_release.slurm_cluster_storage" -> "data.nebius_kubernetes_node_group.gpu";
   "helm_release.slurm_cluster_storage" -> "data.nebius_kubernetes_node_group.non_gpu";
-  "helm_release.slurm_cluster_storage" -> "null_resource.filestore_attachment";
+  "helm_release.slurm_cluster_storage" -> "null_resource.created_filestore_attachment";
   "helm_release.slurm_cluster_storage" -> "module.gluster-module.nebius_compute_instance.storage_node";
   "helm_release.slurm_operator" -> "data.nebius_client_config.client";
   "helm_release.slurm_operator" -> "module.k8s_cluster.nebius_kubernetes_node_group.kube_node_groups";
@@ -91,12 +92,13 @@ digraph G {
   "nebius_vpc_route_table.this" -> "nebius_vpc_gateway.this";
   "nebius_vpc_route_table.this" -> "nebius_vpc_network.this";
   "nebius_vpc_subnet.this" -> "nebius_vpc_route_table.this";
+  "null_resource.created_filestore_attachment" -> "nebius_compute_filesystem.created_filestores";
+  "null_resource.created_filestore_attachment" -> "null_resource.existing_filestore_attachment";
   "null_resource.entrypoint" -> "helm_release.slurm_cluster";
-  "null_resource.filestore_attachment" -> "nebius_compute_filesystem.filestores";
-  "null_resource.filestore_attachment" -> "module.k8s_cluster.nebius_kubernetes_node_group.kube_node_groups";
-  "null_resource.filestore_attachment" -> "module.k8s_cluster.nebius_resourcemanager_folder_iam_member.node_account_monitoring";
-  "null_resource.filestore_attachment" -> "module.k8s_cluster.nebius_vpc_security_group_rule.egress_rules";
-  "null_resource.filestore_attachment" -> "module.k8s_cluster.nebius_vpc_security_group_rule.ingress_rules";
+  "null_resource.existing_filestore_attachment" -> "module.k8s_cluster.nebius_kubernetes_node_group.kube_node_groups";
+  "null_resource.existing_filestore_attachment" -> "module.k8s_cluster.nebius_resourcemanager_folder_iam_member.node_account_monitoring";
+  "null_resource.existing_filestore_attachment" -> "module.k8s_cluster.nebius_vpc_security_group_rule.egress_rules";
+  "null_resource.existing_filestore_attachment" -> "module.k8s_cluster.nebius_vpc_security_group_rule.ingress_rules";
   "module.gluster-module.nebius_compute_instance.storage_node" -> "nebius_vpc_subnet.this";
   "module.gluster-module.nebius_compute_instance.storage_node" -> "module.gluster-module.data.nebius_compute_image.ubuntu";
   "module.gluster-module.nebius_compute_instance.storage_node" -> "module.gluster-module.nebius_compute_disk.glusterdisk_a";

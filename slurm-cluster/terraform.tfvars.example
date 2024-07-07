@@ -5,7 +5,7 @@
 ## BASIC CONFIGURATION
 
 ### Nebius folder ID to create the K8S cluster in it.
-k8s_folder_id = "put_your_folder_id_here"
+k8s_folder_id = "TODO: Put your folder ID here"
 
 ### Name of the K8S cluster. A short random prefix is added. For example, if you set "slurm-test" here, the actual name
 ### will be "slurm-test-randstr1.
@@ -33,7 +33,7 @@ k8s_cluster_master_maintenance_windows = [{
 
 ### ID of an existing network in which a new subnet for the K8S cluster is created. If empty, a new network is created.
 ### A separate subnet is created in either case.
-k8s_network_id = "put_your_network_id_here"
+k8s_network_id = "TODO: Put your network ID here"
 
 ### IPv4 CIDR blocks for the new subnet. In case the subnet is created in an existing network, ensure it doesn't
 ### conflict with CIDR blocks of existing subnets.
@@ -119,7 +119,7 @@ k8s_cluster_node_group_non_gpu = {
 k8s_cluster_ssh_username = "ubuntu"
 
 ### SSH public key for connecting to K8S nodes. Either the key as a string or path to the key must be set.
-k8s_cluster_ssh_public_key = "put_your_ssh_public_key_here"
+k8s_cluster_ssh_public_key = "TODO: Put your public SSH key here"
 k8s_cluster_ssh_public_key_path = null
 
 
@@ -181,10 +181,10 @@ k8s_cluster_filestore_block_size = 32768
 
 ### Folder ID to create GlusterFS nodes in it. Several GlusterFS storages should not be created in the same folder due
 ### to possible conflicts in compute instance names.
-glusterfs_cluster_folder_id = "bje82q7sm8njm3c4rrlq"
+glusterfs_cluster_folder_id = "TODO: Put your folder ID here"
 
 ### SSH key for connecting to GlusterFS compute instances.
-glusterfs_cluster_ssh_public_key = "put_your_ssh_public_key_here"
+glusterfs_cluster_ssh_public_key = "TODO: Put your public SSH key here"
 glusterfs_cluster_ssh_public_key_path = null
 
 ### Size of separate disks comprising the cluster in GB. The total size of the storage = (disk size * number of nodes).
@@ -218,6 +218,10 @@ slurm_cluster_storages = {
 
     ##### Type of the shared storage. Can be either "glusterfs" or "filestore".
     type = "glusterfs"
+
+    ##### ID for an existing compute file storage for using it instead of creating a new one. It is relevant, only when
+    ##### type = "filestore".
+    filestore_id = null
   }
 
   #### "Controller spool" storage configuration.
@@ -228,6 +232,9 @@ slurm_cluster_storages = {
 
     ##### Size of the storage in bytes.
     size = 100 * (1024 * 1024 * 1024) # 100Gi
+
+    ##### ID for an existing compute file storage for using it instead of creating a new one.
+    filestore_id = null
   }
 
   #### "Jail submount" storages configuration. If empty, no additional shared storages are mounted to the jail.
@@ -245,6 +252,9 @@ slurm_cluster_storages = {
 
     ##### The absolute path within the jail environment for which data will be available to users.
     mountPath = "/mlperf-sd"
+
+    ##### ID for an existing compute file storage for using it instead of creating a new one.
+    filestore_id = null
   }]
 }
 
@@ -288,7 +298,7 @@ slurm_cluster_name = "slurm-dev"
 ### List of SSH public keys that will authorized for user root. After connecting to the cluster as root, the Slurm admin
 ### can create other Linux users with different authorized SSH keys.
 slurm_cluster_ssh_root_public_keys = [
-  "put_your_public_ssh_key_here",
+  "TODO: Put your public SSH key here",
 ]
 
 
@@ -309,7 +319,7 @@ slurm_cluster_node_worker_count = 2
 slurm_cluster_node_worker_slurmd_resources = {
   cpu_cores               = 156
   memory_bytes            = 1220 * (1024 * 1024 * 1024) # 1220Gi
-  ephemeral_storage_bytes = 900 * (1024 * 1024 * 1024) # 900Gi
+  ephemeral_storage_bytes = 720 * (1024 * 1024 * 1024) # 720Gi
 }
 
 ### Resources, dedicated to the munged daemon on each worker node. If set to null, the container has will have no K8S
@@ -341,8 +351,8 @@ slurm_cluster_node_controller_count = 2
 ### The slurmdctld container is the place where the Slurm cluster is controlled from. It must have enough resources for
 ### operation, but there's no sense in giving it more than 16 CPU and 64 GiB of memory.
 slurm_cluster_node_controller_slurmctld_resources = {
-  cpu_cores               = 12
-  memory_bytes            = 48 * (1024 * 1024 * 1024) # 48Gi
+  cpu_cores               = 8
+  memory_bytes            = 32 * (1024 * 1024 * 1024) # 32Gi
   ephemeral_storage_bytes = 16 * (1024 * 1024 * 1024) # 16Gi
 }
 
@@ -377,7 +387,7 @@ slurm_cluster_node_login_count = 2
 slurm_cluster_node_login_sshd_resources = {
   cpu_cores               = 16
   memory_bytes            = 64 * (1024 * 1024 * 1024) # 64Gi
-  ephemeral_storage_bytes = 800 * (1024 * 1024 * 1024) # 800Gi
+  ephemeral_storage_bytes = 720 * (1024 * 1024 * 1024) # 720Gi
 }
 
 ### Resources, dedicated to the munged daemon on each login node. If set to null, the container will have no K8S
@@ -393,8 +403,8 @@ slurm_cluster_node_login_munge_resources = {
 
 ## PERIODIC GPU BENCHMARK CONFIGURATION
 ## ---------------------------------------------------------------------------------------------------------------------
-## GPU benchmarks are implemented as "all_reduce_perf" NCCL tests. These checks are implemented as usual Slurm jobs,
-## which are periodically scheduled from a K8S CronJobs and stay in the same queue with users' workload.
+## GPU benchmarks are implemented as "all_reduce_perf" NCCL tests. These checks are launched as usual Slurm jobs, which
+## are periodically scheduled from a K8S CronJob and stay in the same queue with users' workload.
 
 ### Cron string representing the schedule for running NCCL benchmarks.
 slurm_cluster_nccl_benchmark_schedule = "0 */3 * * *" # Every 3 hours
