@@ -86,12 +86,12 @@ variable "slurm_cluster_nccl_benchmark_schedule" {
 variable "slurm_cluster_nccl_settings" {
   description = "NCCL settings."
   type = object({
-    topology_type       = string
-    topology_data       = string
+    topology_type = string
+    topology_data = string
   })
   default = {
-    topology_type           = "auto"
-    topology_data           = ""
+    topology_type = "auto"
+    topology_data = ""
   }
 }
 
@@ -226,5 +226,5 @@ variable "slurm_cluster_node_login_munge_resources" {
 variable "slurm_operator_version" {
   description = "Version of Slurm operator Helm chart."
   type        = string
-  default     = "0.1.14"
+  default     = "0.1.15"
 }
