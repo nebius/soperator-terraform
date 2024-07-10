@@ -18,9 +18,10 @@ locals {
 }
 
 resource "helm_release" "slurm_cluster_storage" {
-  chart   = "${local.slurm_chart_path}/${local.slurm_chart_storage}"
-  name    = local.slurm_chart_storage
-  version = var.slurm_operator_version
+  name       = local.slurm_chart_storage
+  repository = local.slurm_chart_container_registry
+  chart      = local.slurm_chart_storage
+  version    = var.slurm_operator_version
 
   depends_on = [
     module.k8s_cluster,
