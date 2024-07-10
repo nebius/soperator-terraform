@@ -1,21 +1,21 @@
 locals {
   new_filestores = concat(
     var.slurm_cluster_storages.jail.type == "filestore" && var.slurm_cluster_storages.jail.filestore_id == null
-      ? [var.slurm_cluster_storages.jail]
-      : [],
+    ? [var.slurm_cluster_storages.jail]
+    : [],
     var.slurm_cluster_storages.controller_spool.filestore_id == null
-      ? [var.slurm_cluster_storages.controller_spool]
-      : [],
+    ? [var.slurm_cluster_storages.controller_spool]
+    : [],
     [for submount in var.slurm_cluster_storages.jail_submounts : submount if submount.filestore_id == null]
   )
 
   existing_filestores = concat(
     var.slurm_cluster_storages.jail.type == "filestore" && var.slurm_cluster_storages.jail.filestore_id != null
-      ? [var.slurm_cluster_storages.jail]
-      : [],
+    ? [var.slurm_cluster_storages.jail]
+    : [],
     var.slurm_cluster_storages.controller_spool.filestore_id != null
-      ? [var.slurm_cluster_storages.controller_spool]
-      : [],
+    ? [var.slurm_cluster_storages.controller_spool]
+    : [],
     [for submount in var.slurm_cluster_storages.jail_submounts : submount if submount.filestore_id != null]
   )
 
