@@ -8,7 +8,7 @@ module "gluster-module" {
     nebius = nebius
   }
   count             = var.slurm_cluster_storages.jail.type == "glusterfs" ? 1 : 0
-  source            = "../gluster-module"
+  source            = "./gluster-module"
   folder_id         = var.glusterfs_cluster_folder_id
   ext_subnet_id     = nebius_vpc_subnet.this.id
   disk_size         = var.glusterfs_cluster_disk_size
