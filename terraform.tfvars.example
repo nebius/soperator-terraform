@@ -240,18 +240,18 @@ slurm_cluster_storages = {
   #### "Jail submount" storages configuration. If empty, no additional shared storages are mounted to the jail.
   #### All these storages are initially mounted with 777 permissions and root:root ownerships, but users can change them
   #### after the Slurm cluster is created.
-  #### It's enough to execute the command like `sudo chmod 755 /mlperf-sd && sudo chown bob:bob /mlperf-sd` on any of
+  #### It's enough to execute the command like `sudo chmod 755 /datasets && sudo chown bob:bob /datasets` on any of
   #### the Slurm nodes (login or worker) and these changes will apply to all other nodes in the cluster.
   jail_submounts = [{
     ##### Name of the storage. It doesn't matter a lot. Used as a base name for different entities: compute file storage
     ##### name, mounted device name, K8S PV & PVC names, and the like.
-    name = "mlperf-sd"
+    name = "datasets"
 
     ##### Size of the storage in bytes.
     size = 1500 * (1024 * 1024 * 1024) # 1500Gi
 
     ##### The absolute path within the jail environment for which data will be available to users.
-    mountPath = "/mlperf-sd"
+    mountPath = "/datasets"
 
     ##### ID for an existing compute file storage for using it instead of creating a new one.
     filestore_id = null
@@ -277,7 +277,7 @@ slurm_cluster_worker_volume_spool_size = 128 * (1024 * 1024 * 1024) # 128Gi
 ## SLURM OPERATOR CONFIGURATION
 
 ### Version of the Slurm operator. Typically, should be left default.
-slurm_operator_version = "0.1.15"
+slurm_operator_version = "1.0.0"
 
 
 
