@@ -55,6 +55,7 @@ volumeSources:
 secrets:
   mungeKey:
     create: true
+  sshdKeysName: "${slurm_cluster_login_sshd_keys_secret_name}"
 
 populateJail:
   k8sNodeFilterName: "${slurm_cluster_k8s_node_filters.gpu}"
