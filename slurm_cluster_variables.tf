@@ -77,6 +77,12 @@ variable "slurm_cluster_ssh_root_public_keys" {
   type        = list(string)
 }
 
+variable "slurm_cluster_login_sshd_keys_secret_name" {
+  description = "Name of the secret with ssh keys for SSHD server login node"
+  type        = string
+  default     = ""
+}
+
 variable "slurm_cluster_nccl_benchmark_schedule" {
   description = "NCCL test benchmark CronJob schedule."
   type        = string
