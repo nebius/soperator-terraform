@@ -34,6 +34,7 @@ locals {
     slurm_cluster_node_login_sshd_resources           = var.slurm_cluster_node_login_sshd_resources,
     slurm_cluster_node_login_munge_resources          = var.slurm_cluster_node_login_munge_resources,
     slurm_cluster_ssh_root_public_keys                = var.slurm_cluster_ssh_root_public_keys,
+    slurm_cluster_login_sshd_keys_secret_name         = var.slurm_cluster_login_sshd_keys_secret_name,
     k8s_cluster_node_group_gpu                        = var.k8s_cluster_node_group_gpu,
   })
 }
