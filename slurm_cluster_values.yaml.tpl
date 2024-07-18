@@ -53,8 +53,6 @@ volumeSources:
   %{ endfor }
 
 secrets:
-  mungeKey:
-    create: true
   sshdKeysName: "${slurm_cluster_login_sshd_keys_secret_name}"
 
 populateJail:
