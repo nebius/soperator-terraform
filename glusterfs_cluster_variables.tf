@@ -1,5 +1,7 @@
 variable "glusterfs_cluster_folder_id" {
   description = "Folder ID to create GlusterFS"
+  type        = string
+  default     = null
 }
 
 variable "glusterfs_cluster_ssh_public_key" {
