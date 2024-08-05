@@ -3,6 +3,7 @@ locals {
 }
 
 resource "nebius_compute_gpu_cluster" "this" {
+  count                         = var.k8s_cluster_node_group_gpu.platform == "h100" ? 1 : 0
   name                          = "${local.k8s_cluster_normalized_name}-gpus"
   folder_id                     = var.k8s_folder_id
   zone                          = var.k8s_cluster_zone_id
@@ -12,7 +13,7 @@ resource "nebius_compute_gpu_cluster" "this" {
 
 locals {
   k8s_cluster_node_group_non_gpu = {
-    name = "k8s-ng-non-gpu"
+    name = "k8s-ng-non-gpu-${local.k8s_cluster_normalized_name}"
     content = {
       description = "k8s node group without GPUs."
       fixed_scale = {
@@ -31,14 +32,14 @@ locals {
   }
 
   k8s_cluster_node_group_gpu = {
-    name = "k8s-ng-${var.k8s_cluster_node_group_gpu.platform}-${var.k8s_cluster_node_group_gpu.gpus}gpu"
+    name = "k8s-ng-${var.k8s_cluster_node_group_gpu.platform}-${var.k8s_cluster_node_group_gpu.gpus}gpu-${local.k8s_cluster_normalized_name}"
     content = {
       description = "k8s node group with Nvidia ${var.k8s_cluster_node_group_gpu.platform}-${var.k8s_cluster_node_group_gpu.gpus}-gpu nodes with autoscaling"
       fixed_scale = {
         size = var.k8s_cluster_node_group_gpu.size
       }
       preemptible     = var.k8s_cluster_node_group_gpu.preemptible
-      gpu_cluster_id  = nebius_compute_gpu_cluster.this.id
+      gpu_cluster_id  = var.k8s_cluster_node_group_gpu.platform == "h100" ? nebius_compute_gpu_cluster.this[0].id : null
       platform_id     = "gpu-${var.k8s_cluster_node_group_gpu.platform}"
       gpu_environment = "runc"
       node_cores      = var.k8s_cluster_node_group_gpu.cpu_cores

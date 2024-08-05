@@ -50,6 +50,7 @@ k8s_cluster_subnet_cidr_blocks = ["192.168.10.0/24"]
 ### Configuration of the node group with GPUs. Its nodes are interconnected and forms a GPU cluster.
 k8s_cluster_node_group_gpu = {
   #### The kind of GPUs. For example, "h100" (type A), "h100-c" (type C), "h100-c-llm" (type C allowing "preemptible").
+  #### https://nebius.ai/docs/compute/concepts/vm-platforms
   platform = "h100"
 
   #### Whether the nodes can be taken away in favor of higher priority tasks. The only allowed platform is "h100-c-llm".
@@ -277,7 +278,7 @@ slurm_cluster_worker_volume_spool_size = 128 * (1024 * 1024 * 1024) # 128Gi
 ## SLURM OPERATOR CONFIGURATION
 
 ### Version of the Slurm operator. Typically, should be left default.
-slurm_operator_version = "1.3.3"
+slurm_operator_version = "1.4.4"
 
 
 
