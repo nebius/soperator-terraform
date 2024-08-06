@@ -2,8 +2,14 @@ locals {
   k8s_cluster_normalized_name = trimsuffix(substr(replace(trimspace(var.k8s_cluster_name), " ", "-"), 0, 63), "-")
 }
 
+locals {
+  create_gpu_cluster = (var.k8s_cluster_node_group_gpu.platform == "h100" || var.k8s_cluster_node_group_gpu.platform == "h100-a-llm") ? {
+    "create" = true
+  } : {}
+}
+
 resource "nebius_compute_gpu_cluster" "this" {
-  count                         = var.k8s_cluster_node_group_gpu.platform == "h100" ? 1 : 0
+  for_each                      = local.create_gpu_cluster
   name                          = "${local.k8s_cluster_normalized_name}-gpus"
   folder_id                     = var.k8s_folder_id
   zone                          = var.k8s_cluster_zone_id
@@ -13,7 +19,7 @@ resource "nebius_compute_gpu_cluster" "this" {
 
 locals {
   k8s_cluster_node_group_non_gpu = {
-    name = "k8s-ng-non-gpu-${local.k8s_cluster_normalized_name}"
+    name = var.k8s_cluster_node_group_non_gpu.name
     content = {
       description = "k8s node group without GPUs."
       fixed_scale = {
@@ -32,14 +38,17 @@ locals {
   }
 
   k8s_cluster_node_group_gpu = {
-    name = "k8s-ng-${var.k8s_cluster_node_group_gpu.platform}-${var.k8s_cluster_node_group_gpu.gpus}gpu-${local.k8s_cluster_normalized_name}"
+    name = "k8s-ng-${var.k8s_cluster_node_group_gpu.platform}-${var.k8s_cluster_node_group_gpu.gpus}gpu"
     content = {
       description = "k8s node group with Nvidia ${var.k8s_cluster_node_group_gpu.platform}-${var.k8s_cluster_node_group_gpu.gpus}-gpu nodes with autoscaling"
       fixed_scale = {
         size = var.k8s_cluster_node_group_gpu.size
       }
       preemptible     = var.k8s_cluster_node_group_gpu.preemptible
-      gpu_cluster_id  = var.k8s_cluster_node_group_gpu.platform == "h100" ? nebius_compute_gpu_cluster.this[0].id : null
+      gpu_cluster_id = (
+        var.k8s_cluster_node_group_gpu.platform == "h100" ||
+        var.k8s_cluster_node_group_gpu.platform == "h100-a-llm"
+      ) ? nebius_compute_gpu_cluster.this["create"].id : null
       platform_id     = "gpu-${var.k8s_cluster_node_group_gpu.platform}"
       gpu_environment = "runc"
       node_cores      = var.k8s_cluster_node_group_gpu.cpu_cores

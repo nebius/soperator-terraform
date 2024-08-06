@@ -94,6 +94,9 @@ k8s_cluster_node_group_gpu = {
 
 ### Configuration of the node group without GPUs.
 k8s_cluster_node_group_non_gpu = {
+  #### Name of node group without GPUs
+  name = "k8s-ng-non-gpu"
+
   #### Number of nodes in the group. It should be at least 2 in order to benefit from K8S high-availability features.
   #### The created node group doesn't have auto-scaling, but the size can be updated using this terraform.
   size = 2
@@ -278,7 +281,7 @@ slurm_cluster_worker_volume_spool_size = 128 * (1024 * 1024 * 1024) # 128Gi
 ## SLURM OPERATOR CONFIGURATION
 
 ### Version of the Slurm operator. Typically, should be left default.
-slurm_operator_version = "1.4.4"
+slurm_operator_version = "1.4.6"
 
 
 
