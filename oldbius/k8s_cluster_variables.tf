@@ -56,6 +56,7 @@ variable "k8s_cluster_master_maintenance_windows" {
 variable "k8s_cluster_node_group_non_gpu" {
   description = "Non-GPU node group specification."
   type = object({
+    name         = string
     size         = number
     cpu_cores    = number
     memory_gb    = number
@@ -63,6 +64,7 @@ variable "k8s_cluster_node_group_non_gpu" {
     disk_size_gb = number
   })
   default = {
+    name         = "k8s-ng-non-gpu"
     size         = 2
     cpu_cores    = 8
     memory_gb    = 32

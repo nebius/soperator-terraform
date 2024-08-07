@@ -45,5 +45,9 @@ if [ ${VERB} == "apply" ]; then
   source .env
   terraform apply -input=false
 fi
+if [ ${VERB} == "destroy" ]; then
+    source .env
+    terraform -chdir="./terraform/oldbius" destroy -input=false
+fi
 
 echo "finished"
