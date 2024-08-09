@@ -16,5 +16,10 @@ resource "helm_release" "slurm_operator" {
     value = "*"
   }
 
+  set {
+    name  = "opentelemetryOperator.enabled"
+    value = tobool(var.k8s_cluster_operator_opentelemetry_operator_enabled)
+  }
+
   wait = true
 }
