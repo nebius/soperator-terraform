@@ -165,4 +165,10 @@ variable "k8s_cluster_operator_network_version" {
   default     = "23.7.0"
 }
 
+variable "k8s_cluster_operator_opentelemetry_operator_enabled" {
+  description = "Whether to enable OpenTelemetry."
+  type        = bool
+  default     = false
+}
+
 # endregion operator

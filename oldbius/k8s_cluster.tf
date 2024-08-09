@@ -44,7 +44,7 @@ locals {
       fixed_scale = {
         size = var.k8s_cluster_node_group_gpu.size
       }
-      preemptible     = var.k8s_cluster_node_group_gpu.preemptible
+      preemptible = var.k8s_cluster_node_group_gpu.preemptible
       gpu_cluster_id = (
         var.k8s_cluster_node_group_gpu.platform == "h100" ||
         var.k8s_cluster_node_group_gpu.platform == "h100-a-llm"
