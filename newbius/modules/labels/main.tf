@@ -8,11 +8,17 @@ locals {
   )
 
   k8s_cluster_id = tomap({
-    "k8s-cluster-id" = var.k8s_cluster_id
+    "mk8s.nebius.ai/cluster-id" = var.k8s_cluster_id
   })
 
   k8s = merge(
     local.common,
     local.k8s_cluster_id,
   )
+
+  group_name = {
+    key = "slurm.nebius.ai/group-name"
+    cpu = "cpu"
+    gpu = "gpu"
+  }
 }

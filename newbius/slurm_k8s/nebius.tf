@@ -18,18 +18,6 @@ variable "endpoint_s3" {
 
 # region iam
 
-variable "iam_token" {
-  description = "Token for IAM authentication."
-  type        = string
-  sensitive   = true
-  nullable    = false
-
-  validation {
-    condition     = length(var.iam_token) > 0
-    error_message = "IAM token must be passed."
-  }
-}
-
 variable "iam_project_id" {
   description = "Project ID."
   type        = string

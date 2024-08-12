@@ -9,11 +9,6 @@
 #                                                        IAM
 #-----------------------------------------------------------------------------------------------------------------------
 
-# IAM token is being passed via .envrc file.
-# Uncomment to override.
-# ---
-# iam_token = "<IAM-TOKEN>"
-
 # Project ID is being passed via .envrc file.
 # Uncomment to override.
 # ---
@@ -98,27 +93,8 @@ k8s_cluster_node_group_gpu = {
 # ---
 #filestore_existing_id = "<ID of existing Filestore>"
 
-# endregion Infrastructure
-
-# region Slurm
-#-----------------------------------------------------------------------------------------------------------------------
-#                                                    Slurm
-#-----------------------------------------------------------------------------------------------------------------------
-
 # Size of the shared filesystem to be used on controller, worker, and login nodes.
 # ---
-# storage_jail_size_gibibytes = 2048
+# filestore_size_gibibytes = 2048
 
-# Storage dedicated for controller node's spool.
-# ---
-# storage_controller_spool_size_gibibytes = 32
-
-# Extra filesystem mounts inside jail.
-# ---
-# storage_jail_sub_mounts = [{
-#   name = "mlperf-sd"
-#   device_name = "mlperf-sd"
-#   size_gibibytes = 1500
-# }]
-
-# endregion Slurm
+# endregion Infrastructure

@@ -5,11 +5,6 @@ terraform {
       version = "0.3.11"
     }
 
-    helm = {
-      source  = "hashicorp/helm"
-      version = "2.14.1"
-    }
-
     null = {
       source  = "hashicorp/null"
       version = "3.2.2"
@@ -39,15 +34,6 @@ terraform {
 
 provider "nebius" {
   domain = var.endpoint_nebius
-}
-
-provider "helm" {
-  kubernetes {
-    token = var.iam_token
-
-    host                   = nebius_mk8s_v1alpha1_cluster.this.status.control_plane.endpoints.public_endpoint
-    cluster_ca_certificate = nebius_mk8s_v1alpha1_cluster.this.status.control_plane.auth.cluster_ca_certificate
-  }
 }
 
 module "labels" {

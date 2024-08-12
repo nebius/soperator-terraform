@@ -128,3 +128,25 @@ data "units_data_size" "boot_disk_gpu" {
 }
 
 # endregion k8s
+
+# region filestore
+
+variable "filestore_create" {
+  description = "Whether to create new filestore filesystem."
+  type        = bool
+  default     = true
+}
+
+variable "filestore_existing_id" {
+  description = "ID of existing filestore to attach to."
+  type        = string
+  default     = null
+}
+
+variable "filestore_size_gibibytes" {
+  description = "Size of the shared filesystem to be used on controller, worker, and login nodes."
+  type        = number
+  default     = 2048
+}
+
+# endregion filestore

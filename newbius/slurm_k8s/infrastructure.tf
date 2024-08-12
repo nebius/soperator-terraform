@@ -33,8 +33,11 @@ resource "nebius_mk8s_v1alpha1_node_group" "cpu" {
 
   parent_id = nebius_mk8s_v1alpha1_cluster.this.id
 
-  name   = local.name.node_group.cpu
-  labels = module.labels.common_with_k8s_id
+  name = local.name.node_group.cpu
+  labels = merge(
+    module.labels.common_with_k8s_id,
+    module.labels.group_name_cpu
+  )
 
   version          = var.k8s_version
   fixed_node_count = var.k8s_cluster_node_group_cpu.size
@@ -78,8 +81,11 @@ resource "nebius_mk8s_v1alpha1_node_group" "gpu" {
 
   parent_id = nebius_mk8s_v1alpha1_cluster.this.id
 
-  name   = local.name.node_group.gpu
-  labels = module.labels.common_with_k8s_id
+  name = local.name.node_group.gpu
+  labels = merge(
+    module.labels.common_with_k8s_id,
+    module.labels.group_name_gpu,
+  )
 
   version          = var.k8s_version
   fixed_node_count = var.k8s_cluster_node_group_gpu.size
@@ -109,6 +115,12 @@ resource "nebius_mk8s_v1alpha1_node_group" "gpu" {
         id = module.shared_storage.filestore_id
       }
     }]
+
+    taints = [{
+      key    = "slurm.nebius.ai/taint"
+      value  = "gpu"
+      effect = "NO_SCHEDULE"
+    }]
   }
 }
 
@@ -129,7 +141,7 @@ module "shared_storage" {
   filestore_create = var.filestore_create
   filestore_create_spec = {
     disk_type            = "NETWORK_SSD"
-    size_gibibytes       = var.storage_jail_size_gibibytes
+    size_gibibytes       = var.filestore_size_gibibytes
     block_size_kibibytes = 32
   }
 
