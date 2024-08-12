@@ -1,0 +1,147 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] data.nebius_iam_v1_project.this (expand)" [label = "data.nebius_iam_v1_project.this", shape = "box"]
+		"[root] data.nebius_vpc_v1alpha1_subnet.this (expand)" [label = "data.nebius_vpc_v1alpha1_subnet.this", shape = "box"]
+		"[root] data.units_data_size.boot_disk_cpu (expand)" [label = "data.units_data_size.boot_disk_cpu", shape = "box"]
+		"[root] data.units_data_size.boot_disk_gpu (expand)" [label = "data.units_data_size.boot_disk_gpu", shape = "box"]
+		"[root] helm_release.operator_gpu (expand)" [label = "helm_release.operator_gpu", shape = "box"]
+		"[root] helm_release.operator_network (expand)" [label = "helm_release.operator_network", shape = "box"]
+		"[root] helm_release.slurm_cluster_storage (expand)" [label = "helm_release.slurm_cluster_storage", shape = "box"]
+		"[root] helm_release.slurm_operator (expand)" [label = "helm_release.slurm_operator", shape = "box"]
+		"[root] module.shared_storage.data.nebius_compute_v1alpha1_filesystem.shared (expand)" [label = "module.shared_storage.data.nebius_compute_v1alpha1_filesystem.shared", shape = "box"]
+		"[root] module.shared_storage.data.units_data_size.block (expand)" [label = "module.shared_storage.data.units_data_size.block", shape = "box"]
+		"[root] module.shared_storage.data.units_data_size.storage (expand)" [label = "module.shared_storage.data.units_data_size.storage", shape = "box"]
+		"[root] module.shared_storage.nebius_compute_v1alpha1_filesystem.shared (expand)" [label = "module.shared_storage.nebius_compute_v1alpha1_filesystem.shared", shape = "box"]
+		"[root] nebius_compute_v1alpha1_gpu_cluster.this (expand)" [label = "nebius_compute_v1alpha1_gpu_cluster.this", shape = "box"]
+		"[root] nebius_mk8s_v1alpha1_cluster.this (expand)" [label = "nebius_mk8s_v1alpha1_cluster.this", shape = "box"]
+		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" [label = "nebius_mk8s_v1alpha1_node_group.cpu", shape = "box"]
+		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" [label = "nebius_mk8s_v1alpha1_node_group.gpu", shape = "box"]
+		"[root] provider[\"registry.terraform.io/dstaroff/units\"]" [label = "provider[\"registry.terraform.io/dstaroff/units\"]", shape = "diamond"]
+		"[root] provider[\"registry.terraform.io/hashicorp/helm\"]" [label = "provider[\"registry.terraform.io/hashicorp/helm\"]", shape = "diamond"]
+		"[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"]" [label = "provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"]", shape = "diamond"]
+		"[root] var.endpoint_nebius" [label = "var.endpoint_nebius", shape = "note"]
+		"[root] var.endpoint_s3" [label = "var.endpoint_s3", shape = "note"]
+		"[root] var.extra_labels" [label = "var.extra_labels", shape = "note"]
+		"[root] var.filestore_create" [label = "var.filestore_create", shape = "note"]
+		"[root] var.filestore_existing_id" [label = "var.filestore_existing_id", shape = "note"]
+		"[root] var.iam_project_id" [label = "var.iam_project_id", shape = "note"]
+		"[root] var.iam_token" [label = "var.iam_token", shape = "note"]
+		"[root] var.k8s_cluster_name" [label = "var.k8s_cluster_name", shape = "note"]
+		"[root] var.k8s_cluster_node_group_cpu" [label = "var.k8s_cluster_node_group_cpu", shape = "note"]
+		"[root] var.k8s_cluster_node_group_gpu" [label = "var.k8s_cluster_node_group_gpu", shape = "note"]
+		"[root] var.k8s_version" [label = "var.k8s_version", shape = "note"]
+		"[root] var.storage_controller_spool_size_gibibytes" [label = "var.storage_controller_spool_size_gibibytes", shape = "note"]
+		"[root] var.storage_jail_size_gibibytes" [label = "var.storage_jail_size_gibibytes", shape = "note"]
+		"[root] var.storage_jail_sub_mounts" [label = "var.storage_jail_sub_mounts", shape = "note"]
+		"[root] var.vpc_subnet_id" [label = "var.vpc_subnet_id", shape = "note"]
+		"[root] data.nebius_iam_v1_project.this (expand)" -> "[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"]"
+		"[root] data.nebius_iam_v1_project.this (expand)" -> "[root] var.iam_project_id (validation)"
+		"[root] data.nebius_vpc_v1alpha1_subnet.this (expand)" -> "[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"]"
+		"[root] data.nebius_vpc_v1alpha1_subnet.this (expand)" -> "[root] var.vpc_subnet_id (validation)"
+		"[root] data.units_data_size.boot_disk_cpu (expand)" -> "[root] provider[\"registry.terraform.io/dstaroff/units\"]"
+		"[root] data.units_data_size.boot_disk_cpu (expand)" -> "[root] var.k8s_cluster_node_group_cpu"
+		"[root] data.units_data_size.boot_disk_gpu (expand)" -> "[root] provider[\"registry.terraform.io/dstaroff/units\"]"
+		"[root] data.units_data_size.boot_disk_gpu (expand)" -> "[root] var.k8s_cluster_node_group_gpu (validation)"
+		"[root] helm_release.operator_gpu (expand)" -> "[root] local.version (expand)"
+		"[root] helm_release.operator_gpu (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)"
+		"[root] helm_release.operator_gpu (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)"
+		"[root] helm_release.operator_gpu (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/helm\"]"
+		"[root] helm_release.operator_network (expand)" -> "[root] local.version (expand)"
+		"[root] helm_release.operator_network (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)"
+		"[root] helm_release.operator_network (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)"
+		"[root] helm_release.operator_network (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/helm\"]"
+		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] local.version (expand)"
+		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] module.shared_storage (close)"
+		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)"
+		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)"
+		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/helm\"]"
+		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] var.storage_controller_spool_size_gibibytes"
+		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] var.storage_jail_sub_mounts"
+		"[root] helm_release.slurm_operator (expand)" -> "[root] helm_release.operator_gpu (expand)"
+		"[root] helm_release.slurm_operator (expand)" -> "[root] helm_release.operator_network (expand)"
+		"[root] helm_release.slurm_operator (expand)" -> "[root] helm_release.slurm_cluster_storage (expand)"
+		"[root] local.gpu_cluster_create (expand)" -> "[root] var.k8s_cluster_node_group_gpu (validation)"
+		"[root] local.name (expand)" -> "[root] local.name_suffix (expand)"
+		"[root] local.name (expand)" -> "[root] var.k8s_cluster_name (validation)"
+		"[root] local.name_suffix (expand)" -> "[root] var.k8s_cluster_node_group_gpu (validation)"
+		"[root] module.labels (close)" -> "[root] module.labels.output.common_with_k8s_id (expand)"
+		"[root] module.labels.local.common (expand)" -> "[root] module.labels.var.custom_labels (expand)"
+		"[root] module.labels.local.k8s (expand)" -> "[root] module.labels.local.k8s_cluster_id (expand)"
+		"[root] module.labels.local.k8s_cluster_id (expand)" -> "[root] module.labels.var.k8s_cluster_id (expand)"
+		"[root] module.labels.output.common (expand)" -> "[root] module.labels.local.common (expand)"
+		"[root] module.labels.output.common_with_k8s_id (expand)" -> "[root] module.labels.local.k8s (expand)"
+		"[root] module.labels.var.custom_labels (expand)" -> "[root] module.labels (expand)"
+		"[root] module.labels.var.custom_labels (expand)" -> "[root] var.extra_labels"
+		"[root] module.labels.var.k8s_cluster_id (expand)" -> "[root] nebius_mk8s_v1alpha1_cluster.this (expand)"
+		"[root] module.shared_storage (close)" -> "[root] module.shared_storage.output.filestore_id (expand)"
+		"[root] module.shared_storage.data.nebius_compute_v1alpha1_filesystem.shared (expand)" -> "[root] module.shared_storage.var.filestore_create (expand)"
+		"[root] module.shared_storage.data.nebius_compute_v1alpha1_filesystem.shared (expand)" -> "[root] module.shared_storage.var.filestore_existing_id (expand)"
+		"[root] module.shared_storage.data.nebius_compute_v1alpha1_filesystem.shared (expand)" -> "[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"]"
+		"[root] module.shared_storage.data.units_data_size.block (expand)" -> "[root] module.shared_storage.var.filestore_create (expand)"
+		"[root] module.shared_storage.data.units_data_size.block (expand)" -> "[root] module.shared_storage.var.filestore_create_spec (expand)"
+		"[root] module.shared_storage.data.units_data_size.block (expand)" -> "[root] provider[\"registry.terraform.io/dstaroff/units\"]"
+		"[root] module.shared_storage.data.units_data_size.storage (expand)" -> "[root] module.shared_storage.var.filestore_create (expand)"
+		"[root] module.shared_storage.data.units_data_size.storage (expand)" -> "[root] module.shared_storage.var.filestore_create_spec (expand)"
+		"[root] module.shared_storage.data.units_data_size.storage (expand)" -> "[root] provider[\"registry.terraform.io/dstaroff/units\"]"
+		"[root] module.shared_storage.local.filestore_id (expand)" -> "[root] module.shared_storage.data.nebius_compute_v1alpha1_filesystem.shared (expand)"
+		"[root] module.shared_storage.local.filestore_id (expand)" -> "[root] module.shared_storage.nebius_compute_v1alpha1_filesystem.shared (expand)"
+		"[root] module.shared_storage.local.name_suffixes (expand)" -> "[root] module.shared_storage (expand)"
+		"[root] module.shared_storage.local.names (expand)" -> "[root] module.shared_storage.local.name_suffixes (expand)"
+		"[root] module.shared_storage.local.names (expand)" -> "[root] module.shared_storage.var.k8s_cluster_name (expand)"
+		"[root] module.shared_storage.nebius_compute_v1alpha1_filesystem.shared (expand)" -> "[root] module.shared_storage.data.units_data_size.block (expand)"
+		"[root] module.shared_storage.nebius_compute_v1alpha1_filesystem.shared (expand)" -> "[root] module.shared_storage.data.units_data_size.storage (expand)"
+		"[root] module.shared_storage.nebius_compute_v1alpha1_filesystem.shared (expand)" -> "[root] module.shared_storage.local.names (expand)"
+		"[root] module.shared_storage.nebius_compute_v1alpha1_filesystem.shared (expand)" -> "[root] module.shared_storage.var.filestore_labels (expand)"
+		"[root] module.shared_storage.nebius_compute_v1alpha1_filesystem.shared (expand)" -> "[root] module.shared_storage.var.iam_project_id (expand)"
+		"[root] module.shared_storage.output.filestore_id (expand)" -> "[root] module.shared_storage.local.filestore_id (expand)"
+		"[root] module.shared_storage.var.filestore_create (expand)" -> "[root] module.shared_storage (expand)"
+		"[root] module.shared_storage.var.filestore_create (expand)" -> "[root] var.filestore_create"
+		"[root] module.shared_storage.var.filestore_create_spec (expand)" -> "[root] module.shared_storage (expand)"
+		"[root] module.shared_storage.var.filestore_create_spec (expand)" -> "[root] var.storage_jail_size_gibibytes"
+		"[root] module.shared_storage.var.filestore_existing_id (expand)" -> "[root] module.shared_storage (expand)"
+		"[root] module.shared_storage.var.filestore_existing_id (expand)" -> "[root] var.filestore_existing_id"
+		"[root] module.shared_storage.var.filestore_labels (expand)" -> "[root] module.labels.output.common_with_k8s_id (expand)"
+		"[root] module.shared_storage.var.filestore_labels (expand)" -> "[root] module.shared_storage (expand)"
+		"[root] module.shared_storage.var.iam_project_id (expand)" -> "[root] data.nebius_iam_v1_project.this (expand)"
+		"[root] module.shared_storage.var.iam_project_id (expand)" -> "[root] module.shared_storage (expand)"
+		"[root] module.shared_storage.var.k8s_cluster_name (expand)" -> "[root] module.shared_storage (expand)"
+		"[root] module.shared_storage.var.k8s_cluster_name (expand)" -> "[root] var.k8s_cluster_name (validation)"
+		"[root] nebius_compute_v1alpha1_gpu_cluster.this (expand)" -> "[root] local.gpu_cluster_create (expand)"
+		"[root] nebius_compute_v1alpha1_gpu_cluster.this (expand)" -> "[root] local.name (expand)"
+		"[root] nebius_compute_v1alpha1_gpu_cluster.this (expand)" -> "[root] module.labels.output.common_with_k8s_id (expand)"
+		"[root] nebius_mk8s_v1alpha1_cluster.this (expand)" -> "[root] data.nebius_iam_v1_project.this (expand)"
+		"[root] nebius_mk8s_v1alpha1_cluster.this (expand)" -> "[root] data.nebius_vpc_v1alpha1_subnet.this (expand)"
+		"[root] nebius_mk8s_v1alpha1_cluster.this (expand)" -> "[root] module.labels.output.common (expand)"
+		"[root] nebius_mk8s_v1alpha1_cluster.this (expand)" -> "[root] var.k8s_cluster_name (validation)"
+		"[root] nebius_mk8s_v1alpha1_cluster.this (expand)" -> "[root] var.k8s_version (validation)"
+		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" -> "[root] data.units_data_size.boot_disk_cpu (expand)"
+		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" -> "[root] local.name (expand)"
+		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" -> "[root] module.shared_storage.output.filestore_id (expand)"
+		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" -> "[root] data.units_data_size.boot_disk_gpu (expand)"
+		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" -> "[root] module.shared_storage.output.filestore_id (expand)"
+		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" -> "[root] nebius_compute_v1alpha1_gpu_cluster.this (expand)"
+		"[root] provider[\"registry.terraform.io/dstaroff/units\"] (close)" -> "[root] data.units_data_size.boot_disk_cpu (expand)"
+		"[root] provider[\"registry.terraform.io/dstaroff/units\"] (close)" -> "[root] data.units_data_size.boot_disk_gpu (expand)"
+		"[root] provider[\"registry.terraform.io/dstaroff/units\"] (close)" -> "[root] module.shared_storage.data.units_data_size.block (expand)"
+		"[root] provider[\"registry.terraform.io/dstaroff/units\"] (close)" -> "[root] module.shared_storage.data.units_data_size.storage (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/helm\"] (close)" -> "[root] helm_release.slurm_operator (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/helm\"]" -> "[root] nebius_mk8s_v1alpha1_cluster.this (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/helm\"]" -> "[root] var.iam_token (validation)"
+		"[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"] (close)" -> "[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)"
+		"[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"] (close)" -> "[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)"
+		"[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"]" -> "[root] var.endpoint_nebius"
+		"[root] root" -> "[root] module.labels (close)"
+		"[root] root" -> "[root] provider[\"registry.terraform.io/dstaroff/units\"] (close)"
+		"[root] root" -> "[root] provider[\"registry.terraform.io/hashicorp/helm\"] (close)"
+		"[root] root" -> "[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"] (close)"
+		"[root] root" -> "[root] var.endpoint_s3"
+		"[root] var.iam_project_id (validation)" -> "[root] var.iam_project_id"
+		"[root] var.iam_token (validation)" -> "[root] var.iam_token"
+		"[root] var.k8s_cluster_name (validation)" -> "[root] var.k8s_cluster_name"
+		"[root] var.k8s_cluster_node_group_gpu (validation)" -> "[root] var.k8s_cluster_node_group_gpu"
+		"[root] var.k8s_version (validation)" -> "[root] var.k8s_version"
+		"[root] var.vpc_subnet_id (validation)" -> "[root] var.vpc_subnet_id"
+	}
+}
