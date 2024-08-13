@@ -1,0 +1,100 @@
+#-----------------------------------------------------------------------------------------------------------------------
+#
+#                                            Terraform - example values
+#
+#-----------------------------------------------------------------------------------------------------------------------
+
+# region IAM
+#-----------------------------------------------------------------------------------------------------------------------
+#                                                        IAM
+#-----------------------------------------------------------------------------------------------------------------------
+
+# Project ID is being passed via .envrc file.
+# Uncomment to override.
+# ---
+# iam_project_id = "project-<YOUR-PROJECT-ID>"
+
+# endregion IAM
+
+# region Common
+#-----------------------------------------------------------------------------------------------------------------------
+#                                                    Common
+#-----------------------------------------------------------------------------------------------------------------------
+
+# ID of VPC subnet.
+# ---
+vpc_subnet_id  = "vpcsubnet-<YOUR-SUBNET-ID>"
+
+# Additional labels used for all created resources.
+# ---
+# extra_labels = { "custom-label" = "custom-label-value"}
+
+# endregion Common
+
+# region Infrastructure
+#-----------------------------------------------------------------------------------------------------------------------
+#                                                 Infrastructure
+#-----------------------------------------------------------------------------------------------------------------------
+
+# region Kubernetes
+
+# Version of the k8s to be used.
+# ---
+# k8s_version = "1.30"
+
+# Name of the k8s cluster.
+# ---
+# k8s_cluster_name = "slurm-k8s"
+
+# CPU-only node group specification.
+# ---
+k8s_cluster_node_group_cpu = {
+  size = 2
+  resource = {
+    platform = "cpu-e2"
+    preset   = "16vcpu-64gb"
+  }
+  boot_disk = {
+    type           = "NETWORK_SSD"
+    size_gibibytes = 128
+  }
+}
+
+# GPU node group specification.
+# ---
+k8s_cluster_node_group_gpu = {
+  size = 2
+  resource = {
+    platform = "gpu-h100-sxm"
+    preset   = "8gpu-160vcpu-1600gb"
+  }
+  boot_disk = {
+    type           = "NETWORK_SSD"
+    size_gibibytes = 1024
+  }
+  gpu_cluster = {
+    infiniband_fabric = "fabric-2"
+  }
+}
+
+# endregion Kubernetes
+
+# region Filestore
+
+# endregion Filestore
+
+# Whether to create new filestore filesystem.
+# By default, shared filesystem will be created from scratch. Uncomment to not create it.
+# ---
+# filestore_create = false
+
+# ID of existing filestore to attach to.
+# By default, shared filesystem will be created from scratch. Uncomment to provide ID of existing Filestore.
+# ---
+#filestore_existing_id = "<ID of existing Filestore>"
+
+# Size of the shared filesystem to be used on controller, worker, and login nodes.
+# ---
+# filestore_size_gibibytes = 2048
+
+# endregion Infrastructure
