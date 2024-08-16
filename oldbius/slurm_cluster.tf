@@ -3,6 +3,7 @@ locals {
     gpu     = "gpu"
     non_gpu = "non-gpu"
   }
+  otel_collector_http_host = "vmsingle-slurm.${local.monitoring_namespace}.svc.cluster.local"
 }
 
 locals {
@@ -11,6 +12,11 @@ locals {
     unit_gb                        = local.unit_gb,
     unit_gib                       = local.unit_gib,
     unit_core                      = local.unit_core,
+
+    otelCollectorHttpHost = local.otel_collector_http_host
+    otelCollectorPath = "/opentelemetry/api/v1/push"
+    otelCollectorPort =  8428
+    monitoring = var.k8s_monitoring_enabled
 
     kube_node_group_gpu              = data.nebius_kubernetes_node_group.gpu,
     kube_node_group_non_gpu          = data.nebius_kubernetes_node_group.non_gpu,

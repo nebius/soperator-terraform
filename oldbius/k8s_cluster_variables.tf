@@ -171,10 +171,4 @@ variable "k8s_cluster_operator_opentelemetry_operator_enabled" {
   default     = false
 }
 
-variable "k8s_monitoring_enabled" {
-  description = "Whether to enable monitoring."
-  type        = bool
-  default     = true
-}
-
 # endregion operator

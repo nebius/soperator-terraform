@@ -167,3 +167,10 @@ slurmNodes:
       %{ else }
       jailSubMounts: []
       %{ endif }
+telemetry:
+  jobsTelemetry:
+    otelCollectorHttpHost: "${otelCollectorHttpHost}"
+    otelCollectorPath: "${otelCollectorPath}"
+    otelCollectorPort: "${otelCollectorPort}"
+    sendJobsEvents: "${monitoring}"
+    sendOtelMetrics: "${monitoring}"
