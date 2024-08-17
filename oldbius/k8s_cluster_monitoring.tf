@@ -1,6 +1,6 @@
 locals {
   monitoring_namespace                    = "monitoring-system"
-  logs_namespace                         = "logs-system"
+  logs_namespace                          = "logs-system"
   cert_manager_version                    = "v1.15.2"
   cert_manager_chart                      = "cert-manager"
   cert_manager_namespace                  = "cert-manager"
@@ -10,12 +10,16 @@ locals {
   chart_vm_logs_version                   = "0.5.4"
   chart_prometheus_stack                  = "kube-prometheus-stack"
   chart_prometheus_stack_version          = "61.8.0"
-  memory_vmsingle                        = "1024Mi"
-  requests_cpu_vmsingle                  = "250m"
-  memory_vmagent                         = "256Mi"
-  requests_cpu_vmagent                   = "250m"
-  memory_logs_collector                  = "256Mi"
-  requests_cpu_logs_collector            = "200m"
+  memory_vmsingle                         = "1024Mi"
+  requests_cpu_vmsingle                   = "250m"
+  size_vmsingle                           = "40Gi"
+  memory_vmagent                          = "512Mi"
+  requests_cpu_vmagent                    = "250m"
+  memory_logs_collector                   = "256Mi"
+  requests_cpu_logs_collector             = "200m"
+  size_server_logs                        = "40Gi"
+  memory_server_logs                      = "1024Mi"
+  requests_cpu_server_logs                = "250m"
 }
 
 
@@ -117,14 +121,14 @@ resource "helm_release" "prometheus" {
     module.k8s_cluster,
     helm_release.cert_manager,
   ]
-  name       = "prometheus-stack"
-  repository = "https://prometheus-community.github.io/helm-charts"
-  chart      = local.chart_prometheus_stack
-  version    = local.chart_prometheus_stack_version
-  namespace  = local.monitoring_namespace
+  name             = "prometheus-stack"
+  repository       = "https://prometheus-community.github.io/helm-charts"
+  chart            = local.chart_prometheus_stack
+  version          = local.chart_prometheus_stack_version
+  namespace        = local.monitoring_namespace
   create_namespace = true
   wait             = true
-  timeout = 600
+  timeout          = 600
   set {
     name  = "prometheusOperator.enabled"
     value = "false"
@@ -145,7 +149,7 @@ resource "helm_release" "prometheus" {
     value = "false"
   }
 
-   set {
+  set {
     name  = "grafana.sidecar.datasources.url"
     value = "http://${local.otel_collector_http_host}.:${local.otel_collector_port}"
   }
@@ -173,7 +177,7 @@ resource "helm_release" "prometheus" {
 }
 
 resource "helm_release" "vmsingle" {
-    count = var.k8s_monitoring_enabled ? 1 : 0
+  count = var.k8s_monitoring_enabled ? 1 : 0
   depends_on = [
     module.k8s_cluster,
     helm_release.cert_manager,
@@ -203,6 +207,12 @@ resource "helm_release" "vmsingle" {
               cpu: ${local.requests_cpu_vmsingle}
             limits:
               memory: ${local.memory_vmsingle}
+          storage:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: ${local.size_vmsingle}
       - apiVersion: operator.victoriametrics.com/v1beta1
         kind: VMAgent
         metadata:
@@ -320,7 +330,7 @@ resource "helm_release" "vmsingle" {
 
 
 resource "helm_release" "logs_collector" {
-    count = var.k8s_monitoring_enabled ? 1 : 0
+  count = var.k8s_monitoring_enabled ? 1 : 0
   depends_on = [
     module.k8s_cluster,
     helm_release.cert_manager,
@@ -471,12 +481,29 @@ resource "helm_release" "vm_logs" {
     module.k8s_cluster,
     helm_release.cert_manager,
   ]
-  name       = "collect"
-  repository = "https://victoriametrics.github.io/helm-charts/"
-  chart      = local.chart_vm_logs
-  version    = local.chart_vm_logs_version
-  namespace  = local.logs_namespace
+  name             = "collect"
+  repository       = "https://victoriametrics.github.io/helm-charts/"
+  chart            = local.chart_vm_logs
+  version          = local.chart_vm_logs_version
+  namespace        = local.logs_namespace
   create_namespace = true
   wait             = true
-  timeout = 600
+  timeout          = 600
+
+  set {
+    name  = "server.persistentVolume.enabled"
+    value = true
+  }
+  set {
+    name  = "server.persistentVolume.size"
+    value = local.size_server_logs
+  }
+  set {
+    name  = "server.resources.limits.memory"
+    value = local.memory_server_logs
+  }
+  set {
+    name  = "server.resources.requests.cpu"
+    value = local.requests_cpu_server_logs
+  }
 }

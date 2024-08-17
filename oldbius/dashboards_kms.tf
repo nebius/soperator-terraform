@@ -1,5 +1,5 @@
 resource "helm_release" "kms" {
-    count = var.k8s_monitoring_enabled ? 1 : 0
+  count = var.k8s_monitoring_enabled ? 1 : 0
   depends_on = [
     module.k8s_cluster,
     helm_release.cert_manager,
