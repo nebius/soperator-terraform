@@ -10,16 +10,6 @@ locals {
   chart_vm_logs_version                   = "0.5.4"
   chart_prometheus_stack                  = "kube-prometheus-stack"
   chart_prometheus_stack_version          = "61.8.0"
-  memory_vmsingle                         = "1024Mi"
-  requests_cpu_vmsingle                   = "250m"
-  size_vmsingle                           = "40Gi"
-  memory_vmagent                          = "512Mi"
-  requests_cpu_vmagent                    = "250m"
-  memory_logs_collector                   = "256Mi"
-  requests_cpu_logs_collector             = "200m"
-  size_server_logs                        = "40Gi"
-  memory_server_logs                      = "1024Mi"
-  requests_cpu_server_logs                = "250m"
 }
 
 
@@ -203,16 +193,16 @@ resource "helm_release" "vmsingle" {
             dedup.minScrapeInterval: 30s
           resources:
             requests:
-              memory: ${local.memory_vmsingle}
-              cpu: ${local.requests_cpu_vmsingle}
+              memory: ${var.memory_vmsingle}
+              cpu: ${var.requests_cpu_vmsingle}
             limits:
-              memory: ${local.memory_vmsingle}
+              memory: ${var.memory_vmsingle}
           storage:
             accessModes:
               - ReadWriteOnce
             resources:
               requests:
-                storage: ${local.size_vmsingle}
+                storage: ${var.size_vmsingle}
       - apiVersion: operator.victoriametrics.com/v1beta1
         kind: VMAgent
         metadata:
@@ -225,10 +215,10 @@ resource "helm_release" "vmsingle" {
           selectAllByDefault: true
           resources:
             requests:
-              memory: ${local.memory_vmagent}
-              cpu: ${local.requests_cpu_vmagent}
+              memory: ${var.memory_vmagent}
+              cpu: ${var.requests_cpu_vmagent}
             limits:
-              memory: ${local.memory_vmagent}
+              memory: ${var.memory_vmagent}
 
       - apiVersion: v1
         kind: Service
@@ -496,14 +486,14 @@ resource "helm_release" "vm_logs" {
   }
   set {
     name  = "server.persistentVolume.size"
-    value = local.size_server_logs
+    value = var.size_server_logs
   }
   set {
     name  = "server.resources.limits.memory"
-    value = local.memory_server_logs
+    value = var.memory_server_logs
   }
   set {
     name  = "server.resources.requests.cpu"
-    value = local.requests_cpu_server_logs
+    value = var.requests_cpu_server_logs
   }
 }
