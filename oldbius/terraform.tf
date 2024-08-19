@@ -24,6 +24,7 @@ provider "nebius" {
 data "nebius_client_config" "client" {}
 
 provider "helm" {
+  burst_limit = 300
   kubernetes {
     host                   = module.k8s_cluster.external_v4_endpoint
     cluster_ca_certificate = module.k8s_cluster.cluster_ca_certificate
