@@ -234,3 +234,15 @@ variable "slurm_operator_version" {
   type        = string
   default     = "1.0.0"
 }
+
+variable "shared_memory_size" {
+  description = "Shared memory size for Slurm controller and worker nodes."
+  type        = string
+  default     = "64Gi"
+}
+
+variable "path_crd_file_yaml" {
+  description = "Path to the CRD file"
+  type        = string
+  default     = "/slurmcluster-crd.yaml"
+}
