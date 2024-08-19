@@ -22,6 +22,16 @@ resource "helm_release" "k8s_cluster_operator_gpu" {
   }
 
   set {
+    name  = "dcgmExporter.serviceMonitor.enabled"
+    value = true
+  }
+
+  set {
+    name  = "dcgmExporter.serviceMonitor.interval"
+    value = "30s"
+  }
+
+  set {
     name  = "driver.version"
     value = var.k8s_cluster_operator_gpu_driver_version
   }
