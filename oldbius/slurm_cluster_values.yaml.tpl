@@ -135,6 +135,7 @@ slurmNodes:
       %{ else }
       jailSubMounts: []
       %{ endif }
+      sharedMemorySize: ${shared_memory_size}
   login:
     size: ${slurm_cluster_node_login_count}
     k8sNodeFilterName: "${slurm_cluster_k8s_node_filters.non_gpu}"

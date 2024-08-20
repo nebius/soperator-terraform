@@ -49,5 +49,13 @@ if [ ${VERB} == "destroy" ]; then
     source .env
     terraform -chdir="./terraform/oldbius" destroy -input=false
 fi
+if [ ${VERB} == "patch" ]; then
+    source .env
+    terraform -chdir="./terraform/oldbius" workspace select ${WORKSPACE}
+    terraform -chdir="./terraform/oldbius" state pull > ./terraform/oldbius/terraform.tfstate
+    jq '.serial |= . + 1 |(.resources[] | select(.type == "nebius_client_config").instances[].attributes) |= del(.iam_token)' ./terraform/oldbius/terraform.tfstate > ./terraform/oldbius/terraform.tfstate.new
+    terraform -chdir="./terraform/oldbius" state push terraform.tfstate.new
+    rm ./terraform/oldbius/terraform.tfstate ./terraform/oldbius/terraform.tfstate.new
+fi
 
 echo "finished"
