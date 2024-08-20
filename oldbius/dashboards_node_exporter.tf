@@ -147,7 +147,7 @@ resource "helm_release" "node_exporter" {
                   "pluginVersion": "8.4.2",
                   "targets": [
                     {
-                      "expr": "(((count(count(node_cpu_seconds_total{kubernetes_node=\"$node\"}) by (cpu))) - avg(sum by (mode)(rate(node_cpu_seconds_total{mode='idle',kubernetes_node=\"$node\"}[$__rate_interval])))) * 100) / count(count(node_cpu_seconds_total{kubernetes_node=\"$node\"}) by (cpu))",
+                      "expr": "(((count(count(node_cpu_seconds_total{instance=\"$node\"}) by (cpu))) - avg(sum by (mode)(rate(node_cpu_seconds_total{mode='idle',instance=\"$node\"}[$__rate_interval])))) * 100) / count(count(node_cpu_seconds_total{instance=\"$node\"}) by (cpu))",
                       "hide": false,
                       "intervalFactor": 1,
                       "legendFormat": "",
@@ -226,7 +226,7 @@ resource "helm_release" "node_exporter" {
                   "pluginVersion": "8.4.2",
                   "targets": [
                     {
-                      "expr": "avg(node_load5{kubernetes_node=\"$node\"}) /  count(count(node_cpu_seconds_total{kubernetes_node=\"$node\"}) by (cpu)) * 100",
+                      "expr": "avg(node_load5{instance=\"$node\"}) /  count(count(node_cpu_seconds_total{instance=\"$node\"}) by (cpu)) * 100",
                       "format": "time_series",
                       "hide": false,
                       "intervalFactor": 1,
@@ -305,7 +305,7 @@ resource "helm_release" "node_exporter" {
                   "pluginVersion": "8.4.2",
                   "targets": [
                     {
-                      "expr": "avg(node_load15{kubernetes_node=\"$node\"}) /  count(count(node_cpu_seconds_total{kubernetes_node=\"$node\"}) by (cpu)) * 100",
+                      "expr": "avg(node_load15{instance=\"$node\"}) /  count(count(node_cpu_seconds_total{instance=\"$node\"}) by (cpu)) * 100",
                       "hide": false,
                       "intervalFactor": 1,
                       "refId": "A",
@@ -375,7 +375,7 @@ resource "helm_release" "node_exporter" {
                   "pluginVersion": "8.4.2",
                   "targets": [
                     {
-                      "expr": "((node_memory_MemTotal_bytes{kubernetes_node=\"$node\"} - node_memory_MemFree_bytes{kubernetes_node=\"$node\"}) / (node_memory_MemTotal_bytes{kubernetes_node=\"$node\"} )) * 100",
+                      "expr": "((node_memory_MemTotal_bytes{instance=\"$node\"} - node_memory_MemFree_bytes{instance=\"$node\"}) / (node_memory_MemTotal_bytes{instance=\"$node\"} )) * 100",
                       "format": "time_series",
                       "hide": true,
                       "intervalFactor": 1,
@@ -383,7 +383,7 @@ resource "helm_release" "node_exporter" {
                       "step": 240
                     },
                     {
-                      "expr": "100 - ((node_memory_MemAvailable_bytes{kubernetes_node=\"$node\"} * 100) / node_memory_MemTotal_bytes{kubernetes_node=\"$node\"})",
+                      "expr": "100 - ((node_memory_MemAvailable_bytes{instance=\"$node\"} * 100) / node_memory_MemTotal_bytes{instance=\"$node\"})",
                       "format": "time_series",
                       "hide": false,
                       "intervalFactor": 1,
@@ -462,7 +462,7 @@ resource "helm_release" "node_exporter" {
                   "pluginVersion": "8.4.2",
                   "targets": [
                     {
-                      "expr": "((node_memory_SwapTotal_bytes{kubernetes_node=\"$node\"} - node_memory_SwapFree_bytes{kubernetes_node=\"$node\"}) / (node_memory_SwapTotal_bytes{kubernetes_node=\"$node\"} )) * 100",
+                      "expr": "((node_memory_SwapTotal_bytes{instance=\"$node\"} - node_memory_SwapFree_bytes{instance=\"$node\"}) / (node_memory_SwapTotal_bytes{instance=\"$node\"} )) * 100",
                       "intervalFactor": 1,
                       "refId": "A",
                       "step": 240
@@ -539,7 +539,7 @@ resource "helm_release" "node_exporter" {
                   "pluginVersion": "8.4.2",
                   "targets": [
                     {
-                      "expr": "100 - ((node_filesystem_avail_bytes{kubernetes_node=\"$node\",mountpoint=\"/\",fstype!=\"rootfs\"} * 100) / node_filesystem_size_bytes{kubernetes_node=\"$node\",mountpoint=\"/\",fstype!=\"rootfs\"})",
+                      "expr": "100 - ((node_filesystem_avail_bytes{instance=\"$node\",mountpoint=\"/\",fstype!=\"rootfs\"} * 100) / node_filesystem_size_bytes{instance=\"$node\",mountpoint=\"/\",fstype!=\"rootfs\"})",
                       "format": "time_series",
                       "intervalFactor": 1,
                       "refId": "A",
@@ -614,7 +614,7 @@ resource "helm_release" "node_exporter" {
                   "pluginVersion": "8.4.2",
                   "targets": [
                     {
-                      "expr": "count(count(node_cpu_seconds_total{kubernetes_node=\"$node\"}) by (cpu))",
+                      "expr": "count(count(node_cpu_seconds_total{instance=\"$node\"}) by (cpu))",
                       "interval": "",
                       "intervalFactor": 1,
                       "legendFormat": "",
@@ -692,7 +692,7 @@ resource "helm_release" "node_exporter" {
                   "pluginVersion": "8.4.2",
                   "targets": [
                     {
-                      "expr": "node_time_seconds{kubernetes_node=\"$node\"} - node_boot_time_seconds{kubernetes_node=\"$node\"}",
+                      "expr": "node_time_seconds{instance=\"$node\"} - node_boot_time_seconds{instance=\"$node\"}",
                       "intervalFactor": 1,
                       "refId": "A",
                       "step": 240
@@ -771,7 +771,7 @@ resource "helm_release" "node_exporter" {
                   "pluginVersion": "8.4.2",
                   "targets": [
                     {
-                      "expr": "node_filesystem_size_bytes{kubernetes_node=\"$node\",mountpoint=\"/\",fstype!=\"rootfs\"}",
+                      "expr": "node_filesystem_size_bytes{instance=\"$node\",mountpoint=\"/\",fstype!=\"rootfs\"}",
                       "format": "time_series",
                       "hide": false,
                       "intervalFactor": 1,
@@ -848,7 +848,7 @@ resource "helm_release" "node_exporter" {
                   "pluginVersion": "8.4.2",
                   "targets": [
                     {
-                      "expr": "node_memory_MemTotal_bytes{kubernetes_node=\"$node\"}",
+                      "expr": "node_memory_MemTotal_bytes{instance=\"$node\"}",
                       "intervalFactor": 1,
                       "refId": "A",
                       "step": 240
@@ -923,7 +923,7 @@ resource "helm_release" "node_exporter" {
                   "pluginVersion": "8.4.2",
                   "targets": [
                     {
-                      "expr": "node_memory_SwapTotal_bytes{kubernetes_node=\"$node\"}",
+                      "expr": "node_memory_SwapTotal_bytes{instance=\"$node\"}",
                       "intervalFactor": 1,
                       "refId": "A",
                       "step": 240
@@ -1043,7 +1043,7 @@ resource "helm_release" "node_exporter" {
                   "steppedLine": false,
                   "targets": [
                     {
-                      "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode=\"system\",kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                      "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode=\"system\",instance=\"$node\"}[$__rate_interval])) * 100",
                       "format": "time_series",
                       "hide": false,
                       "intervalFactor": 1,
@@ -1052,7 +1052,7 @@ resource "helm_release" "node_exporter" {
                       "step": 240
                     },
                     {
-                      "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode='user',kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                      "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode='user',instance=\"$node\"}[$__rate_interval])) * 100",
                       "format": "time_series",
                       "hide": false,
                       "intervalFactor": 1,
@@ -1061,7 +1061,7 @@ resource "helm_release" "node_exporter" {
                       "step": 240
                     },
                     {
-                      "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode='iowait',kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                      "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode='iowait',instance=\"$node\"}[$__rate_interval])) * 100",
                       "format": "time_series",
                       "intervalFactor": 1,
                       "legendFormat": "Busy Iowait",
@@ -1069,7 +1069,7 @@ resource "helm_release" "node_exporter" {
                       "step": 240
                     },
                     {
-                      "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode=~\".*irq\",kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                      "expr": "sum by (instance)(rate(node_cpu_seconds_total{mode=~\".*irq\",instance=\"$node\"}[$__rate_interval])) * 100",
                       "format": "time_series",
                       "intervalFactor": 1,
                       "legendFormat": "Busy IRQs",
@@ -1077,7 +1077,7 @@ resource "helm_release" "node_exporter" {
                       "step": 240
                     },
                     {
-                      "expr": "sum (rate(node_cpu_seconds_total{mode!='idle',mode!='user',mode!='system',mode!='iowait',mode!='irq',mode!='softirq',kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                      "expr": "sum (rate(node_cpu_seconds_total{mode!='idle',mode!='user',mode!='system',mode!='iowait',mode!='irq',mode!='softirq',instance=\"$node\"}[$__rate_interval])) * 100",
                       "format": "time_series",
                       "intervalFactor": 1,
                       "legendFormat": "Busy Other",
@@ -1085,7 +1085,7 @@ resource "helm_release" "node_exporter" {
                       "step": 240
                     },
                     {
-                      "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='idle',kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                      "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='idle',instance=\"$node\"}[$__rate_interval])) * 100",
                       "format": "time_series",
                       "intervalFactor": 1,
                       "legendFormat": "Idle",
@@ -1227,7 +1227,7 @@ resource "helm_release" "node_exporter" {
                   "steppedLine": false,
                   "targets": [
                     {
-                      "expr": "node_memory_MemTotal_bytes{kubernetes_node=\"$node\"}",
+                      "expr": "node_memory_MemTotal_bytes{instance=\"$node\"}",
                       "format": "time_series",
                       "hide": false,
                       "intervalFactor": 1,
@@ -1236,7 +1236,7 @@ resource "helm_release" "node_exporter" {
                       "step": 240
                     },
                     {
-                      "expr": "node_memory_MemTotal_bytes{kubernetes_node=\"$node\"} - node_memory_MemFree_bytes{kubernetes_node=\"$node\"} - (node_memory_Cached_bytes{kubernetes_node=\"$node\"} + node_memory_Buffers_bytes{kubernetes_node=\"$node\"})",
+                      "expr": "node_memory_MemTotal_bytes{instance=\"$node\"} - node_memory_MemFree_bytes{instance=\"$node\"} - (node_memory_Cached_bytes{instance=\"$node\"} + node_memory_Buffers_bytes{instance=\"$node\"})",
                       "format": "time_series",
                       "hide": false,
                       "intervalFactor": 1,
@@ -1245,7 +1245,7 @@ resource "helm_release" "node_exporter" {
                       "step": 240
                     },
                     {
-                      "expr": "node_memory_Cached_bytes{kubernetes_node=\"$node\"} + node_memory_Buffers_bytes{kubernetes_node=\"$node\"}",
+                      "expr": "node_memory_Cached_bytes{instance=\"$node\"} + node_memory_Buffers_bytes{instance=\"$node\"}",
                       "format": "time_series",
                       "intervalFactor": 1,
                       "legendFormat": "RAM Cache + Buffer",
@@ -1253,7 +1253,7 @@ resource "helm_release" "node_exporter" {
                       "step": 240
                     },
                     {
-                      "expr": "node_memory_MemFree_bytes{kubernetes_node=\"$node\"}",
+                      "expr": "node_memory_MemFree_bytes{instance=\"$node\"}",
                       "format": "time_series",
                       "intervalFactor": 1,
                       "legendFormat": "RAM Free",
@@ -1261,7 +1261,7 @@ resource "helm_release" "node_exporter" {
                       "step": 240
                     },
                     {
-                      "expr": "(node_memory_SwapTotal_bytes{kubernetes_node=\"$node\"} - node_memory_SwapFree_bytes{kubernetes_node=\"$node\"})",
+                      "expr": "(node_memory_SwapTotal_bytes{instance=\"$node\"} - node_memory_SwapFree_bytes{instance=\"$node\"})",
                       "format": "time_series",
                       "intervalFactor": 1,
                       "legendFormat": "SWAP Used",
@@ -1389,7 +1389,7 @@ resource "helm_release" "node_exporter" {
                   "steppedLine": false,
                   "targets": [
                     {
-                      "expr": "rate(node_network_receive_bytes_total{kubernetes_node=\"$node\"}[$__rate_interval])*8",
+                      "expr": "rate(node_network_receive_bytes_total{instance=\"$node\"}[$__rate_interval])*8",
                       "format": "time_series",
                       "intervalFactor": 1,
                       "legendFormat": "recv {{device}}",
@@ -1397,7 +1397,7 @@ resource "helm_release" "node_exporter" {
                       "step": 240
                     },
                     {
-                      "expr": "rate(node_network_transmit_bytes_total{kubernetes_node=\"$node\"}[$__rate_interval])*8",
+                      "expr": "rate(node_network_transmit_bytes_total{instance=\"$node\"}[$__rate_interval])*8",
                       "format": "time_series",
                       "intervalFactor": 1,
                       "legendFormat": "trans {{device}} ",
@@ -1496,7 +1496,7 @@ resource "helm_release" "node_exporter" {
                   "steppedLine": false,
                   "targets": [
                     {
-                      "expr": "100 - ((node_filesystem_avail_bytes{kubernetes_node=\"$node\",device!~'rootfs'} * 100) / node_filesystem_size_bytes{kubernetes_node=\"$node\",device!~'rootfs'})",
+                      "expr": "100 - ((node_filesystem_avail_bytes{instance=\"$node\",device!~'rootfs'} * 100) / node_filesystem_size_bytes{instance=\"$node\",device!~'rootfs'})",
                       "format": "time_series",
                       "intervalFactor": 1,
                       "legendFormat": "{{mountpoint}}",
@@ -1619,7 +1619,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode=\"system\",kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode=\"system\",instance=\"$node\"}[$__rate_interval])) * 100",
                           "format": "time_series",
                           "interval": "10s",
                           "intervalFactor": 1,
@@ -1628,7 +1628,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='user',kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='user',instance=\"$node\"}[$__rate_interval])) * 100",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "User - Normal processes executing in user mode",
@@ -1636,7 +1636,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='nice',kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='nice',instance=\"$node\"}[$__rate_interval])) * 100",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Nice - Niced processes executing in user mode",
@@ -1644,7 +1644,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='idle',kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='idle',instance=\"$node\"}[$__rate_interval])) * 100",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Idle - Waiting for something to happen",
@@ -1652,7 +1652,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='iowait',kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='iowait',instance=\"$node\"}[$__rate_interval])) * 100",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Iowait - Waiting for I/O to complete",
@@ -1660,7 +1660,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='irq',kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='irq',instance=\"$node\"}[$__rate_interval])) * 100",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Irq - Servicing interrupts",
@@ -1668,7 +1668,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='softirq',kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='softirq',instance=\"$node\"}[$__rate_interval])) * 100",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Softirq - Servicing softirqs",
@@ -1676,7 +1676,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='steal',kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='steal',instance=\"$node\"}[$__rate_interval])) * 100",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Steal - Time spent in other operating systems when running in a virtualized environment",
@@ -1684,7 +1684,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='guest',kubernetes_node=\"$node\"}[$__rate_interval])) * 100",
+                          "expr": "sum by (mode)(rate(node_cpu_seconds_total{mode='guest',instance=\"$node\"}[$__rate_interval])) * 100",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Guest - Time spent running a virtual CPU for a guest operating system",
@@ -1808,7 +1808,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_MemTotal_bytes{kubernetes_node=\"$node\"} - node_memory_MemFree_bytes{kubernetes_node=\"$node\"} - node_memory_Buffers_bytes{kubernetes_node=\"$node\"} - node_memory_Cached_bytes{kubernetes_node=\"$node\"} - node_memory_Slab_bytes{kubernetes_node=\"$node\"} - node_memory_PageTables_bytes{kubernetes_node=\"$node\"} - node_memory_SwapCached_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_MemTotal_bytes{instance=\"$node\"} - node_memory_MemFree_bytes{instance=\"$node\"} - node_memory_Buffers_bytes{instance=\"$node\"} - node_memory_Cached_bytes{instance=\"$node\"} - node_memory_Slab_bytes{instance=\"$node\"} - node_memory_PageTables_bytes{instance=\"$node\"} - node_memory_SwapCached_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -1817,7 +1817,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_PageTables_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_PageTables_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -1826,7 +1826,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_SwapCached_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_SwapCached_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "SwapCache - Memory that keeps track of pages that have been fetched from swap but not yet been modified",
@@ -1834,7 +1834,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_Slab_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Slab_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -1843,7 +1843,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_Cached_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Cached_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -1852,7 +1852,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_Buffers_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Buffers_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -1861,7 +1861,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_MemFree_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_MemFree_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -1870,7 +1870,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "(node_memory_SwapTotal_bytes{kubernetes_node=\"$node\"} - node_memory_SwapFree_bytes{kubernetes_node=\"$node\"})",
+                          "expr": "(node_memory_SwapTotal_bytes{instance=\"$node\"} - node_memory_SwapFree_bytes{instance=\"$node\"})",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -1879,7 +1879,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_HardwareCorrupted_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_HardwareCorrupted_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -1985,7 +1985,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "rate(node_network_receive_bytes_total{kubernetes_node=\"$node\"}[$__rate_interval])*8",
+                          "expr": "rate(node_network_receive_bytes_total{instance=\"$node\"}[$__rate_interval])*8",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "{{device}} - Receive",
@@ -1993,7 +1993,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "rate(node_network_transmit_bytes_total{kubernetes_node=\"$node\"}[$__rate_interval])*8",
+                          "expr": "rate(node_network_transmit_bytes_total{instance=\"$node\"}[$__rate_interval])*8",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "{{device}} - Transmit",
@@ -2094,7 +2094,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_filesystem_size_bytes{kubernetes_node=\"$node\",device!~'rootfs'} - node_filesystem_avail_bytes{kubernetes_node=\"$node\",device!~'rootfs'}",
+                          "expr": "node_filesystem_size_bytes{instance=\"$node\",device!~'rootfs'} - node_filesystem_avail_bytes{instance=\"$node\",device!~'rootfs'}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "{{mountpoint}}",
@@ -2280,14 +2280,14 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "rate(node_disk_reads_completed_total{kubernetes_node=\"$node\",device=~\"$diskdevices\"}[$__rate_interval])",
+                          "expr": "rate(node_disk_reads_completed_total{instance=\"$node\",device=~\"$diskdevices\"}[$__rate_interval])",
                           "intervalFactor": 4,
                           "legendFormat": "{{device}} - Reads completed",
                           "refId": "A",
                           "step": 240
                         },
                         {
-                          "expr": "rate(node_disk_writes_completed_total{kubernetes_node=\"$node\",device=~\"$diskdevices\"}[$__rate_interval])",
+                          "expr": "rate(node_disk_writes_completed_total{instance=\"$node\",device=~\"$diskdevices\"}[$__rate_interval])",
                           "intervalFactor": 1,
                           "legendFormat": "{{device}} - Writes completed",
                           "refId": "B",
@@ -2409,7 +2409,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "rate(node_disk_read_bytes_total{kubernetes_node=\"$node\",device=~\"$diskdevices\"}[$__rate_interval])",
+                          "expr": "rate(node_disk_read_bytes_total{instance=\"$node\",device=~\"$diskdevices\"}[$__rate_interval])",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -2418,7 +2418,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "rate(node_disk_written_bytes_total{kubernetes_node=\"$node\",device=~\"$diskdevices\"}[$__rate_interval])",
+                          "expr": "rate(node_disk_written_bytes_total{instance=\"$node\",device=~\"$diskdevices\"}[$__rate_interval])",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -2520,7 +2520,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "rate(node_disk_io_time_seconds_total{kubernetes_node=\"$node\",device=~\"$diskdevices\"} [$__rate_interval])",
+                          "expr": "rate(node_disk_io_time_seconds_total{instance=\"$node\",device=~\"$diskdevices\"} [$__rate_interval])",
                           "format": "time_series",
                           "hide": false,
                           "interval": "",
@@ -2649,7 +2649,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_Committed_AS_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Committed_AS_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Committed_AS - Amount of memory presently allocated on the system",
@@ -2657,7 +2657,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_CommitLimit_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_CommitLimit_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "CommitLimit - Amount of  memory currently available to be allocated on the system",
@@ -2773,7 +2773,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_Writeback_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Writeback_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Writeback - Memory which is actively being written back to disk",
@@ -2781,7 +2781,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_WritebackTmp_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_WritebackTmp_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "WritebackTmp - Memory used by FUSE for temporary writeback buffers",
@@ -2789,7 +2789,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_Dirty_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Dirty_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Dirty - Memory which is waiting to get written back to the disk",
@@ -2904,7 +2904,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_Inactive_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Inactive_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Inactive - Memory which has been less recently used.  It is more eligible to be reclaimed for other purposes",
@@ -2912,7 +2912,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_Active_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Active_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Active - Memory that has been used more recently and usually not reclaimed unless absolutely necessary",
@@ -3028,7 +3028,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_SUnreclaim_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_SUnreclaim_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "SUnreclaim - Part of Slab, that cannot be reclaimed on memory pressure",
@@ -3036,7 +3036,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_SReclaimable_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_SReclaimable_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "SReclaimable - Part of Slab, that might be reclaimed, such as caches",
@@ -3151,7 +3151,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_Inactive_file_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Inactive_file_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -3160,7 +3160,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_Inactive_anon_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Inactive_anon_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -3169,7 +3169,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_Active_file_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Active_file_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -3178,7 +3178,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_Active_anon_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Active_anon_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -3294,7 +3294,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_Bounce_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Bounce_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Bounce - Memory used for block device bounce buffers",
@@ -3420,7 +3420,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_Mapped_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Mapped_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Mapped - Used memory in mapped pages files which have been mmaped, such as libraries",
@@ -3428,7 +3428,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_Shmem_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Shmem_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Shmem - Used shared memory (shared between several processes, thus including RAM disks)",
@@ -3436,7 +3436,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_ShmemHugePages_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_ShmemHugePages_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "interval": "",
                           "intervalFactor": 1,
@@ -3445,7 +3445,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_ShmemPmdMapped_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_ShmemPmdMapped_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "interval": "",
                           "intervalFactor": 1,
@@ -3560,7 +3560,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_KernelStack_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_KernelStack_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "KernelStack - Kernel memory stack. This is not reclaimable",
@@ -3568,7 +3568,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_Percpu_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Percpu_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "interval": "",
                           "intervalFactor": 1,
@@ -3684,7 +3684,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_VmallocChunk_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_VmallocChunk_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -3693,7 +3693,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_VmallocTotal_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_VmallocTotal_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -3702,7 +3702,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_VmallocUsed_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_VmallocUsed_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "intervalFactor": 1,
@@ -3815,7 +3815,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_HugePages_Total{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_HugePages_Total{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "HugePages - Total size of the pool of huge pages",
@@ -3823,7 +3823,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_Hugepagesize_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Hugepagesize_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Hugepagesize - Huge Page size",
@@ -3941,7 +3941,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_AnonHugePages_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_AnonHugePages_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "AnonHugePages - Memory in anonymous huge pages",
@@ -3949,7 +3949,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_AnonPages_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_AnonPages_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "AnonPages - Memory in user pages not backed by files",
@@ -4061,7 +4061,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_Unevictable_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Unevictable_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Unevictable - Amount of unevictable memory that can't be swapped out for a variety of reasons",
@@ -4069,7 +4069,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_Mlocked_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_Mlocked_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "MLocked - Size of pages locked to memory using the mlock() system call",
@@ -4181,7 +4181,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_HugePages_Free{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_HugePages_Free{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "HugePages_Free - Huge pages in the pool that are not yet allocated",
@@ -4189,7 +4189,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_HugePages_Rsvd{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_HugePages_Rsvd{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "HugePages_Rsvd - Huge pages for which a commitment to allocate from the pool has been made, but no allocation has yet been made",
@@ -4197,7 +4197,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_HugePages_Surp{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_HugePages_Surp{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "HugePages_Surp - Huge pages in the pool above the value in /proc/sys/vm/nr_hugepages",
@@ -4298,7 +4298,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "rate(node_vmstat_pswpin{kubernetes_node=\"$node\"}[$__rate_interval])",
+                          "expr": "rate(node_vmstat_pswpin{instance=\"$node\"}[$__rate_interval])",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Pswpin - Pages swapped in",
@@ -4306,7 +4306,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "rate(node_vmstat_pswpout{kubernetes_node=\"$node\"}[$__rate_interval])",
+                          "expr": "rate(node_vmstat_pswpout{instance=\"$node\"}[$__rate_interval])",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Pswpout - Pages swapped out",
@@ -4419,7 +4419,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_DirectMap1G_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_DirectMap1G_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "DirectMap1G - Amount of pages mapped as this size",
@@ -4427,7 +4427,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_DirectMap2M_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_DirectMap2M_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "interval": "",
                           "intervalFactor": 1,
@@ -4436,7 +4436,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_memory_DirectMap4k_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_DirectMap4k_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "interval": "",
                           "intervalFactor": 1,
@@ -4553,7 +4553,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "rate(node_vmstat_oom_kill{kubernetes_node=\"$node\"}[$__rate_interval])",
+                          "expr": "rate(node_vmstat_oom_kill{instance=\"$node\"}[$__rate_interval])",
                           "format": "time_series",
                           "interval": "",
                           "intervalFactor": 1,
@@ -4669,7 +4669,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_memory_NFS_Unstable_bytes{kubernetes_node=\"$node\"}",
+                          "expr": "node_memory_NFS_Unstable_bytes{instance=\"$node\"}",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "NFS Unstable - Memory in NFS pages sent to the server, but not yet commited to the storage",
@@ -4769,7 +4769,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "rate(node_vmstat_pgpgin{kubernetes_node=\"$node\"}[$__rate_interval])",
+                          "expr": "rate(node_vmstat_pgpgin{instance=\"$node\"}[$__rate_interval])",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Pagesin - Page in operations",
@@ -4777,7 +4777,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "rate(node_vmstat_pgpgout{kubernetes_node=\"$node\"}[$__rate_interval])",
+                          "expr": "rate(node_vmstat_pgpgout{instance=\"$node\"}[$__rate_interval])",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Pagesout - Page out operations",
@@ -4898,7 +4898,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "rate(node_vmstat_pgfault{kubernetes_node=\"$node\"}[$__rate_interval])",
+                          "expr": "rate(node_vmstat_pgfault{instance=\"$node\"}[$__rate_interval])",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Pgfault - Page major and minor fault operations",
@@ -4906,7 +4906,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "rate(node_vmstat_pgmajfault{kubernetes_node=\"$node\"}[$__rate_interval])",
+                          "expr": "rate(node_vmstat_pgmajfault{instance=\"$node\"}[$__rate_interval])",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Pgmajfault - Major page fault operations",
@@ -4914,7 +4914,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "rate(node_vmstat_pgfault{kubernetes_node=\"$node\"}[$__rate_interval])  - rate(node_vmstat_pgmajfault{kubernetes_node=\"$node\"}[$__rate_interval])",
+                          "expr": "rate(node_vmstat_pgfault{instance=\"$node\"}[$__rate_interval])  - rate(node_vmstat_pgmajfault{instance=\"$node\"}[$__rate_interval])",
                           "format": "time_series",
                           "intervalFactor": 1,
                           "legendFormat": "Pgminfault - Minor page fault operations",
@@ -5026,7 +5026,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_timex_estimated_error_seconds{kubernetes_node=\"$node\"}",
+                          "expr": "node_timex_estimated_error_seconds{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "interval": "",
@@ -5036,7 +5036,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_timex_offset_seconds{kubernetes_node=\"$node\"}",
+                          "expr": "node_timex_offset_seconds{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "interval": "",
@@ -5046,7 +5046,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_timex_maxerror_seconds{kubernetes_node=\"$node\"}",
+                          "expr": "node_timex_maxerror_seconds{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "interval": "",
@@ -5135,7 +5135,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_timex_loop_time_constant{kubernetes_node=\"$node\"}",
+                          "expr": "node_timex_loop_time_constant{instance=\"$node\"}",
                           "format": "time_series",
                           "interval": "",
                           "intervalFactor": 1,
@@ -5227,7 +5227,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_timex_sync_status{kubernetes_node=\"$node\"}",
+                          "expr": "node_timex_sync_status{instance=\"$node\"}",
                           "format": "time_series",
                           "interval": "",
                           "intervalFactor": 1,
@@ -5236,7 +5236,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_timex_frequency_adjustment_ratio{kubernetes_node=\"$node\"}",
+                          "expr": "node_timex_frequency_adjustment_ratio{instance=\"$node\"}",
                           "format": "time_series",
                           "interval": "",
                           "intervalFactor": 1,
@@ -5323,7 +5323,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_timex_tick_seconds{kubernetes_node=\"$node\"}",
+                          "expr": "node_timex_tick_seconds{instance=\"$node\"}",
                           "format": "time_series",
                           "interval": "",
                           "intervalFactor": 1,
@@ -5332,7 +5332,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_timex_tai_offset_seconds{kubernetes_node=\"$node\"}",
+                          "expr": "node_timex_tai_offset_seconds{instance=\"$node\"}",
                           "format": "time_series",
                           "interval": "",
                           "intervalFactor": 1,
@@ -5439,7 +5439,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_scrape_collector_duration_seconds{kubernetes_node=\"$node\"}",
+                          "expr": "node_scrape_collector_duration_seconds{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "interval": "",
@@ -5534,7 +5534,7 @@ resource "helm_release" "node_exporter" {
                       "steppedLine": false,
                       "targets": [
                         {
-                          "expr": "node_scrape_collector_success{kubernetes_node=\"$node\"}",
+                          "expr": "node_scrape_collector_success{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "interval": "",
@@ -5544,7 +5544,7 @@ resource "helm_release" "node_exporter" {
                           "step": 240
                         },
                         {
-                          "expr": "node_textfile_scrape_error{kubernetes_node=\"$node\"}",
+                          "expr": "node_textfile_scrape_error{instance=\"$node\"}",
                           "format": "time_series",
                           "hide": false,
                           "interval": "",
@@ -5620,11 +5620,16 @@ resource "helm_release" "node_exporter" {
                     "type": "datasource"
                   },
                   {
+                    "current": {
+                      "selected": false,
+                      "text": "cl10htlt61t109eqnt1l-esad",
+                      "value": "cl10htlt61t109eqnt1l-esad"
+                    },
                     "datasource": {
                       "type": "prometheus",
                       "uid": "prometheus"
                     },
-                    "definition": "label_values(node_uname_info, kubernetes_node)",
+                    "definition": "label_values(node_uname_info, instance)",
                     "hide": 0,
                     "includeAll": false,
                     "label": "Host:",
@@ -5632,7 +5637,7 @@ resource "helm_release" "node_exporter" {
                     "name": "node",
                     "options": [],
                     "query": {
-                      "query": "label_values(node_uname_info, kubernetes_node)",
+                      "query": "label_values(node_uname_info, instance)",
                       "refId": "StandardVariableQuery"
                     },
                     "refresh": 1,
