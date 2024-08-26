@@ -16,14 +16,14 @@ done
 
 version=$(echo "$VERSION" | tr '.' '_' | tr '-' '_')
 
-tarball="terraform/releases/unstable/slurm_operator_tf_${version}.tar.gz"
+tarball="releases/unstable/slurm_operator_tf_${version}.tar.gz"
 if [ ! -f "$tarball" ] || [ -n "$force" ]; then
     tar -czf "$tarball" \
-        --exclude="terraform/oldbius/.terraform" \
-        --exclude="terraform/oldbius/.terraform.lock.hcl" \
-        --exclude="terraform/oldbius/.terraform.tfstate.lock.info" \
-        --exclude="terraform/oldbius/terraform.tfstate" \
-        --exclude="terraform/oldbius/terraform.tfstate.backup" \
-        terraform/oldbius test
+        --exclude="oldbius/.terraform" \
+        --exclude="oldbius/.terraform.lock.hcl" \
+        --exclude="oldbius/.terraform.tfstate.lock.info" \
+        --exclude="oldbius/terraform.tfstate" \
+        --exclude="oldbius/terraform.tfstate.backup" \
+        oldbius test
     echo "Created $(pwd)/$tarball"
 fi
