@@ -13,18 +13,10 @@ else
 endif
 ifeq ($(UNSTABLE), true)
     SHORT_SHA 					= $(shell echo -n "$(VERSION)" | $(SHA_CMD) | cut -c1-8)
-    IMAGE_TAG  		= $(VERSION)-$(SHORT_SHA)
+    IMAGE_TAG  					= $(VERSION)-$(SHORT_SHA)
 endif
 
 TARBALL							="slurm_operator_tf_$(shell echo "${IMAGE_TAG}" | tr '-' '_' | tr '.' '_').tar.gz"
-
-.PHONY: get-version
-get-version:
-ifeq ($(UNSTABLE), true)
-	@echo '$(VERSION)-$(SHORT_SHA)'
-else
-	@echo '$(VERSION)'
-endif
 
 .PHONY: get-image-version
 get-image-version:
