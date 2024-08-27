@@ -1,7 +1,7 @@
-SLURM_VERSION		  			= 24.05.2
-UBUNTU_VERSION		  			= jammy
-VERSION               			= $(shell cat VERSION)
-IMAGE_TAG  						= $(VERSION)
+SLURM_VERSION					= 24.05.2
+UBUNTU_VERSION					= jammy
+VERSION							= $(shell cat VERSION)
+IMAGE_TAG						= $(VERSION)
 GREEN							= '\033[0;32m'
 RESET							= '\033[0m'
 
@@ -12,11 +12,11 @@ else
     SHA_CMD = sha256sum
 endif
 ifeq ($(UNSTABLE), true)
-    SHORT_SHA 					= $(shell echo -n "$(VERSION)" | $(SHA_CMD) | cut -c1-8)
-    IMAGE_TAG  					= $(VERSION)-$(SHORT_SHA)
+    SHORT_SHA					= $(shell echo -n "$(VERSION)" | $(SHA_CMD) | cut -c1-8)
+    IMAGE_TAG					= $(VERSION)-$(SHORT_SHA)
 endif
 
-TARBALL							="slurm_operator_tf_$(shell echo "${IMAGE_TAG}" | tr '-' '_' | tr '.' '_').tar.gz"
+TARBALL							= "slurm_operator_tf_$(shell echo "${IMAGE_TAG}" | tr '-' '_' | tr '.' '_').tar.gz"
 
 .PHONY: get-image-version
 get-image-version:
