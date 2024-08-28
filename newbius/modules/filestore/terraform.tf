@@ -9,3 +9,9 @@ terraform {
     }
   }
 }
+
+module "labels" {
+  source = "../labels"
+
+  custom_labels = var.common_labels
+}

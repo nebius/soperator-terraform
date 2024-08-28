@@ -2,17 +2,19 @@ terraform {
   required_providers {
     nebius = {
       source  = "terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius"
-      version = "0.3.11"
+      version = "0.3.12"
     }
 
     null = {
-      source  = "hashicorp/null"
-      version = "3.2.2"
+      source = "hashicorp/null"
     }
 
     units = {
-      source  = "dstaroff/units"
-      version = "0.1.0"
+      source = "dstaroff/units"
+    }
+
+    helm = {
+      source = "hashicorp/helm"
     }
   }
 
@@ -36,9 +38,20 @@ provider "nebius" {
   domain = var.endpoint_nebius
 }
 
+provider "helm" {
+  kubernetes {
+    host                   = nebius_mk8s_v1alpha1_cluster.this.status.control_plane.endpoints.public_endpoint
+    cluster_ca_certificate = nebius_mk8s_v1alpha1_cluster.this.status.control_plane.auth.cluster_ca_certificate
+    token                  = var.iam_token
+  }
+}
+
 module "labels" {
   source = "../modules/labels"
 
-  custom_labels  = var.extra_labels
-  k8s_cluster_id = nebius_mk8s_v1alpha1_cluster.this.id
+  custom_labels = var.extra_labels
+
+  ng_name_control = local.consts.node_group.control
+  ng_name_cpu     = local.consts.node_group.cpu
+  ng_name_gpu     = local.consts.node_group.gpu
 }

@@ -4,8 +4,20 @@ variable "custom_labels" {
   default     = {}
 }
 
-variable "k8s_cluster_id" {
-  description = "ID of the k8s cluster."
+variable "ng_name_control" {
+  description = "Name of the 'control' node group."
   type        = string
-  nullable    = false
+  default     = "control"
+}
+
+variable "ng_name_cpu" {
+  description = "Name of the 'cpu' node group."
+  type        = string
+  default     = "cpu"
+}
+
+variable "ng_name_gpu" {
+  description = "Name of the 'gpu' node group."
+  type        = string
+  default     = "gpu"
 }

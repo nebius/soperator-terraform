@@ -1,24 +1,41 @@
 locals {
-  name_suffix = {
+  consts = {
     node_group = {
-      cpu = "cpu"
-      gpu = "gpu"
+      control = "control"
+      cpu     = "cpu"
+      gpu     = "gpu"
     }
-    gpu_cluster = var.k8s_cluster_node_group_gpu.gpu_cluster.infiniband_fabric
+
+    filestore = {
+      jail             = "jail"
+      controller_spool = "controller-spool"
+    }
   }
 
   name = {
     node_group = {
+      control = join("-", [
+        trimsuffix(
+          substr(
+            var.k8s_cluster_name,
+            0,
+            64 - (length(local.consts.node_group.control) + 1)
+          ),
+          "-"
+        ),
+        local.consts.node_group.control
+      ])
+
       cpu = join("-", [
         trimsuffix(
           substr(
             var.k8s_cluster_name,
             0,
-            64 - (length(local.name_suffix.node_group.cpu) + 1)
+            64 - (length(local.consts.node_group.cpu) + 1)
           ),
           "-"
         ),
-        local.name_suffix.node_group.cpu
+        local.consts.node_group.cpu
       ])
 
       gpu = join("-", [
@@ -26,11 +43,11 @@ locals {
           substr(
             var.k8s_cluster_name,
             0,
-            64 - (length(local.name_suffix.node_group.gpu) + 1)
+            64 - (length(local.consts.node_group.gpu) + 1)
           ),
           "-"
         ),
-        local.name_suffix.node_group.gpu
+        local.consts.node_group.gpu
       ])
     }
 
@@ -39,29 +56,35 @@ locals {
         substr(
           var.k8s_cluster_name,
           0,
-          64 - (length(local.name_suffix.gpu_cluster) + 1)
+          64 - (length(var.k8s_cluster_node_group_gpu.gpu_cluster.infiniband_fabric) + 1)
         ),
         "-"
       ),
-      local.name_suffix.gpu_cluster
+      var.k8s_cluster_node_group_gpu.gpu_cluster.infiniband_fabric
     ])
+  }
 
-    operator = {
-      network = "network-operator"
-      gpu     = "gpu-operator"
-      slurm   = "slurm-operator"
+  helm = {
+    repository = {
+      nvidia = "https://helm.ngc.nvidia.com/nvidia"
+      slurm  = "oci://cr.ai.nebius.cloud/crnefnj17i4kqgt3up94"
     }
 
     chart = {
+      slurm_cluster         = "slurm-cluster"
       slurm_cluster_storage = "slurm-cluster-storage"
-    }
-  }
 
-  version = {
-    operator = {
-      network = "24.4.0"
-      gpu     = "v24.3.0"
-      slurm   = "1.5.1"
+      operator = {
+        network = "network-operator"
+        gpu     = "gpu-operator"
+        slurm   = "slurm-operator"
+      }
+    }
+
+    version = {
+      network = "24.4.1"
+      gpu     = "v24.6.1"
+      slurm   = "1.10.1"
     }
   }
 }
