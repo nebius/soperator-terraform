@@ -49,6 +49,36 @@ variable "k8s_cluster_name" {
   }
 }
 
+variable "k8s_cluster_node_group_control" {
+  description = "Non-Slurm control node group specification. It is used for running operator controllers etc."
+  type = object({
+    size = number
+    resource = object({
+      platform = string
+      preset   = string
+    })
+    boot_disk = object({
+      type           = string
+      size_gibibytes = number
+    })
+  })
+  default = {
+    size = 1
+    resource = {
+      platform = "cpu-e2"
+      preset   = "16vcpu-64gb"
+    }
+    boot_disk = {
+      type           = "NETWORK_SSD"
+      size_gibibytes = 64
+    }
+  }
+}
+
+data "units_data_size" "ng_control_boot_disk" {
+  gibibytes = var.k8s_cluster_node_group_control.boot_disk.size_gibibytes
+}
+
 variable "k8s_cluster_node_group_cpu" {
   description = "CPU-only node group specification."
   type = object({
@@ -75,7 +105,7 @@ variable "k8s_cluster_node_group_cpu" {
   }
 }
 
-data "units_data_size" "boot_disk_cpu" {
+data "units_data_size" "ng_cpu_boot_disk" {
   gibibytes = var.k8s_cluster_node_group_cpu.boot_disk.size_gibibytes
 }
 
@@ -128,25 +158,3 @@ data "units_data_size" "boot_disk_gpu" {
 }
 
 # endregion k8s
-
-# region filestore
-
-variable "filestore_create" {
-  description = "Whether to create new filestore filesystem."
-  type        = bool
-  default     = true
-}
-
-variable "filestore_existing_id" {
-  description = "ID of existing filestore to attach to."
-  type        = string
-  default     = null
-}
-
-variable "filestore_size_gibibytes" {
-  description = "Size of the shared filesystem to be used on controller, worker, and login nodes."
-  type        = number
-  default     = 2048
-}
-
-# endregion filestore

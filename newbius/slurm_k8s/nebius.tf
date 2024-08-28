@@ -18,6 +18,11 @@ variable "endpoint_s3" {
 
 # region iam
 
+variable "iam_token" {
+  type      = string
+  sensitive = true
+}
+
 variable "iam_project_id" {
   description = "Project ID."
   type        = string
