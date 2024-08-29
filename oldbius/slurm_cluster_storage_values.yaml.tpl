@@ -17,7 +17,6 @@ volume:
     - name: "${filestore.name}"
       filestoreDeviceName: "${filestore.name}"
       size: "${ceil(filestore.size / unit_gib)}Gi"
-      mountPath: "${filestore.mountPath}"
     %{ endfor }
   %{ endif }
 
