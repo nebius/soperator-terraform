@@ -1,1 +1,3 @@
 .terraform*
+.DS_Store
+/.idea/
