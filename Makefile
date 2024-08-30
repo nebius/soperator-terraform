@@ -7,12 +7,15 @@ RESET							= '\033[0m'
 
 
 ifeq ($(shell uname), Darwin)
-	SHA_CMD = shasum -a 256
+    SHA_CMD = shasum -a 256
+    SED_COMMAND = sed -i ''
 else
-	SHA_CMD = sha256sum
+    SHA_CMD = sha256sum
+    SED_COMMAND = sed -i
 endif
 ifeq ($(UNSTABLE), true)
-	SHORT_SHA					= $(shell echo -n "$(VERSION)" | $(SHA_CMD) | cut -c1-8)
+	USER_MAIL					= $(shell git log -1 --pretty=format:'%ae')
+    SHORT_SHA 					= $(shell echo -n "$(USER_MAIL)-$(VERSION)" | $(SHA_CMD) | cut -c1-8)
 	IMAGE_TAG					= $(VERSION)-$(SHORT_SHA)
 endif
 
@@ -29,18 +32,18 @@ sync-version: ## Sync versions from file
 
 	@# region oldbius/terraform.tfvars.example
 	@echo 'Syncing oldbius/terraform.tfvars.example'
-	@sed -i '' -E 's/slurm_operator_version *= *"[0-9]+.[0-9]+.[0-9]+[^ ]*"/slurm_operator_version = "$(IMAGE_TAG)"/' oldbius/terraform.tfvars.example
+	@$(SED_COMMAND) -E 's/slurm_operator_version *= *"[0-9]+.[0-9]+.[0-9]+[^ ]*"/slurm_operator_version = "$(IMAGE_TAG)"/' oldbius/terraform.tfvars.example
 	@# endregion oldbius/terraform.tfvars.example
 
 	@# region oldbius/slurm_cluster_variables.tf
 	@echo 'Syncing oldbius/slurm_cluster_variables.tf'
-	@sed -i '' -E 's/default *= *"[0-9]+.[0-9]+.[0-9]+[^ ]*"/default = "$(IMAGE_TAG)"/' oldbius/slurm_cluster_variables.tf
+	@$(SED_COMMAND) -E 's/default *= *"[0-9]+.[0-9]+.[0-9]+[^ ]*"/default = "$(IMAGE_TAG)"/' oldbius/slurm_cluster_variables.tf
 	@terraform fmt oldbius/slurm_cluster_variables.tf
 	@# endregion oldbius/slurm_cluster_variables.tf
 
 	@# region newbius/slurm_k8s/locals.tf
 	@echo 'Syncing newbius/slurm_k8s/locals.tf'
-	@sed -i '' -E 's/slurm *= *"[0-9]+.[0-9]+.[0-9]+[^ ]*"/slurm = "$(IMAGE_TAG)"/' newbius/slurm_k8s/locals.tf
+	@$(SED_COMMAND) -E 's/slurm *= *"[0-9]+.[0-9]+.[0-9]+[^ ]*"/slurm = "$(IMAGE_TAG)"/' newbius/slurm_k8s/locals.tf
 	@terraform fmt newbius/slurm_k8s/locals.tf
 	@# endregion newbius/slurm_k8s/locals.tf
 
@@ -56,3 +59,9 @@ else
 	mv "releases/unstable/${TARBALL}" "releases/stable/"
 	@echo "${GREEN}Stable version ${IMAGE_TAG} is successfully released${RESET}"
 endif
+
+.PHONY: release-terraform-ci
+release-terraform-ci:
+	@echo "Packing terraform tarball with version - ${IMAGE_TAG}"
+	VERSION=${IMAGE_TAG} ./release_terraform.sh -f
+	mv "releases/unstable/${TARBALL}" "releases/"

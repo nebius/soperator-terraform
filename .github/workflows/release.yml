@@ -1,0 +1,40 @@
+name: Build All in one job
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run all
+        run: |
+          make release-terraform-ci
+          ls -la releases/
+
+      - name: Get Version
+        id: get_version
+        run: |
+          echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
+          echo "FILE_VERSION=$(cat VERSION | tr '.' '_' | tr '-' '_')" >> $GITHUB_ENV
+
+      - name: Create GitHub Release and Upload terraform tarball
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: release-${{ env.VERSION }}
+          name: Release terraform tarball ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+          files: |
+            releases/slurm_operator_tf_${{ env.FILE_VERSION }}.tar.gz
+
+      - name: Cleanup
+        run: rm -rf releases/slurm_operator_tf_${{ env.FILE_VERSION }}.tar.gz

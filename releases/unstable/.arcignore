@@ -1,4 +1,0 @@
-terraform/
-test/
-*.tar.gz
-.env
