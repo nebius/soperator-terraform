@@ -47,9 +47,21 @@ variable "filestore_jail_submounts" {
   type = list(object({
     name           = string
     size_gibibytes = number
-    mountPath      = string
+    mount_path     = string
   }))
   default = []
 }
 
 # endregion filestore
+
+variable "slurm_shared_memory_size_gibibytes" {
+  description = "Shared memory size for Slurm controller and worker nodes in GiB."
+  type        = string
+  default     = 64
+}
+
+variable "slurm_ssh_root_public_keys" {
+  description = "Authorized keys accepted for connecting via SSH to Slurm login as 'root' user."
+  type        = list(string)
+  default     = []
+}
