@@ -14,18 +14,6 @@ locals {
 
   name = {
     node_group = {
-      control = join("-", [
-        trimsuffix(
-          substr(
-            var.k8s_cluster_name,
-            0,
-            64 - (length(local.consts.node_group.control) + 1)
-          ),
-          "-"
-        ),
-        local.consts.node_group.control
-      ])
-
       cpu = join("-", [
         trimsuffix(
           substr(

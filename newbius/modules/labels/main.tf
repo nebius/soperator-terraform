@@ -19,9 +19,8 @@ locals {
     }
 
     value = {
-      ng_control = var.ng_name_control
-      ng_cpu     = var.ng_name_cpu
-      ng_gpu     = var.ng_name_gpu
+      ng_cpu = var.ng_name_cpu
+      ng_gpu = var.ng_name_gpu
 
       terraform = "terraform"
       slurm     = "slurm"
@@ -42,10 +41,6 @@ locals {
     })
 
     group_name = {
-      control = tomap({
-        (local.label_key.group_name) = (local.consts.value.ng_control)
-      })
-
       cpu = tomap({
         (local.label_key.group_name) = (local.consts.value.ng_cpu)
       })

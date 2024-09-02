@@ -3,7 +3,6 @@ digraph "newbius" {
 	newrank=true;
 	rankdir=TB;
 	"module.root.helm_release.gpu-operator"->"module.root.helm_release.network_operator"[ shape="", style="solid" ];
-	"module.root.helm_release.network_operator"->"module.root.nebius_mk8s_v1alpha1_node_group.control"[ shape="", style="solid" ];
 	"module.root.helm_release.network_operator"->"module.root.nebius_mk8s_v1alpha1_node_group.cpu"[ shape="", style="solid" ];
 	"module.root.helm_release.network_operator"->"module.root.nebius_mk8s_v1alpha1_node_group.gpu"[ shape="", style="solid" ];
 	"module.root.helm_release.slurm_cluster"->"module.root.helm_release.gpu-operator"[ shape="", style="solid" ];
@@ -12,14 +11,14 @@ digraph "newbius" {
 	"module.root.helm_release.slurm_cluster"->"module.root.nebius_vpc_v1alpha1_allocation.this"[ shape="", style="solid" ];
 	"module.root.helm_release.slurm_cluster_storage"->"module.root.nebius_mk8s_v1alpha1_node_group.cpu"[ shape="", style="solid" ];
 	"module.root.helm_release.slurm_cluster_storage"->"module.root.nebius_mk8s_v1alpha1_node_group.gpu"[ shape="", style="solid" ];
-	"module.root.helm_release.slurm_operator"->"module.root.nebius_mk8s_v1alpha1_node_group.control"[ shape="", style="solid" ];
+	"module.root.helm_release.slurm_operator"->"module.root.nebius_mk8s_v1alpha1_node_group.cpu"[ shape="", style="solid" ];
+	"module.root.helm_release.slurm_operator"->"module.root.nebius_mk8s_v1alpha1_node_group.gpu"[ shape="", style="solid" ];
 	"module.root.module.filestore.output.controller_spool"->"module.root.module.filestore.nebius_compute_v1alpha1_filesystem.controller_spool"[ shape="", style="solid" ];
 	"module.root.module.filestore.output.jail"->"module.root.module.filestore.nebius_compute_v1alpha1_filesystem.jail"[ shape="", style="solid" ];
 	"module.root.module.filestore.output.jail_submount"->"module.root.module.filestore.nebius_compute_v1alpha1_filesystem.jail_submount"[ shape="", style="solid" ];
 	"module.root.nebius_compute_v1alpha1_gpu_cluster.this"->"module.root.data.nebius_iam_v1_project.this"[ shape="", style="solid" ];
 	"module.root.nebius_mk8s_v1alpha1_cluster.this"->"module.root.data.nebius_iam_v1_project.this"[ shape="", style="solid" ];
 	"module.root.nebius_mk8s_v1alpha1_cluster.this"->"module.root.data.nebius_vpc_v1alpha1_subnet.this"[ shape="", style="solid" ];
-	"module.root.nebius_mk8s_v1alpha1_node_group.control"->"module.root.nebius_mk8s_v1alpha1_cluster.this"[ shape="", style="solid" ];
 	"module.root.nebius_mk8s_v1alpha1_node_group.cpu"->"module.root.module.filestore.output.controller_spool"[ shape="", style="dashed" ];
 	"module.root.nebius_mk8s_v1alpha1_node_group.cpu"->"module.root.module.filestore.output.jail"[ shape="", style="dashed" ];
 	"module.root.nebius_mk8s_v1alpha1_node_group.cpu"->"module.root.module.filestore.output.jail_submount"[ shape="", style="dashed" ];
@@ -52,7 +51,6 @@ digraph "newbius" {
 	"module.root.helm_release.slurm_operator" [ label="helm_release.slurm_operator", shape="box", style="rounded" ];
 	"module.root.nebius_compute_v1alpha1_gpu_cluster.this" [ label="nebius_compute_v1alpha1_gpu_cluster.this", shape="box", style="rounded" ];
 	"module.root.nebius_mk8s_v1alpha1_cluster.this" [ label="nebius_mk8s_v1alpha1_cluster.this", shape="box", style="rounded" ];
-	"module.root.nebius_mk8s_v1alpha1_node_group.control" [ label="nebius_mk8s_v1alpha1_node_group.control", shape="box", style="rounded" ];
 	"module.root.nebius_mk8s_v1alpha1_node_group.cpu" [ label="nebius_mk8s_v1alpha1_node_group.cpu", shape="box", style="rounded" ];
 	"module.root.nebius_mk8s_v1alpha1_node_group.gpu" [ label="nebius_mk8s_v1alpha1_node_group.gpu", shape="box", style="rounded" ];
 	"module.root.nebius_vpc_v1alpha1_allocation.this" [ label="nebius_vpc_v1alpha1_allocation.this", shape="box", style="rounded" ];

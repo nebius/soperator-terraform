@@ -5,7 +5,6 @@ digraph {
 		"[root] data.nebius_iam_v1_project.this (expand)" [label = "data.nebius_iam_v1_project.this", shape = "box"]
 		"[root] data.nebius_vpc_v1alpha1_subnet.this (expand)" [label = "data.nebius_vpc_v1alpha1_subnet.this", shape = "box"]
 		"[root] data.units_data_size.boot_disk_gpu (expand)" [label = "data.units_data_size.boot_disk_gpu", shape = "box"]
-		"[root] data.units_data_size.ng_control_boot_disk (expand)" [label = "data.units_data_size.ng_control_boot_disk", shape = "box"]
 		"[root] data.units_data_size.ng_cpu_boot_disk (expand)" [label = "data.units_data_size.ng_cpu_boot_disk", shape = "box"]
 		"[root] helm_release.gpu-operator (expand)" [label = "helm_release.gpu-operator", shape = "box"]
 		"[root] helm_release.network_operator (expand)" [label = "helm_release.network_operator", shape = "box"]
@@ -23,7 +22,6 @@ digraph {
 		"[root] module.filestore.nebius_compute_v1alpha1_filesystem.jail_submount (expand)" [label = "module.filestore.nebius_compute_v1alpha1_filesystem.jail_submount", shape = "box"]
 		"[root] nebius_compute_v1alpha1_gpu_cluster.this (expand)" [label = "nebius_compute_v1alpha1_gpu_cluster.this", shape = "box"]
 		"[root] nebius_mk8s_v1alpha1_cluster.this (expand)" [label = "nebius_mk8s_v1alpha1_cluster.this", shape = "box"]
-		"[root] nebius_mk8s_v1alpha1_node_group.control (expand)" [label = "nebius_mk8s_v1alpha1_node_group.control", shape = "box"]
 		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" [label = "nebius_mk8s_v1alpha1_node_group.cpu", shape = "box"]
 		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" [label = "nebius_mk8s_v1alpha1_node_group.gpu", shape = "box"]
 		"[root] nebius_vpc_v1alpha1_allocation.this (expand)" [label = "nebius_vpc_v1alpha1_allocation.this", shape = "box"]
@@ -39,11 +37,12 @@ digraph {
 		"[root] var.iam_project_id" [label = "var.iam_project_id", shape = "note"]
 		"[root] var.iam_token" [label = "var.iam_token", shape = "note"]
 		"[root] var.k8s_cluster_name" [label = "var.k8s_cluster_name", shape = "note"]
-		"[root] var.k8s_cluster_node_group_control" [label = "var.k8s_cluster_node_group_control", shape = "note"]
 		"[root] var.k8s_cluster_node_group_cpu" [label = "var.k8s_cluster_node_group_cpu", shape = "note"]
 		"[root] var.k8s_cluster_node_group_gpu" [label = "var.k8s_cluster_node_group_gpu", shape = "note"]
 		"[root] var.k8s_version" [label = "var.k8s_version", shape = "note"]
 		"[root] var.slurm_cluster_name" [label = "var.slurm_cluster_name", shape = "note"]
+		"[root] var.slurm_shared_memory_size_gibibytes" [label = "var.slurm_shared_memory_size_gibibytes", shape = "note"]
+		"[root] var.slurm_ssh_root_public_keys" [label = "var.slurm_ssh_root_public_keys", shape = "note"]
 		"[root] var.vpc_subnet_id" [label = "var.vpc_subnet_id", shape = "note"]
 		"[root] data.nebius_iam_v1_project.this (expand)" -> "[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"]"
 		"[root] data.nebius_iam_v1_project.this (expand)" -> "[root] var.iam_project_id (validation)"
@@ -51,13 +50,10 @@ digraph {
 		"[root] data.nebius_vpc_v1alpha1_subnet.this (expand)" -> "[root] var.vpc_subnet_id (validation)"
 		"[root] data.units_data_size.boot_disk_gpu (expand)" -> "[root] provider[\"registry.terraform.io/dstaroff/units\"]"
 		"[root] data.units_data_size.boot_disk_gpu (expand)" -> "[root] var.k8s_cluster_node_group_gpu (validation)"
-		"[root] data.units_data_size.ng_control_boot_disk (expand)" -> "[root] provider[\"registry.terraform.io/dstaroff/units\"]"
-		"[root] data.units_data_size.ng_control_boot_disk (expand)" -> "[root] var.k8s_cluster_node_group_control"
 		"[root] data.units_data_size.ng_cpu_boot_disk (expand)" -> "[root] provider[\"registry.terraform.io/dstaroff/units\"]"
 		"[root] data.units_data_size.ng_cpu_boot_disk (expand)" -> "[root] var.k8s_cluster_node_group_cpu"
 		"[root] helm_release.gpu-operator (expand)" -> "[root] helm_release.network_operator (expand)"
 		"[root] helm_release.network_operator (expand)" -> "[root] local.helm (expand)"
-		"[root] helm_release.network_operator (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.control (expand)"
 		"[root] helm_release.network_operator (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)"
 		"[root] helm_release.network_operator (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)"
 		"[root] helm_release.network_operator (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/helm\"]"
@@ -65,14 +61,18 @@ digraph {
 		"[root] helm_release.slurm_cluster (expand)" -> "[root] helm_release.slurm_cluster_storage (expand)"
 		"[root] helm_release.slurm_cluster (expand)" -> "[root] helm_release.slurm_operator (expand)"
 		"[root] helm_release.slurm_cluster (expand)" -> "[root] nebius_vpc_v1alpha1_allocation.this (expand)"
+		"[root] helm_release.slurm_cluster (expand)" -> "[root] var.slurm_shared_memory_size_gibibytes"
+		"[root] helm_release.slurm_cluster (expand)" -> "[root] var.slurm_ssh_root_public_keys"
 		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] local.helm (expand)"
 		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] module.filestore (close)"
+		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] module.labels.output.key_node_group_name (expand)"
 		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)"
 		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)"
 		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/helm\"]"
 		"[root] helm_release.slurm_cluster_storage (expand)" -> "[root] var.slurm_cluster_name (validation)"
 		"[root] helm_release.slurm_operator (expand)" -> "[root] local.helm (expand)"
-		"[root] helm_release.slurm_operator (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.control (expand)"
+		"[root] helm_release.slurm_operator (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)"
+		"[root] helm_release.slurm_operator (expand)" -> "[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)"
 		"[root] helm_release.slurm_operator (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/helm\"]"
 		"[root] local.gpu_cluster_create (expand)" -> "[root] var.k8s_cluster_node_group_gpu (validation)"
 		"[root] local.gpu_count (expand)" -> "[root] var.k8s_cluster_node_group_gpu (validation)"
@@ -101,20 +101,18 @@ digraph {
 		"[root] module.filestore.local.name (expand)" -> "[root] module.filestore.var.jail_submounts (expand)"
 		"[root] module.filestore.local.name (expand)" -> "[root] module.filestore.var.k8s_cluster_name (expand)"
 		"[root] module.filestore.module.labels (close)" -> "[root] module.filestore.module.labels.output.key_node_group_name (expand)"
-		"[root] module.filestore.module.labels (close)" -> "[root] module.filestore.module.labels.output.label_group_name_control (expand)"
 		"[root] module.filestore.module.labels (close)" -> "[root] module.filestore.module.labels.output.label_group_name_cpu (expand)"
 		"[root] module.filestore.module.labels (close)" -> "[root] module.filestore.module.labels.output.label_group_name_gpu (expand)"
 		"[root] module.filestore.module.labels (close)" -> "[root] module.filestore.module.labels.output.label_managed_by (expand)"
 		"[root] module.filestore.module.labels (close)" -> "[root] module.filestore.module.labels.output.label_used_for (expand)"
 		"[root] module.filestore.module.labels (close)" -> "[root] module.filestore.module.labels.output.labels_common (expand)"
+		"[root] module.filestore.module.labels (close)" -> "[root] module.filestore.module.labels.var.ng_name_control (expand)"
 		"[root] module.filestore.module.labels (expand)" -> "[root] module.filestore (expand)"
-		"[root] module.filestore.module.labels.local.consts (expand)" -> "[root] module.filestore.module.labels.var.ng_name_control (expand)"
 		"[root] module.filestore.module.labels.local.consts (expand)" -> "[root] module.filestore.module.labels.var.ng_name_cpu (expand)"
 		"[root] module.filestore.module.labels.local.consts (expand)" -> "[root] module.filestore.module.labels.var.ng_name_gpu (expand)"
 		"[root] module.filestore.module.labels.local.label (expand)" -> "[root] module.filestore.module.labels.local.label_key (expand)"
 		"[root] module.filestore.module.labels.local.label_key (expand)" -> "[root] module.filestore.module.labels.local.consts (expand)"
 		"[root] module.filestore.module.labels.output.key_node_group_name (expand)" -> "[root] module.filestore.module.labels.local.label_key (expand)"
-		"[root] module.filestore.module.labels.output.label_group_name_control (expand)" -> "[root] module.filestore.module.labels.local.label (expand)"
 		"[root] module.filestore.module.labels.output.label_group_name_cpu (expand)" -> "[root] module.filestore.module.labels.local.label (expand)"
 		"[root] module.filestore.module.labels.output.label_group_name_gpu (expand)" -> "[root] module.filestore.module.labels.local.label (expand)"
 		"[root] module.filestore.module.labels.output.label_managed_by (expand)" -> "[root] module.filestore.module.labels.local.label (expand)"
@@ -159,19 +157,17 @@ digraph {
 		"[root] module.filestore.var.k8s_cluster_name (expand)" -> "[root] module.filestore (expand)"
 		"[root] module.filestore.var.k8s_cluster_name (expand)" -> "[root] var.k8s_cluster_name (validation)"
 		"[root] module.labels (close)" -> "[root] module.labels.output.key_node_group_name (expand)"
-		"[root] module.labels (close)" -> "[root] module.labels.output.label_group_name_control (expand)"
 		"[root] module.labels (close)" -> "[root] module.labels.output.label_group_name_cpu (expand)"
 		"[root] module.labels (close)" -> "[root] module.labels.output.label_group_name_gpu (expand)"
 		"[root] module.labels (close)" -> "[root] module.labels.output.label_managed_by (expand)"
 		"[root] module.labels (close)" -> "[root] module.labels.output.label_used_for (expand)"
 		"[root] module.labels (close)" -> "[root] module.labels.output.labels_common (expand)"
-		"[root] module.labels.local.consts (expand)" -> "[root] module.labels.var.ng_name_control (expand)"
+		"[root] module.labels (close)" -> "[root] module.labels.var.ng_name_control (expand)"
 		"[root] module.labels.local.consts (expand)" -> "[root] module.labels.var.ng_name_cpu (expand)"
 		"[root] module.labels.local.consts (expand)" -> "[root] module.labels.var.ng_name_gpu (expand)"
 		"[root] module.labels.local.label (expand)" -> "[root] module.labels.local.label_key (expand)"
 		"[root] module.labels.local.label_key (expand)" -> "[root] module.labels.local.consts (expand)"
 		"[root] module.labels.output.key_node_group_name (expand)" -> "[root] module.labels.local.label_key (expand)"
-		"[root] module.labels.output.label_group_name_control (expand)" -> "[root] module.labels.local.label (expand)"
 		"[root] module.labels.output.label_group_name_cpu (expand)" -> "[root] module.labels.local.label (expand)"
 		"[root] module.labels.output.label_group_name_gpu (expand)" -> "[root] module.labels.local.label (expand)"
 		"[root] module.labels.output.label_managed_by (expand)" -> "[root] module.labels.local.label (expand)"
@@ -195,23 +191,17 @@ digraph {
 		"[root] nebius_mk8s_v1alpha1_cluster.this (expand)" -> "[root] module.labels.output.labels_common (expand)"
 		"[root] nebius_mk8s_v1alpha1_cluster.this (expand)" -> "[root] var.k8s_cluster_name (validation)"
 		"[root] nebius_mk8s_v1alpha1_cluster.this (expand)" -> "[root] var.k8s_version (validation)"
-		"[root] nebius_mk8s_v1alpha1_node_group.control (expand)" -> "[root] data.units_data_size.ng_control_boot_disk (expand)"
-		"[root] nebius_mk8s_v1alpha1_node_group.control (expand)" -> "[root] local.name (expand)"
-		"[root] nebius_mk8s_v1alpha1_node_group.control (expand)" -> "[root] module.labels.output.label_group_name_control (expand)"
-		"[root] nebius_mk8s_v1alpha1_node_group.control (expand)" -> "[root] nebius_mk8s_v1alpha1_cluster.this (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" -> "[root] data.units_data_size.ng_cpu_boot_disk (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" -> "[root] local.name (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" -> "[root] module.filestore.output.controller_spool (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" -> "[root] module.filestore.output.jail (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" -> "[root] module.filestore.output.jail_submount (expand)"
-		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" -> "[root] module.labels.output.key_node_group_name (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" -> "[root] module.labels.output.label_group_name_cpu (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)" -> "[root] nebius_mk8s_v1alpha1_cluster.this (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" -> "[root] data.units_data_size.boot_disk_gpu (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" -> "[root] local.gpu_count (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" -> "[root] module.filestore.output.jail (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" -> "[root] module.filestore.output.jail_submount (expand)"
-		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" -> "[root] module.labels.output.key_node_group_name (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" -> "[root] module.labels.output.label_group_name_gpu (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" -> "[root] nebius_compute_v1alpha1_gpu_cluster.this (expand)"
 		"[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)" -> "[root] nebius_mk8s_v1alpha1_cluster.this (expand)"
@@ -220,7 +210,6 @@ digraph {
 		"[root] nebius_vpc_v1alpha1_allocation.this (expand)" -> "[root] module.labels.output.labels_common (expand)"
 		"[root] nebius_vpc_v1alpha1_allocation.this (expand)" -> "[root] var.slurm_cluster_name (validation)"
 		"[root] provider[\"registry.terraform.io/dstaroff/units\"] (close)" -> "[root] data.units_data_size.boot_disk_gpu (expand)"
-		"[root] provider[\"registry.terraform.io/dstaroff/units\"] (close)" -> "[root] data.units_data_size.ng_control_boot_disk (expand)"
 		"[root] provider[\"registry.terraform.io/dstaroff/units\"] (close)" -> "[root] data.units_data_size.ng_cpu_boot_disk (expand)"
 		"[root] provider[\"registry.terraform.io/dstaroff/units\"] (close)" -> "[root] module.filestore.data.units_data_size.controller_spool_block (expand)"
 		"[root] provider[\"registry.terraform.io/dstaroff/units\"] (close)" -> "[root] module.filestore.data.units_data_size.controller_spool_storage (expand)"
@@ -231,7 +220,6 @@ digraph {
 		"[root] provider[\"registry.terraform.io/hashicorp/helm\"] (close)" -> "[root] helm_release.slurm_cluster (expand)"
 		"[root] provider[\"registry.terraform.io/hashicorp/helm\"]" -> "[root] nebius_mk8s_v1alpha1_cluster.this (expand)"
 		"[root] provider[\"registry.terraform.io/hashicorp/helm\"]" -> "[root] var.iam_token"
-		"[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"] (close)" -> "[root] nebius_mk8s_v1alpha1_node_group.control (expand)"
 		"[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"] (close)" -> "[root] nebius_mk8s_v1alpha1_node_group.cpu (expand)"
 		"[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"] (close)" -> "[root] nebius_mk8s_v1alpha1_node_group.gpu (expand)"
 		"[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"] (close)" -> "[root] nebius_vpc_v1alpha1_allocation.this (expand)"

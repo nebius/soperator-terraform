@@ -43,38 +43,6 @@ resource "nebius_mk8s_v1alpha1_cluster" "this" {
 
 # region node group
 
-resource "nebius_mk8s_v1alpha1_node_group" "control" {
-  depends_on = [
-    nebius_mk8s_v1alpha1_cluster.this,
-  ]
-
-  parent_id = nebius_mk8s_v1alpha1_cluster.this.id
-
-  name = local.name.node_group.control
-  labels = merge(
-    module.labels.labels_common,
-    module.labels.label_group_name_control
-  )
-  metadata = {
-    labels = module.labels.label_group_name_control
-  }
-
-  version          = var.k8s_version
-  fixed_node_count = var.k8s_cluster_node_group_control.size
-
-  template = {
-    resources = {
-      platform = var.k8s_cluster_node_group_control.resource.platform
-      preset   = var.k8s_cluster_node_group_control.resource.preset
-    }
-
-    boot_disk = {
-      type       = var.k8s_cluster_node_group_control.boot_disk.type
-      size_bytes = data.units_data_size.ng_control_boot_disk.bytes
-    }
-  }
-}
-
 resource "nebius_mk8s_v1alpha1_node_group" "cpu" {
   depends_on = [
     nebius_mk8s_v1alpha1_cluster.this,
@@ -95,11 +63,6 @@ resource "nebius_mk8s_v1alpha1_node_group" "cpu" {
     metadata = {
       labels = module.labels.label_group_name_cpu
     }
-    taints = [{
-      key    = module.labels.key_node_group_name
-      value  = local.consts.node_group.cpu
-      effect = "NO_SCHEDULE"
-    }]
 
     resources = {
       platform = var.k8s_cluster_node_group_cpu.resource.platform
@@ -159,18 +122,11 @@ resource "nebius_mk8s_v1alpha1_node_group" "gpu" {
     metadata = {
       labels = module.labels.label_group_name_gpu
     }
-    taints = [
-      {
-        key    = module.labels.key_node_group_name
-        value  = local.consts.node_group.gpu
-        effect = "NO_SCHEDULE"
-      },
-      {
-        key    = "nvidia.com/gpu",
-        value  = local.gpu_count
-        effect = "NO_SCHEDULE"
-      }
-    ]
+    taints = [{
+      key    = "nvidia.com/gpu",
+      value  = local.gpu_count
+      effect = "NO_SCHEDULE"
+    }]
 
     resources = {
       platform = var.k8s_cluster_node_group_gpu.resource.platform
