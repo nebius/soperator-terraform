@@ -97,7 +97,10 @@ resource "nebius_mk8s_v1alpha1_node_group" "cpu" {
 }
 
 locals {
-  gpu_cluster_create = var.k8s_cluster_node_group_gpu.resource.preset == "1gpu-20vcpu-200gb" ? false : true
+  gpu_cluster_create = tomap({
+    "8gpu-160vcpu-1600gb" = true
+    "1gpu-20vcpu-200gb"   = false
+  })[var.k8s_cluster_node_group_gpu.resource.preset]
   gpu_count = var.k8s_cluster_node_group_gpu.resource.preset == "1gpu-20vcpu-200gb" ? 1 : 8
 }
 
