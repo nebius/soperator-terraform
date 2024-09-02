@@ -1,6 +1,5 @@
 resource "helm_release" "network_operator" {
   depends_on = [
-    nebius_mk8s_v1alpha1_node_group.control,
     nebius_mk8s_v1alpha1_node_group.cpu,
     nebius_mk8s_v1alpha1_node_group.gpu,
   ]
@@ -41,7 +40,8 @@ resource "helm_release" "gpu-operator" {
 
 resource "helm_release" "slurm_operator" {
   depends_on = [
-    nebius_mk8s_v1alpha1_node_group.control,
+    nebius_mk8s_v1alpha1_node_group.cpu,
+    nebius_mk8s_v1alpha1_node_group.gpu,
   ]
 
   name       = local.helm.chart.operator.slurm

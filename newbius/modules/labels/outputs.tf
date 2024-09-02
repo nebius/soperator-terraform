@@ -17,11 +17,6 @@ output "label_used_for" {
   value       = local.label.used_for
 }
 
-output "label_group_name_control" {
-  description = "Control node group label."
-  value       = local.label.group_name.control
-}
-
 output "label_group_name_cpu" {
   description = "CPU node group label."
   value       = local.label.group_name.cpu
