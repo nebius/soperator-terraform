@@ -2,6 +2,7 @@ resource "helm_release" "network_operator" {
   depends_on = [
     nebius_mk8s_v1alpha1_node_group.cpu,
     nebius_mk8s_v1alpha1_node_group.gpu,
+    nebius_mk8s_v1alpha1_node_group.nlb,
   ]
 
   name       = local.helm.chart.operator.network
@@ -42,6 +43,7 @@ resource "helm_release" "slurm_operator" {
   depends_on = [
     nebius_mk8s_v1alpha1_node_group.cpu,
     nebius_mk8s_v1alpha1_node_group.gpu,
+    nebius_mk8s_v1alpha1_node_group.nlb,
   ]
 
   name       = local.helm.chart.operator.slurm
@@ -60,6 +62,7 @@ resource "helm_release" "slurm_cluster_storage" {
   depends_on = [
     nebius_mk8s_v1alpha1_node_group.cpu,
     nebius_mk8s_v1alpha1_node_group.gpu,
+    nebius_mk8s_v1alpha1_node_group.nlb,
     module.filestore,
   ]
 
@@ -104,6 +107,7 @@ resource "helm_release" "slurm_cluster" {
     helm_release.gpu-operator,
     helm_release.slurm_operator,
     helm_release.slurm_cluster_storage,
+    nebius_vpc_v1alpha1_allocation.this,
   ]
 
   name       = local.helm.chart.slurm_cluster
@@ -140,7 +144,7 @@ resource "helm_release" "slurm_cluster" {
     }]
 
     ncclBenchmark = {
-      use_infiniband = local.gpu_cluster_create
+      use_infiniband = local.gpu.create_cluster
     }
 
     nodes = {
@@ -167,7 +171,9 @@ resource "helm_release" "slurm_cluster" {
       }
       login = {
         size             = nebius_mk8s_v1alpha1_node_group.cpu.fixed_node_count
-        load_balancer_ip = regexall("[\\d\\.]+", nebius_vpc_v1alpha1_allocation.this.status.details.allocated_cidr)[0]
+        service_type     = var.slurm_login_service_type
+        load_balancer_ip = local.login.create_nlb_ng ? "" : regexall("[\\d\\.]+", one(nebius_vpc_v1alpha1_allocation.this).status.details.allocated_cidr)[0]
+        node_port        = 30022
         root_public_keys = var.slurm_ssh_root_public_keys
       }
     }

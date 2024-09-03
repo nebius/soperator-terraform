@@ -92,8 +92,13 @@ slurmNodes:
   login:
     size: ${nodes.login.size}
     k8sNodeFilterName: ${k8s_node_filters.non_gpu.name}
-    sshdServiceAnnotations: {}
-    sshdServiceLoadBalancerIP: ${nodes.login.load_balancer_ip}
+    sshdServiceType: ${nodes.login.service_type}
+    %{~ if nodes.login.service_type == "LoadBalancer" ~}
+    sshdServiceLoadBalancerIP: "${nodes.login.load_balancer_ip}"
+    %{~ endif ~}
+    %{~ if nodes.login.service_type == "NodePort" ~}
+    sshdServiceNodePort: ${nodes.login.node_port}
+    %{~ endif ~}
     %{~ if length(nodes.login.root_public_keys) > 0 ~}
     sshRootPublicKeys:
       %{~ for key in nodes.login.root_public_keys ~}

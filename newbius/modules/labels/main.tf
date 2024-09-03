@@ -21,6 +21,7 @@ locals {
     value = {
       ng_cpu = var.ng_name_cpu
       ng_gpu = var.ng_name_gpu
+      ng_nlb = var.ng_name_nlb
 
       terraform = "terraform"
       slurm     = "slurm"
@@ -47,6 +48,10 @@ locals {
 
       gpu = tomap({
         (local.label_key.group_name) = (local.consts.value.ng_gpu)
+      })
+
+      nlb = tomap({
+        (local.label_key.group_name) = (local.consts.value.ng_nlb)
       })
     }
   }

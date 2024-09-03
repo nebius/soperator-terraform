@@ -27,6 +27,11 @@ output "label_group_name_gpu" {
   value       = local.label.group_name.gpu
 }
 
+output "label_group_name_nlb" {
+  description = "NLB node group label."
+  value       = local.label.group_name.nlb
+}
+
 output "key_node_group_name" {
   description = "Node group label key."
   value       = local.label_key.group_name

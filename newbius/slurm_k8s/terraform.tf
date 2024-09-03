@@ -51,7 +51,7 @@ module "labels" {
 
   custom_labels = var.extra_labels
 
-  ng_name_control = local.consts.node_group.control
-  ng_name_cpu     = local.consts.node_group.cpu
-  ng_name_gpu     = local.consts.node_group.gpu
+  ng_name_cpu = local.consts.node_group.cpu
+  ng_name_gpu = local.consts.node_group.gpu
+  ng_name_nlb = local.consts.node_group.nlb
 }

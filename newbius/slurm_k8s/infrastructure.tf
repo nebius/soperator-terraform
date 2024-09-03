@@ -5,6 +5,8 @@ data "nebius_vpc_v1alpha1_subnet" "this" {
 }
 
 resource "nebius_vpc_v1alpha1_allocation" "this" {
+  count = local.login.create_nlb_ng ? 0 : 1
+
   depends_on = [
     data.nebius_vpc_v1alpha1_subnet.this
   ]
@@ -96,14 +98,6 @@ resource "nebius_mk8s_v1alpha1_node_group" "cpu" {
   }
 }
 
-locals {
-  gpu_cluster_create = tomap({
-    "8gpu-160vcpu-1600gb" = true
-    "1gpu-20vcpu-200gb"   = false
-  })[var.k8s_cluster_node_group_gpu.resource.preset]
-  gpu_count = var.k8s_cluster_node_group_gpu.resource.preset == "1gpu-20vcpu-200gb" ? 1 : 8
-}
-
 resource "nebius_mk8s_v1alpha1_node_group" "gpu" {
   depends_on = [
     nebius_mk8s_v1alpha1_cluster.this,
@@ -127,7 +121,7 @@ resource "nebius_mk8s_v1alpha1_node_group" "gpu" {
     }
     taints = [{
       key    = "nvidia.com/gpu",
-      value  = local.gpu_count
+      value  = local.gpu.count
       effect = "NO_SCHEDULE"
     }]
 
@@ -135,7 +129,7 @@ resource "nebius_mk8s_v1alpha1_node_group" "gpu" {
       platform = var.k8s_cluster_node_group_gpu.resource.platform
       preset   = var.k8s_cluster_node_group_gpu.resource.preset
     }
-    gpu_cluster = local.gpu_cluster_create ? one(nebius_compute_v1alpha1_gpu_cluster.this) : null
+    gpu_cluster = local.gpu.create_cluster ? one(nebius_compute_v1alpha1_gpu_cluster.this) : null
 
     boot_disk = {
       type       = var.k8s_cluster_node_group_gpu.boot_disk.type
@@ -155,6 +149,52 @@ resource "nebius_mk8s_v1alpha1_node_group" "gpu" {
         id = module.filestore.jail_submount[submount.name].id
       }
     }])
+  }
+}
+
+data "units_data_size" "ng_nlb_boot_disk" {
+  count = local.login.create_nlb_ng ? 1 : 0
+
+  gibibytes = "64"
+}
+
+resource "nebius_mk8s_v1alpha1_node_group" "nlb" {
+  count = local.login.create_nlb_ng ? 1 : 0
+
+  depends_on = [
+    nebius_mk8s_v1alpha1_cluster.this,
+  ]
+
+  parent_id = nebius_mk8s_v1alpha1_cluster.this.id
+
+  name = local.name.node_group.nlb
+  labels = merge(
+    module.labels.labels_common,
+    module.labels.label_group_name_nlb
+  )
+
+  version          = var.k8s_version
+  fixed_node_count = 1
+
+  template = {
+    metadata = {
+      labels = module.labels.label_group_name_nlb
+    }
+
+    resources = {
+      platform = "cpu-e2"
+      preset   = "2vcpu-8gb"
+    }
+
+    boot_disk = {
+      type       = "NETWORK_SSD"
+      size_bytes = one(data.units_data_size.ng_nlb_boot_disk).bytes
+    }
+
+    network_interfaces = [{
+      public_ip_address = {}
+      subnet_id         = data.nebius_vpc_v1alpha1_subnet.this.id
+    }]
   }
 }
 
@@ -205,7 +245,7 @@ module "filestore" {
 # region gpu cluster
 
 resource "nebius_compute_v1alpha1_gpu_cluster" "this" {
-  count = local.gpu_cluster_create ? 1 : 0
+  count = local.gpu.create_cluster ? 1 : 0
 
   parent_id = data.nebius_iam_v1_project.this.id
 

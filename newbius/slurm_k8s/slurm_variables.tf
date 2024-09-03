@@ -60,6 +60,17 @@ variable "slurm_shared_memory_size_gibibytes" {
   default     = 64
 }
 
+variable "slurm_login_service_type" {
+  description = "Type of the k8s service to connect to login nodes."
+  type        = string
+  default     = "LoadBalancer"
+
+  validation {
+    condition     = (contains(["LoadBalancer", "NodePort"], var.slurm_login_service_type))
+    error_message = "Invalid service type. It must be one of `LoadBalancer` or `NodePort`."
+  }
+}
+
 variable "slurm_ssh_root_public_keys" {
   description = "Authorized keys accepted for connecting via SSH to Slurm login as 'root' user."
   type        = list(string)
