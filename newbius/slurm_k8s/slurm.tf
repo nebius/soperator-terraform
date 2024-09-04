@@ -1,44 +1,3 @@
-resource "helm_release" "network_operator" {
-  depends_on = [
-    nebius_mk8s_v1alpha1_node_group.cpu,
-    nebius_mk8s_v1alpha1_node_group.gpu,
-    nebius_mk8s_v1alpha1_node_group.nlb,
-  ]
-
-  name       = local.helm.chart.operator.network
-  repository = local.helm.repository.nvidia
-  chart      = local.helm.chart.operator.network
-  version    = local.helm.version.network
-
-  create_namespace = true
-  namespace        = local.helm.chart.operator.network
-
-  wait          = true
-  wait_for_jobs = true
-}
-
-resource "helm_release" "gpu-operator" {
-  depends_on = [
-    helm_release.network_operator
-  ]
-
-  name       = local.helm.chart.operator.gpu
-  repository = local.helm.repository.nvidia
-  chart      = local.helm.chart.operator.gpu
-  version    = local.helm.version.gpu
-
-  create_namespace = true
-  namespace        = local.helm.chart.operator.gpu
-
-  set {
-    name  = "driver.rdma.useHostMofed"
-    value = length(helm_release.network_operator) > 0 ? "true" : "false"
-  }
-
-  wait          = true
-  wait_for_jobs = true
-}
-
 resource "helm_release" "slurm_operator" {
   depends_on = [
     nebius_mk8s_v1alpha1_node_group.cpu,
@@ -49,6 +8,23 @@ resource "helm_release" "slurm_operator" {
   name       = local.helm.chart.operator.slurm
   repository = local.helm.repository.slurm
   chart      = local.helm.chart.operator.slurm
+  version    = local.helm.version.slurm
+
+  create_namespace = true
+  namespace        = local.helm.chart.operator.slurm
+
+  wait          = true
+  wait_for_jobs = true
+}
+
+resource "helm_release" "slurm_cluster_crd" {
+  depends_on = [
+    helm_release.slurm_operator
+  ]
+
+  name       = local.helm.chart.slurm_operator_crds
+  repository = local.helm.repository.slurm
+  chart      = local.helm.chart.slurm_operator_crds
   version    = local.helm.version.slurm
 
   create_namespace = true
@@ -76,7 +52,7 @@ resource "helm_release" "slurm_cluster_storage" {
 
   values = [templatefile("${path.module}/templates/slurm_cluster_storage_values.yaml.tftpl", {
     scheduling = {
-      key = module.labels.key_node_group_name
+      key = module.labels.key_slurm_node_group_name
       cpu = local.consts.node_group.cpu
       gpu = local.consts.node_group.gpu
     }
@@ -106,6 +82,7 @@ resource "helm_release" "slurm_cluster" {
     helm_release.network_operator,
     helm_release.gpu-operator,
     helm_release.slurm_operator,
+    helm_release.slurm_cluster_crd,
     helm_release.slurm_cluster_storage,
     nebius_vpc_v1alpha1_allocation.this,
   ]
@@ -125,14 +102,14 @@ resource "helm_release" "slurm_cluster" {
       non_gpu = {
         name = local.consts.node_group.cpu
         affinity = {
-          key   = module.labels.key_node_group_name
+          key   = module.labels.key_slurm_node_group_name
           value = local.consts.node_group.cpu
         }
       }
       gpu = {
         name = local.consts.node_group.gpu
         affinity = {
-          key   = module.labels.key_node_group_name
+          key   = module.labels.key_slurm_node_group_name
           value = local.consts.node_group.gpu
         }
       }
@@ -174,11 +151,34 @@ resource "helm_release" "slurm_cluster" {
         service_type     = var.slurm_login_service_type
         load_balancer_ip = local.login.create_nlb_ng ? "" : regexall("[\\d\\.]+", one(nebius_vpc_v1alpha1_allocation.this).status.details.allocated_cidr)[0]
         node_port        = 30022
-        root_public_keys = var.slurm_ssh_root_public_keys
+        root_public_keys = var.slurm_login_ssh_root_public_keys
       }
     }
   })]
 
   wait          = true
   wait_for_jobs = true
+}
+
+resource "nebius_vpc_v1alpha1_allocation" "this" {
+  count = local.login.create_nlb_ng ? 0 : 1
+
+  depends_on = [
+    data.nebius_vpc_v1alpha1_subnet.this,
+    nebius_mk8s_v1alpha1_cluster.this,
+  ]
+
+  parent_id = data.nebius_iam_v1_project.this.id
+
+  name = "${var.k8s_cluster_name}-${var.slurm_cluster_name}"
+  labels = merge(
+    module.labels.labels_common,
+    tomap({
+      (module.labels.key_k8s_cluster_id)     = (nebius_mk8s_v1alpha1_cluster.this.id)
+      (module.labels.key_k8s_cluster_name)   = (nebius_mk8s_v1alpha1_cluster.this.name)
+      (module.labels.key_slurm_cluster_name) = (var.slurm_cluster_name)
+    })
+  )
+
+  ipv4_public = {}
 }

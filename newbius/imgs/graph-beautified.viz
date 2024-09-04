@@ -7,9 +7,10 @@ digraph "newbius" {
 	"module.root.helm_release.network_operator"->"module.root.nebius_mk8s_v1alpha1_node_group.gpu"[ shape="", style="solid" ];
 	"module.root.helm_release.network_operator"->"module.root.nebius_mk8s_v1alpha1_node_group.nlb"[ shape="", style="solid" ];
 	"module.root.helm_release.slurm_cluster"->"module.root.helm_release.gpu-operator"[ shape="", style="solid" ];
+	"module.root.helm_release.slurm_cluster"->"module.root.helm_release.slurm_cluster_crd"[ shape="", style="solid" ];
 	"module.root.helm_release.slurm_cluster"->"module.root.helm_release.slurm_cluster_storage"[ shape="", style="solid" ];
-	"module.root.helm_release.slurm_cluster"->"module.root.helm_release.slurm_operator"[ shape="", style="solid" ];
 	"module.root.helm_release.slurm_cluster"->"module.root.nebius_vpc_v1alpha1_allocation.this"[ shape="", style="solid" ];
+	"module.root.helm_release.slurm_cluster_crd"->"module.root.helm_release.slurm_operator"[ shape="", style="solid" ];
 	"module.root.helm_release.slurm_cluster_storage"->"module.root.nebius_mk8s_v1alpha1_node_group.cpu"[ shape="", style="solid" ];
 	"module.root.helm_release.slurm_cluster_storage"->"module.root.nebius_mk8s_v1alpha1_node_group.gpu"[ shape="", style="solid" ];
 	"module.root.helm_release.slurm_cluster_storage"->"module.root.nebius_mk8s_v1alpha1_node_group.nlb"[ shape="", style="solid" ];
@@ -31,8 +32,7 @@ digraph "newbius" {
 	"module.root.nebius_mk8s_v1alpha1_node_group.gpu"->"module.root.nebius_compute_v1alpha1_gpu_cluster.this"[ shape="", style="solid" ];
 	"module.root.nebius_mk8s_v1alpha1_node_group.gpu"->"module.root.nebius_mk8s_v1alpha1_cluster.this"[ shape="", style="solid" ];
 	"module.root.nebius_mk8s_v1alpha1_node_group.nlb"->"module.root.nebius_mk8s_v1alpha1_cluster.this"[ shape="", style="solid" ];
-	"module.root.nebius_vpc_v1alpha1_allocation.this"->"module.root.data.nebius_iam_v1_project.this"[ shape="", style="solid" ];
-	"module.root.nebius_vpc_v1alpha1_allocation.this"->"module.root.data.nebius_vpc_v1alpha1_subnet.this"[ shape="", style="solid" ];
+	"module.root.nebius_vpc_v1alpha1_allocation.this"->"module.root.nebius_mk8s_v1alpha1_cluster.this"[ shape="", style="solid" ];
 	subgraph "cluster_module.root" {
 	label="module.root";
 	subgraph "cluster_module.root.module.filestore" {
@@ -51,6 +51,7 @@ digraph "newbius" {
 	"module.root.helm_release.gpu-operator" [ label="helm_release.gpu-operator", shape="box", style="rounded" ];
 	"module.root.helm_release.network_operator" [ label="helm_release.network_operator", shape="box", style="rounded" ];
 	"module.root.helm_release.slurm_cluster" [ label="helm_release.slurm_cluster", shape="box", style="rounded" ];
+	"module.root.helm_release.slurm_cluster_crd" [ label="helm_release.slurm_cluster_crd", shape="box", style="rounded" ];
 	"module.root.helm_release.slurm_cluster_storage" [ label="helm_release.slurm_cluster_storage", shape="box", style="rounded" ];
 	"module.root.helm_release.slurm_operator" [ label="helm_release.slurm_operator", shape="box", style="rounded" ];
 	"module.root.nebius_compute_v1alpha1_gpu_cluster.this" [ label="nebius_compute_v1alpha1_gpu_cluster.this", shape="box", style="rounded" ];

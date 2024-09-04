@@ -13,8 +13,9 @@ locals {
           slurm = "slurm.nebius.ai"
           mk8s  = "mk8s.nebius.ai"
         }
-        cluster_id = "cluster-id"
-        group_name = "group-name"
+        cluster_id   = "cluster-id"
+        cluster_name = "cluster-name"
+        group_name   = "group-name"
       }
     }
 
@@ -29,7 +30,10 @@ locals {
   }
 
   label_key = {
-    group_name = "${local.consts.k8s.label.domain.slurm}/${local.consts.k8s.label.group_name}"
+    k8s_cluster_id     = "${local.consts.k8s.label.domain.mk8s}/${local.consts.k8s.label.cluster_id}"
+    k8s_cluster_name   = "${local.consts.k8s.label.domain.mk8s}/${local.consts.k8s.label.cluster_name}"
+    slurm_cluster_name = "${local.consts.k8s.label.domain.slurm}/${local.consts.k8s.label.cluster_name}"
+    slurm_group_name   = "${local.consts.k8s.label.domain.slurm}/${local.consts.k8s.label.group_name}"
   }
 
   label = {
@@ -43,15 +47,15 @@ locals {
 
     group_name = {
       cpu = tomap({
-        (local.label_key.group_name) = (local.consts.value.ng_cpu)
+        (local.label_key.slurm_group_name) = (local.consts.value.ng_cpu)
       })
 
       gpu = tomap({
-        (local.label_key.group_name) = (local.consts.value.ng_gpu)
+        (local.label_key.slurm_group_name) = (local.consts.value.ng_gpu)
       })
 
       nlb = tomap({
-        (local.label_key.group_name) = (local.consts.value.ng_nlb)
+        (local.label_key.slurm_group_name) = (local.consts.value.ng_nlb)
       })
     }
   }

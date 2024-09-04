@@ -1,42 +1,62 @@
-#-----------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #
-#                                            Terraform - example values
 #
-#-----------------------------------------------------------------------------------------------------------------------
+#                          Terraform - example values
+#
+#
+#-------------------------------------------------------------------------------
 
-# region IAM
-#-----------------------------------------------------------------------------------------------------------------------
-#                                                        IAM
-#-----------------------------------------------------------------------------------------------------------------------
+# region Cloud
+#-------------------------------------------------------------------------------
+#
+#                                     Cloud
+#
+#-------------------------------------------------------------------------------
 
+# IAM token used for communicating with Nebius services.
+# Token is being passed via .envrc file.
+# Uncomment to override.
+# ---
+# iam_token = "<YOUR-IAM-TOKEN>"
+
+# ID of the IAM project.
 # Project ID is being passed via .envrc file.
 # Uncomment to override.
 # ---
 # iam_project_id = "project-<YOUR-PROJECT-ID>"
 
-# endregion IAM
-
-# region Common
-#-----------------------------------------------------------------------------------------------------------------------
-#                                                    Common
-#-----------------------------------------------------------------------------------------------------------------------
-
 # ID of VPC subnet.
 # ---
 vpc_subnet_id  = "vpcsubnet-<YOUR-SUBNET-ID>"
 
+# endregion Cloud
+
+# region Common
+#-------------------------------------------------------------------------------
+#
+#                                    Common
+#
+#-------------------------------------------------------------------------------
+
 # Additional labels used for all created resources.
 # ---
-# extra_labels = { "custom-label" = "custom-label-value"}
+# extra_labels = {
+#   "custom-label-key" = "custom-label-value"
+# }
 
 # endregion Common
 
 # region Infrastructure
-#-----------------------------------------------------------------------------------------------------------------------
-#                                                 Infrastructure
-#-----------------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#
+#                                Infrastructure
+#
+#-------------------------------------------------------------------------------
 
-# region Kubernetes
+# region k8s
+#-------------------------------------------------------------------------------
+#                                      k8s
+#-------------------------------------------------------------------------------
 
 # Version of the k8s to be used.
 # ---
@@ -47,6 +67,7 @@ vpc_subnet_id  = "vpcsubnet-<YOUR-SUBNET-ID>"
 # k8s_cluster_name = "slurm-k8s"
 
 # CPU-only node group specification.
+# Look at https://docs.nebius.ai/compute/virtual-machines/types/#cpu-configurations to choose the preset.
 # ---
 k8s_cluster_node_group_cpu = {
   size = 2
@@ -61,6 +82,7 @@ k8s_cluster_node_group_cpu = {
 }
 
 # GPU node group specification.
+# Look at https://docs.nebius.ai/compute/virtual-machines/types/#gpu-configurations to choose the preset.
 # ---
 k8s_cluster_node_group_gpu = {
   size = 2
@@ -77,24 +99,80 @@ k8s_cluster_node_group_gpu = {
   }
 }
 
-# endregion Kubernetes
+# endregion k8s
 
-# region Filestore
+# region Storage
+#-------------------------------------------------------------------------------
+#                                    Storage
+#-------------------------------------------------------------------------------
 
-# endregion Filestore
-
-# Whether to create new filestore filesystem.
-# By default, shared filesystem will be created from scratch. Uncomment to not create it.
+# Shared filesystem to be used on controller, worker, and login nodes.
 # ---
-# filestore_create = false
+# filestore_jail = {
+#   size_gibibytes       = 2048
+#   block_size_kibibytes = 32
+# }
 
-# ID of existing filestore to attach to.
-# By default, shared filesystem will be created from scratch. Uncomment to provide ID of existing Filestore.
+# Shared filesystem to be used on controller nodes.
 # ---
-#filestore_existing_id = "<ID of existing Filestore>"
+# filestore_controller_spool = {
+#   size_gibibytes       = 128
+#   block_size_kibibytes = 4
+# }
 
-# Size of the shared filesystem to be used on controller, worker, and login nodes.
+# Shared filesystems to be mounted inside jail.
 # ---
-# filestore_size_gibibytes = 2048
+# filestore_jail_submounts = [{
+#   name                 = "mlperf-sd"
+#   size_gibibytes       = 2048
+#   block_size_kibibytes = 32
+#   mount_path           = "/mlperf-sd"
+# }]
+
+# endregion Storage
 
 # endregion Infrastructure
+
+# region Slurm
+#-------------------------------------------------------------------------------
+#
+#                                     Slurm
+#
+#-------------------------------------------------------------------------------
+
+# Name of the Slurm cluster in k8s cluster.
+# ---
+# slurm_cluster_name = "my-amazing-slurm"
+
+# region Login
+#-------------------------------------------------------------------------------
+#                                     Login
+#-------------------------------------------------------------------------------
+
+# Type of the k8s service to connect to login nodes.
+# Could be either "LoadBalancer" or "NodePort".
+# By default, "LoadBalancer".
+# ---
+# slurm_login_service_type = "NodePort"
+
+# Authorized keys accepted for connecting to Slurm login nodes via SSH as 'root' user.
+# ---
+slurm_login_ssh_root_public_keys = [
+  "ENCRYPTION-METHOD HASH USER",
+]
+
+# endregion Login
+
+# region Config
+#-------------------------------------------------------------------------------
+#                                    Config
+#-------------------------------------------------------------------------------
+
+# Shared memory size for Slurm controller and worker nodes in GiB.
+# By default, 64.
+# ---
+# slurm_shared_memory_size_gibibytes = 64
+
+# endregion Config
+
+# endregion Slurm

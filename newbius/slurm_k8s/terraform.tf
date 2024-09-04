@@ -46,6 +46,14 @@ provider "helm" {
   }
 }
 
+provider "units" {}
+
+variable "extra_labels" {
+  description = "Additional labels used for all created resources."
+  type        = map(string)
+  default     = {}
+}
+
 module "labels" {
   source = "../modules/labels"
 
