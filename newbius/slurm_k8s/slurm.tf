@@ -1,25 +1,8 @@
-resource "helm_release" "slurm_operator" {
+resource "helm_release" "slurm_cluster_crd" {
   depends_on = [
     nebius_mk8s_v1_node_group.cpu,
     nebius_mk8s_v1_node_group.gpu,
     nebius_mk8s_v1_node_group.nlb,
-  ]
-
-  name       = local.helm.chart.operator.slurm
-  repository = local.helm.repository.slurm
-  chart      = local.helm.chart.operator.slurm
-  version    = local.helm.version.slurm
-
-  create_namespace = true
-  namespace        = local.helm.chart.operator.slurm
-
-  wait          = true
-  wait_for_jobs = true
-}
-
-resource "helm_release" "slurm_cluster_crd" {
-  depends_on = [
-    helm_release.slurm_operator
   ]
 
   name       = local.helm.chart.slurm_operator_crds
@@ -72,6 +55,23 @@ resource "helm_release" "slurm_cluster_storage" {
       }]
     }
   })]
+
+  wait          = true
+  wait_for_jobs = true
+}
+
+resource "helm_release" "slurm_operator" {
+  depends_on = [
+    helm_release.slurm_cluster_crd,
+  ]
+
+  name       = local.helm.chart.operator.slurm
+  repository = local.helm.repository.slurm
+  chart      = local.helm.chart.operator.slurm
+  version    = local.helm.version.slurm
+
+  create_namespace = true
+  namespace        = local.helm.chart.operator.slurm
 
   wait          = true
   wait_for_jobs = true

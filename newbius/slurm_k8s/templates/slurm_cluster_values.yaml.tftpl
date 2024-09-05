@@ -66,6 +66,7 @@ slurmNodes:
   worker:
     size: ${nodes.worker.size}
     k8sNodeFilterName: ${k8s_node_filters.gpu.name}
+    cgroupVersion: v2
     munge:
       resources:
         cpu: 500m
