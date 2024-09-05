@@ -1,9 +1,9 @@
 locals {
   consts = {
     node_group = {
-      control = "control"
-      cpu     = "cpu"
-      gpu     = "gpu"
+      cpu = "cpu"
+      gpu = "gpu"
+      nlb = "nlb"
     }
 
     filestore = {
@@ -14,18 +14,6 @@ locals {
 
   name = {
     node_group = {
-      control = join("-", [
-        trimsuffix(
-          substr(
-            var.k8s_cluster_name,
-            0,
-            64 - (length(local.consts.node_group.control) + 1)
-          ),
-          "-"
-        ),
-        local.consts.node_group.control
-      ])
-
       cpu = join("-", [
         trimsuffix(
           substr(
@@ -48,6 +36,18 @@ locals {
           "-"
         ),
         local.consts.node_group.gpu
+      ])
+
+      nlb = join("-", [
+        trimsuffix(
+          substr(
+            var.k8s_cluster_name,
+            0,
+            64 - (length(local.consts.node_group.nlb) + 1)
+          ),
+          "-"
+        ),
+        local.consts.node_group.nlb
       ])
     }
 
@@ -73,6 +73,7 @@ locals {
     chart = {
       slurm_cluster         = "slurm-cluster"
       slurm_cluster_storage = "slurm-cluster-storage"
+      slurm_operator_crds   = "slurm-operator-crds"
 
       operator = {
         network = "network-operator"
@@ -84,7 +85,23 @@ locals {
     version = {
       network = "24.4.1"
       gpu     = "v24.6.1"
-      slurm   = "1.10.1"
+      slurm   = "1.12.1"
     }
+  }
+
+  gpu = {
+    create_cluster = tomap({
+      "8gpu-128vcpu-1600gb" = true
+      "1gpu-20vcpu-200gb"   = false
+    })[var.k8s_cluster_node_group_gpu.resource.preset]
+
+    count = tomap({
+      "8gpu-128vcpu-1600gb" = 8
+      "1gpu-20vcpu-200gb"   = 1
+    })[var.k8s_cluster_node_group_gpu.resource.preset]
+  }
+
+  login = {
+    create_nlb_ng = var.slurm_login_service_type == "NodePort" ? true : false
   }
 }
