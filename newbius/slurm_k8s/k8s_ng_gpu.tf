@@ -1,4 +1,4 @@
-resource "nebius_compute_v1alpha1_gpu_cluster" "this" {
+resource "nebius_compute_v1_gpu_cluster" "this" {
   count = local.gpu.create_cluster ? 1 : 0
 
   parent_id = data.nebius_iam_v1_project.this.id
@@ -9,13 +9,13 @@ resource "nebius_compute_v1alpha1_gpu_cluster" "this" {
   infiniband_fabric = var.k8s_cluster_node_group_gpu.gpu_cluster.infiniband_fabric
 }
 
-resource "nebius_mk8s_v1alpha1_node_group" "gpu" {
+resource "nebius_mk8s_v1_node_group" "gpu" {
   depends_on = [
-    nebius_mk8s_v1alpha1_cluster.this,
-    nebius_compute_v1alpha1_gpu_cluster.this,
+    nebius_mk8s_v1_cluster.this,
+    nebius_compute_v1_gpu_cluster.this,
   ]
 
-  parent_id = nebius_mk8s_v1alpha1_cluster.this.id
+  parent_id = nebius_mk8s_v1_cluster.this.id
 
   name = local.name.node_group.gpu
   labels = merge(
@@ -40,7 +40,7 @@ resource "nebius_mk8s_v1alpha1_node_group" "gpu" {
       platform = var.k8s_cluster_node_group_gpu.resource.platform
       preset   = var.k8s_cluster_node_group_gpu.resource.preset
     }
-    gpu_cluster = local.gpu.create_cluster ? one(nebius_compute_v1alpha1_gpu_cluster.this) : null
+    gpu_cluster = local.gpu.create_cluster ? one(nebius_compute_v1_gpu_cluster.this) : null
 
     boot_disk = {
       type       = var.k8s_cluster_node_group_gpu.boot_disk.type
@@ -49,13 +49,13 @@ resource "nebius_mk8s_v1alpha1_node_group" "gpu" {
 
     filesystems = concat([{
       attach_mode = "READ_WRITE"
-      device_name = local.consts.filestore.jail
+      mount_tag   = local.consts.filestore.jail
       existing_filesystem = {
         id = module.filestore.jail.id
       }
       }], [for submount in var.filestore_jail_submounts : {
       attach_mode = "READ_WRITE"
-      device_name = "jail-submount-${submount.name}"
+      mount_tag   = "jail-submount-${submount.name}"
       existing_filesystem = {
         id = module.filestore.jail_submount[submount.name].id
       }

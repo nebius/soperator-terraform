@@ -2,7 +2,7 @@ module "filestore" {
   source = "../modules/filestore"
 
   iam_project_id   = data.nebius_iam_v1_project.this.id
-  k8s_cluster_id   = nebius_mk8s_v1alpha1_cluster.this.id
+  k8s_cluster_id   = nebius_mk8s_v1_cluster.this.id
   k8s_cluster_name = var.k8s_cluster_name
 
   jail = {

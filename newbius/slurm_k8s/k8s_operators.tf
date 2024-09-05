@@ -1,8 +1,8 @@
 resource "helm_release" "network_operator" {
   depends_on = [
-    nebius_mk8s_v1alpha1_node_group.cpu,
-    nebius_mk8s_v1alpha1_node_group.gpu,
-    nebius_mk8s_v1alpha1_node_group.nlb,
+    nebius_mk8s_v1_node_group.cpu,
+    nebius_mk8s_v1_node_group.gpu,
+    nebius_mk8s_v1_node_group.nlb,
   ]
 
   name       = local.helm.chart.operator.network

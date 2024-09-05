@@ -1,8 +1,8 @@
 resource "helm_release" "slurm_operator" {
   depends_on = [
-    nebius_mk8s_v1alpha1_node_group.cpu,
-    nebius_mk8s_v1alpha1_node_group.gpu,
-    nebius_mk8s_v1alpha1_node_group.nlb,
+    nebius_mk8s_v1_node_group.cpu,
+    nebius_mk8s_v1_node_group.gpu,
+    nebius_mk8s_v1_node_group.nlb,
   ]
 
   name       = local.helm.chart.operator.slurm
@@ -36,9 +36,9 @@ resource "helm_release" "slurm_cluster_crd" {
 
 resource "helm_release" "slurm_cluster_storage" {
   depends_on = [
-    nebius_mk8s_v1alpha1_node_group.cpu,
-    nebius_mk8s_v1alpha1_node_group.gpu,
-    nebius_mk8s_v1alpha1_node_group.nlb,
+    nebius_mk8s_v1_node_group.cpu,
+    nebius_mk8s_v1_node_group.gpu,
+    nebius_mk8s_v1_node_group.nlb,
     module.filestore,
   ]
 
@@ -126,10 +126,10 @@ resource "helm_release" "slurm_cluster" {
 
     nodes = {
       controller = {
-        size = nebius_mk8s_v1alpha1_node_group.cpu.fixed_node_count
+        size = nebius_mk8s_v1_node_group.cpu.fixed_node_count
       }
       worker = {
-        size = nebius_mk8s_v1alpha1_node_group.gpu.fixed_node_count
+        size = nebius_mk8s_v1_node_group.gpu.fixed_node_count
         resources = tomap({
           "8gpu-160vcpu-1600gb" = {
             cpu               = 156
@@ -147,7 +147,7 @@ resource "helm_release" "slurm_cluster" {
         shared_memory = var.slurm_shared_memory_size_gibibytes
       }
       login = {
-        size             = nebius_mk8s_v1alpha1_node_group.cpu.fixed_node_count
+        size             = nebius_mk8s_v1_node_group.cpu.fixed_node_count
         service_type     = var.slurm_login_service_type
         load_balancer_ip = local.login.create_nlb_ng ? "" : regexall("[\\d\\.]+", one(nebius_vpc_v1alpha1_allocation.this).status.details.allocated_cidr)[0]
         node_port        = 30022
@@ -165,7 +165,7 @@ resource "nebius_vpc_v1alpha1_allocation" "this" {
 
   depends_on = [
     data.nebius_vpc_v1alpha1_subnet.this,
-    nebius_mk8s_v1alpha1_cluster.this,
+    nebius_mk8s_v1_cluster.this,
   ]
 
   parent_id = data.nebius_iam_v1_project.this.id
@@ -174,8 +174,8 @@ resource "nebius_vpc_v1alpha1_allocation" "this" {
   labels = merge(
     module.labels.labels_common,
     tomap({
-      (module.labels.key_k8s_cluster_id)     = (nebius_mk8s_v1alpha1_cluster.this.id)
-      (module.labels.key_k8s_cluster_name)   = (nebius_mk8s_v1alpha1_cluster.this.name)
+      (module.labels.key_k8s_cluster_id)     = (nebius_mk8s_v1_cluster.this.id)
+      (module.labels.key_k8s_cluster_name)   = (nebius_mk8s_v1_cluster.this.name)
       (module.labels.key_slurm_cluster_name) = (var.slurm_cluster_name)
     })
   )

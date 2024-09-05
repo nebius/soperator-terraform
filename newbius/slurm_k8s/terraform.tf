@@ -2,7 +2,7 @@ terraform {
   required_providers {
     nebius = {
       source  = "terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius"
-      version = "0.3.12"
+      version = "0.3.18"
     }
 
     null = {
@@ -23,7 +23,7 @@ terraform {
     key    = "slurm.tfstate"
 
     endpoints = {
-      s3 = var.endpoint_s3
+      s3 = "https://storage.eu-north1.nebius.cloud:443"
     }
     region = "eu-north1"
 
@@ -40,8 +40,8 @@ provider "nebius" {
 
 provider "helm" {
   kubernetes {
-    host                   = nebius_mk8s_v1alpha1_cluster.this.status.control_plane.endpoints.public_endpoint
-    cluster_ca_certificate = nebius_mk8s_v1alpha1_cluster.this.status.control_plane.auth.cluster_ca_certificate
+    host                   = nebius_mk8s_v1_cluster.this.status.control_plane.endpoints.public_endpoint
+    cluster_ca_certificate = nebius_mk8s_v1_cluster.this.status.control_plane.auth.cluster_ca_certificate
     token                  = var.iam_token
   }
 }

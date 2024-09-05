@@ -1,4 +1,4 @@
-resource "nebius_compute_v1alpha1_filesystem" "jail" {
+resource "nebius_compute_v1_filesystem" "jail" {
   parent_id = var.iam_project_id
 
   name   = local.name.filesystem.jail
@@ -9,7 +9,7 @@ resource "nebius_compute_v1alpha1_filesystem" "jail" {
   block_size_bytes = data.units_data_size.jail_block.bytes
 }
 
-resource "nebius_compute_v1alpha1_filesystem" "controller_spool" {
+resource "nebius_compute_v1_filesystem" "controller_spool" {
   parent_id = var.iam_project_id
 
   name   = local.name.filesystem.controller_spool
@@ -20,7 +20,7 @@ resource "nebius_compute_v1alpha1_filesystem" "controller_spool" {
   block_size_bytes = data.units_data_size.controller_spool_block.bytes
 }
 
-resource "nebius_compute_v1alpha1_filesystem" "jail_submount" {
+resource "nebius_compute_v1_filesystem" "jail_submount" {
   for_each = tomap({ for submount in var.jail_submounts :
     submount.name => {
       name    = local.name.jail_submount[submount.name]

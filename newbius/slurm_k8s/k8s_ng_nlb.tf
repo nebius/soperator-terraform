@@ -4,14 +4,14 @@ data "units_data_size" "ng_nlb_boot_disk" {
   gibibytes = "64"
 }
 
-resource "nebius_mk8s_v1alpha1_node_group" "nlb" {
+resource "nebius_mk8s_v1_node_group" "nlb" {
   count = local.login.create_nlb_ng ? 1 : 0
 
   depends_on = [
-    nebius_mk8s_v1alpha1_cluster.this,
+    nebius_mk8s_v1_cluster.this,
   ]
 
-  parent_id = nebius_mk8s_v1alpha1_cluster.this.id
+  parent_id = nebius_mk8s_v1_cluster.this.id
 
   name = local.name.node_group.nlb
   labels = merge(

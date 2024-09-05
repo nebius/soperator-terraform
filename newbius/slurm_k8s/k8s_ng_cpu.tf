@@ -1,9 +1,9 @@
-resource "nebius_mk8s_v1alpha1_node_group" "cpu" {
+resource "nebius_mk8s_v1_node_group" "cpu" {
   depends_on = [
-    nebius_mk8s_v1alpha1_cluster.this,
+    nebius_mk8s_v1_cluster.this,
   ]
 
-  parent_id = nebius_mk8s_v1alpha1_cluster.this.id
+  parent_id = nebius_mk8s_v1_cluster.this.id
 
   name = local.name.node_group.cpu
   labels = merge(
@@ -31,19 +31,19 @@ resource "nebius_mk8s_v1alpha1_node_group" "cpu" {
 
     filesystems = concat([{
       attach_mode = "READ_WRITE"
-      device_name = local.consts.filestore.jail
+      mount_tag   = local.consts.filestore.jail
       existing_filesystem = {
         id = module.filestore.jail.id
       }
       }, {
       attach_mode = "READ_WRITE"
-      device_name = local.consts.filestore.controller_spool
+      mount_tag   = local.consts.filestore.controller_spool
       existing_filesystem = {
         id = module.filestore.controller_spool.id
       }
       }], [for submount in var.filestore_jail_submounts : {
       attach_mode = "READ_WRITE"
-      device_name = "jail-submount-${submount.name}"
+      mount_tag   = "jail-submount-${submount.name}"
       existing_filesystem = {
         id = module.filestore.jail_submount[submount.name].id
       }

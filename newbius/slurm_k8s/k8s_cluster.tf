@@ -1,4 +1,4 @@
-resource "nebius_mk8s_v1alpha1_cluster" "this" {
+resource "nebius_mk8s_v1_cluster" "this" {
   depends_on = [
     data.nebius_vpc_v1alpha1_subnet.this,
   ]

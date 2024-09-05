@@ -7,13 +7,6 @@ variable "endpoint_nebius" {
   default     = "api.eu-north1.nebius.cloud:443"
 }
 
-variable "endpoint_s3" {
-  description = "Endpoint for S3 backend."
-  type        = string
-  nullable    = false
-  default     = "https://storage.eu-north1.nebius.cloud:443"
-}
-
 # endregion endpoint
 
 # region iam
