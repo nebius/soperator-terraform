@@ -80,7 +80,7 @@ variable "k8s_cluster_node_group_gpu" {
     size = 2
     resource = {
       platform = "gpu-h100-sxm"
-      preset   = "8gpu-160vcpu-1600gb"
+      preset   = "8gpu-128vcpu-1600gb"
     }
     boot_disk = {
       type           = "NETWORK_SSD"
@@ -94,12 +94,12 @@ variable "k8s_cluster_node_group_gpu" {
   validation {
     condition = (
       (var.k8s_cluster_node_group_gpu.resource.platform == "gpu-h100-sxm") &&
-      (contains(["8gpu-160vcpu-1600gb", "1gpu-20vcpu-200gb"], var.k8s_cluster_node_group_gpu.resource.preset))
+      (contains(["8gpu-128vcpu-1600gb", "1gpu-20vcpu-200gb"], var.k8s_cluster_node_group_gpu.resource.preset))
     )
     error_message = <<EOF
       Wrong resource specification for GPU node group.
       - The only platform supported is `gpu-h100-sxm`
-      - Preset must be one of `8gpu-160vcpu-1600gb` or `1gpu-20vcpu-200gb`
+      - Preset must be one of `8gpu-128vcpu-1600gb` or `1gpu-20vcpu-200gb`
     EOF
   }
 }

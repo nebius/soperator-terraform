@@ -130,17 +130,18 @@ resource "helm_release" "slurm_cluster" {
       }
       worker = {
         size = nebius_mk8s_v1_node_group.gpu.fixed_node_count
+        # TODO make better use of ephemeral storage
         resources = tomap({
-          "8gpu-160vcpu-1600gb" = {
-            cpu               = 156
-            memory            = 1220
-            ephemeral_storage = 64
+          "8gpu-128vcpu-1600gb" = {
+            cpu               = 128 - 48
+            memory            = 1600 - 400
+            ephemeral_storage = ceil(data.units_data_size.boot_disk_ng_gpu.gibibytes / 2)
             gpus              = 8
           }
           "1gpu-20vcpu-200gb" = {
-            cpu               = 18
-            memory            = 150
-            ephemeral_storage = 16
+            cpu               = 20 - 4
+            memory            = 200 - 50
+            ephemeral_storage = ceil(data.units_data_size.boot_disk_ng_gpu.gibibytes / 2)
             gpus              = 1
           }
         })[var.k8s_cluster_node_group_gpu.resource.preset]

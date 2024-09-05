@@ -91,12 +91,12 @@ locals {
 
   gpu = {
     create_cluster = tomap({
-      "8gpu-160vcpu-1600gb" = true
+      "8gpu-128vcpu-1600gb" = true
       "1gpu-20vcpu-200gb"   = false
     })[var.k8s_cluster_node_group_gpu.resource.preset]
 
     count = tomap({
-      "8gpu-160vcpu-1600gb" = 8
+      "8gpu-128vcpu-1600gb" = 8
       "1gpu-20vcpu-200gb"   = 1
     })[var.k8s_cluster_node_group_gpu.resource.preset]
   }
