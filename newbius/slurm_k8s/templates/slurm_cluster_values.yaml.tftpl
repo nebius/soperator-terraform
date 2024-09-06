@@ -52,8 +52,12 @@ volumeSources:
 populateJail:
   k8sNodeFilterName: ${k8s_node_filters.gpu.name}
 
+ncclSettings:
+  topologyType: "${nccl_topology_type}"
+
 periodicChecks:
   ncclBenchmark:
+    enabled: true
     k8sNodeFilterName: ${k8s_node_filters.non_gpu.name}
     ncclArguments:
       useInfiniband: ${ncclBenchmark.use_infiniband}

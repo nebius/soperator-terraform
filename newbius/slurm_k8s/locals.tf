@@ -66,8 +66,9 @@ locals {
 
   helm = {
     repository = {
-      nvidia = "https://helm.ngc.nvidia.com/nvidia"
-      slurm  = "oci://cr.ai.nebius.cloud/crnefnj17i4kqgt3up94"
+      marketplace = "cr.nemax.nebius.cloud/yc-marketplace"
+      nvidia      = "oci://cr.nemax.nebius.cloud/yc-marketplace/nebius"
+      slurm       = "oci://cr.ai.nebius.cloud/crnefnj17i4kqgt3up94"
     }
 
     chart = {
@@ -83,8 +84,8 @@ locals {
     }
 
     version = {
-      network = "24.4.1"
-      gpu     = "v24.6.1"
+      network = "24.4.0"
+      gpu     = "v24.3.0"
       slurm   = "1.12.1"
     }
   }
