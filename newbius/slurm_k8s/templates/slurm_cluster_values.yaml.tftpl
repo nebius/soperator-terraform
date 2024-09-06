@@ -57,7 +57,7 @@ ncclSettings:
 
 periodicChecks:
   ncclBenchmark:
-    enabled: false
+    enabled: true
     k8sNodeFilterName: ${k8s_node_filters.non_gpu.name}
     ncclArguments:
       useInfiniband: ${ncclBenchmark.use_infiniband}
