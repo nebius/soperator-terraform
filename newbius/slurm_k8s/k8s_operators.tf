@@ -6,9 +6,11 @@ resource "helm_release" "network_operator" {
   ]
 
   name       = local.helm.chart.operator.network
-  repository = local.helm.repository.nvidia
+  repository = "${local.helm.repository.nvidia}/nvidia-${local.helm.chart.operator.network}/chart"
   chart      = local.helm.chart.operator.network
   version    = local.helm.version.network
+  atomic     = true
+  timeout    = 600
 
   create_namespace = true
   namespace        = local.helm.chart.operator.network
@@ -23,17 +25,40 @@ resource "helm_release" "gpu-operator" {
   ]
 
   name       = local.helm.chart.operator.gpu
-  repository = local.helm.repository.nvidia
+  repository = "${local.helm.repository.nvidia}/nvidia-${local.helm.chart.operator.gpu}/chart"
   chart      = local.helm.chart.operator.gpu
   version    = local.helm.version.gpu
+  atomic     = true
+  timeout    = 600
 
   create_namespace = true
   namespace        = local.helm.chart.operator.gpu
 
-  set {
-    name  = "driver.rdma.useHostMofed"
-    value = true
-  }
+  values = [templatefile("${path.module}/templates/gpu_operator_values.yaml.tftpl", {
+    repository       = local.helm.repository.marketplace
+    image_prefix     = "nebius/nvidia-gpu-operator/image"
+    operator_version = local.helm.version.gpu
+
+    enable = {
+      cc_manager             = false
+      dcgm                   = true
+      dcgm_exporter          = true
+      device_plugin          = true
+      driver                 = true
+      driver_rdma            = true
+      driver_rdma_host_mofed = false
+      gfd                    = true
+      kata_manager           = false
+      mig_manager            = true
+      nfd                    = true
+      node_status_exporter   = false
+      sandbox_device_plugin  = true
+      toolkit                = true
+      vfio_manager           = true
+      vgpu_device_manager    = true
+      vgpu_manager           = false
+    }
+  })]
 
   wait          = true
   wait_for_jobs = true
