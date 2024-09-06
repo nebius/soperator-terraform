@@ -120,6 +120,7 @@ resource "helm_release" "slurm_cluster" {
       mount_path = submount.mount_path
     }]
 
+    nccl_topology_type = var.k8s_cluster_node_group_gpu.resource.platform == "gpu-h100-sxm" ? "H100 GPU cluster" : "auto"
     ncclBenchmark = {
       use_infiniband = local.gpu.create_cluster
     }
