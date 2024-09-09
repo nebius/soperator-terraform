@@ -17,7 +17,6 @@ volume:
     - name: "${filestore.name}"
       filestoreDeviceName: "${filestore.name}"
       size: "${ceil(filestore.size / unit_gib)}Gi"
-      mountPath: "${filestore.mountPath}"
     %{ endfor }
   %{ endif }
 
@@ -35,3 +34,7 @@ scheduling:
         values:
           - "${kube_node_group_gpu.id}"
           - "${kube_node_group_non_gpu.id}"
+    tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule

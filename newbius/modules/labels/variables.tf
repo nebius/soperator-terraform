@@ -4,12 +4,6 @@ variable "custom_labels" {
   default     = {}
 }
 
-variable "ng_name_control" {
-  description = "Name of the 'control' node group."
-  type        = string
-  default     = "control"
-}
-
 variable "ng_name_cpu" {
   description = "Name of the 'cpu' node group."
   type        = string
@@ -17,6 +11,12 @@ variable "ng_name_cpu" {
 }
 
 variable "ng_name_gpu" {
+  description = "Name of the 'gpu' node group."
+  type        = string
+  default     = "gpu"
+}
+
+variable "ng_name_nlb" {
   description = "Name of the 'gpu' node group."
   type        = string
   default     = "gpu"

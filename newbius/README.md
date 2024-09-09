@@ -170,3 +170,37 @@ It can find and load variables from e.g. `.envrc` file.
 > # or
 > direnv reload
 > ```
+
+
+
+### Terraform CLI
+
+Install [Terraform CLI](https://developer.hashicorp.com/terraform/install).
+
+#### Initialization
+
+Run `terraform init` from [slurm_k8s](./slurm_k8s) directory.
+
+```shell
+cd slurm_k8s
+terraform init
+```
+
+## Create your cluster
+
+We provide [`terraform.tfvars.example`](./slurm_k8s/terraform.tfvars.example) that you can use as a reference for your
+cluster configuration.
+
+1. Copy this file to `terraform.tfvars`
+2. Change some values according to your needs and cloud environment.
+3. Run `terraform plan` to make sure if provided values create resources as you want.
+4. Run `terraform apply` to create resources based on provided values. You will be prompted to check if resources
+correspond to your needs. Type `yes` if the configuration is correct and watch the process.
+
+Once resource creation is done, you will be able to connect to Slurm login node via SSH using provided public key as a
+`root` user.
+
+```shell
+SLURM_IP='<NLB node / allocated IP address>'
+ssh -i '<Path to provided public key>' root@${SLURM_IP}
+```
