@@ -42,10 +42,18 @@ digraph {
 		"[root] var.k8s_cluster_node_group_cpu" [label = "var.k8s_cluster_node_group_cpu", shape = "note"]
 		"[root] var.k8s_cluster_node_group_gpu" [label = "var.k8s_cluster_node_group_gpu", shape = "note"]
 		"[root] var.k8s_version" [label = "var.k8s_version", shape = "note"]
+		"[root] var.nccl_benchmark_enable" [label = "var.nccl_benchmark_enable", shape = "note"]
+		"[root] var.nccl_benchmark_min_threshold" [label = "var.nccl_benchmark_min_threshold", shape = "note"]
+		"[root] var.nccl_benchmark_schedule" [label = "var.nccl_benchmark_schedule", shape = "note"]
 		"[root] var.slurm_cluster_name" [label = "var.slurm_cluster_name", shape = "note"]
+		"[root] var.slurm_login_node_port" [label = "var.slurm_login_node_port", shape = "note"]
 		"[root] var.slurm_login_service_type" [label = "var.slurm_login_service_type", shape = "note"]
 		"[root] var.slurm_login_ssh_root_public_keys" [label = "var.slurm_login_ssh_root_public_keys", shape = "note"]
 		"[root] var.slurm_shared_memory_size_gibibytes" [label = "var.slurm_shared_memory_size_gibibytes", shape = "note"]
+		"[root] var.telemetry_enable_otel_collector" [label = "var.telemetry_enable_otel_collector", shape = "note"]
+		"[root] var.telemetry_enable_prometheus" [label = "var.telemetry_enable_prometheus", shape = "note"]
+		"[root] var.telemetry_send_job_events" [label = "var.telemetry_send_job_events", shape = "note"]
+		"[root] var.telemetry_send_otel_metrics" [label = "var.telemetry_send_otel_metrics", shape = "note"]
 		"[root] var.vpc_subnet_id" [label = "var.vpc_subnet_id", shape = "note"]
 		"[root] data.nebius_iam_v1_project.this (expand)" -> "[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"]"
 		"[root] data.nebius_iam_v1_project.this (expand)" -> "[root] var.iam_project_id (validation)"
@@ -67,8 +75,16 @@ digraph {
 		"[root] helm_release.slurm_cluster (expand)" -> "[root] helm_release.slurm_cluster_storage (expand)"
 		"[root] helm_release.slurm_cluster (expand)" -> "[root] helm_release.slurm_operator (expand)"
 		"[root] helm_release.slurm_cluster (expand)" -> "[root] nebius_vpc_v1alpha1_allocation.this (expand)"
+		"[root] helm_release.slurm_cluster (expand)" -> "[root] var.nccl_benchmark_enable"
+		"[root] helm_release.slurm_cluster (expand)" -> "[root] var.nccl_benchmark_min_threshold"
+		"[root] helm_release.slurm_cluster (expand)" -> "[root] var.nccl_benchmark_schedule"
+		"[root] helm_release.slurm_cluster (expand)" -> "[root] var.slurm_login_node_port (validation)"
 		"[root] helm_release.slurm_cluster (expand)" -> "[root] var.slurm_login_ssh_root_public_keys"
 		"[root] helm_release.slurm_cluster (expand)" -> "[root] var.slurm_shared_memory_size_gibibytes"
+		"[root] helm_release.slurm_cluster (expand)" -> "[root] var.telemetry_enable_otel_collector"
+		"[root] helm_release.slurm_cluster (expand)" -> "[root] var.telemetry_enable_prometheus"
+		"[root] helm_release.slurm_cluster (expand)" -> "[root] var.telemetry_send_job_events"
+		"[root] helm_release.slurm_cluster (expand)" -> "[root] var.telemetry_send_otel_metrics"
 		"[root] helm_release.slurm_cluster_crd (expand)" -> "[root] local.helm (expand)"
 		"[root] helm_release.slurm_cluster_crd (expand)" -> "[root] nebius_mk8s_v1_node_group.cpu (expand)"
 		"[root] helm_release.slurm_cluster_crd (expand)" -> "[root] nebius_mk8s_v1_node_group.gpu (expand)"
@@ -265,6 +281,7 @@ digraph {
 		"[root] var.k8s_cluster_node_group_gpu (validation)" -> "[root] var.k8s_cluster_node_group_gpu"
 		"[root] var.k8s_version (validation)" -> "[root] var.k8s_version"
 		"[root] var.slurm_cluster_name (validation)" -> "[root] var.slurm_cluster_name"
+		"[root] var.slurm_login_node_port (validation)" -> "[root] var.slurm_login_node_port"
 		"[root] var.slurm_login_service_type (validation)" -> "[root] var.slurm_login_service_type"
 		"[root] var.vpc_subnet_id (validation)" -> "[root] var.vpc_subnet_id"
 	}
