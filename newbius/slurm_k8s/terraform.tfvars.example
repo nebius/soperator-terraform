@@ -180,4 +180,27 @@ slurm_login_ssh_root_public_keys = [
 
 # endregion Config
 
+# region NCCL benchmark
+#-------------------------------------------------------------------------------
+#                                    NCCL benchmark
+#-------------------------------------------------------------------------------
+
+# Whether to enable NCCL benchmark CronJob to benchmark GPU performance.
+# It won't take effect in case of 1-GPU hosts.
+# By default, true.
+# ---
+# nccl_benchmark_enable = false
+
+# NCCL benchmark's CronJob schedule.
+# By default, `0 */3 * * *` - every 3 hour.
+# ---
+# nccl_benchmark_enable = "0 */3 * * *"
+
+# Minimal threshold of NCCL benchmark for GPU performance to be considered as acceptable.
+# By default, 420.
+# ---
+# nccl_benchmark_min_threshold = 420
+
+# endregion NCCL benchmark
+
 # endregion Slurm

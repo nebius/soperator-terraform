@@ -57,10 +57,11 @@ ncclSettings:
 
 periodicChecks:
   ncclBenchmark:
-    enabled: true
+    enabled: ${ncclBenchmark.enable}
     k8sNodeFilterName: ${k8s_node_filters.non_gpu.name}
+    schedule: "${ncclBenchmark.schedule}"
     ncclArguments:
-      useInfiniband: ${ncclBenchmark.use_infiniband}
+      thresholdMoreThan: ${ncclBenchmark.min_threshold}
 
 slurmNodes:
   controller:

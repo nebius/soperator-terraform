@@ -122,7 +122,9 @@ resource "helm_release" "slurm_cluster" {
 
     nccl_topology_type = var.k8s_cluster_node_group_gpu.resource.platform == "gpu-h100-sxm" ? "H100 GPU cluster" : "auto"
     ncclBenchmark = {
-      use_infiniband = local.gpu.create_cluster
+      enable        = !startswith(var.k8s_cluster_node_group_gpu.resource.preset, "1gpu") ? var.nccl_benchmark_enable : false
+      schedule      = var.nccl_benchmark_schedule
+      min_threshold = var.nccl_benchmark_min_threshold
     }
 
     nodes = {

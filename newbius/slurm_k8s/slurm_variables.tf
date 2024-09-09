@@ -61,3 +61,25 @@ variable "slurm_shared_memory_size_gibibytes" {
 }
 
 # endregion Config
+
+# region NCCL benchmark
+
+variable "nccl_benchmark_enable" {
+  description = "Whether to enable NCCL benchmark CronJob to benchmark GPU performance. It won't take effect in case of 1-GPU hosts."
+  type        = bool
+  default     = true
+}
+
+variable "nccl_benchmark_schedule" {
+  description = "NCCL benchmark's CronJob schedule."
+  type        = string
+  default     = "0 */3 * * *"
+}
+
+variable "nccl_benchmark_min_threshold" {
+  description = "Minimal threshold of NCCL benchmark for GPU performance to be considered as acceptable."
+  type        = number
+  default     = 420
+}
+
+# endregion NCCL benchmark
