@@ -95,7 +95,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Resource pressure via PSI",
                   "fieldConfig": {
@@ -160,7 +160,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -176,7 +176,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -193,7 +193,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -214,7 +214,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Busy state of all CPU cores together",
                   "fieldConfig": {
@@ -284,7 +284,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -304,7 +304,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "System load  over all CPU cores together",
                   "fieldConfig": {
@@ -374,7 +374,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -394,7 +394,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Non available RAM memory",
                   "fieldConfig": {
@@ -455,7 +455,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -471,7 +471,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -491,7 +491,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Used Swap",
                   "fieldConfig": {
@@ -561,7 +561,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -579,7 +579,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Used Root FS",
                   "fieldConfig": {
@@ -649,7 +649,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -668,7 +668,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Total number of CPU cores",
                   "fieldConfig": {
@@ -734,7 +734,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -751,7 +751,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "System uptime",
                   "fieldConfig": {
@@ -819,7 +819,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -837,7 +837,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Total RootFS",
                   "fieldConfig": {
@@ -908,7 +908,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -928,7 +928,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Total RAM",
                   "fieldConfig": {
@@ -995,7 +995,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -1013,7 +1013,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Total SWAP",
                   "fieldConfig": {
@@ -1080,7 +1080,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -1124,7 +1124,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Basic CPU info",
                   "fieldConfig": {
@@ -1315,7 +1315,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "exemplar": false,
@@ -1332,7 +1332,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"user\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -1347,7 +1347,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"iowait\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -1361,7 +1361,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=~\".*irq\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -1375,7 +1375,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\",  mode!='idle',mode!='user',mode!='system',mode!='iowait',mode!='irq',mode!='softirq'}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -1389,7 +1389,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"idle\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -1407,7 +1407,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Basic memory usage",
                   "fieldConfig": {
@@ -1860,7 +1860,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_memory_MemTotal_bytes{instance=\"$node\",job=\"$job\"}",
                       "format": "time_series",
@@ -1873,7 +1873,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_memory_MemTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_MemFree_bytes{instance=\"$node\",job=\"$job\"} - (node_memory_Cached_bytes{instance=\"$node\",job=\"$job\"} + node_memory_Buffers_bytes{instance=\"$node\",job=\"$job\"} + node_memory_SReclaimable_bytes{instance=\"$node\",job=\"$job\"})",
                       "format": "time_series",
@@ -1886,7 +1886,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_memory_Cached_bytes{instance=\"$node\",job=\"$job\"} + node_memory_Buffers_bytes{instance=\"$node\",job=\"$job\"} + node_memory_SReclaimable_bytes{instance=\"$node\",job=\"$job\"}",
                       "format": "time_series",
@@ -1898,7 +1898,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_memory_MemFree_bytes{instance=\"$node\",job=\"$job\"}",
                       "format": "time_series",
@@ -1910,7 +1910,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "(node_memory_SwapTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_SwapFree_bytes{instance=\"$node\",job=\"$job\"})",
                       "format": "time_series",
@@ -1926,7 +1926,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Basic network info per interface",
                   "fieldConfig": {
@@ -2367,7 +2367,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "irate(node_network_receive_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])*8",
                       "format": "time_series",
@@ -2379,7 +2379,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "irate(node_network_transmit_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])*8",
                       "format": "time_series",
@@ -2395,7 +2395,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "Disk space used of all filesystems mounted",
                   "fieldConfig": {
@@ -2480,7 +2480,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "100 - ((node_filesystem_avail_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'} * 100) / node_filesystem_size_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'})",
                       "format": "time_series",
@@ -2522,7 +2522,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "",
                   "fieldConfig": {
@@ -2733,7 +2733,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"system\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -2748,7 +2748,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"user\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -2762,7 +2762,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"nice\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -2776,7 +2776,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"iowait\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -2790,7 +2790,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"irq\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -2804,7 +2804,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"softirq\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -2818,7 +2818,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"steal\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -2832,7 +2832,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum(irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"idle\"}[$__rate_interval])) / scalar(count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)))",
@@ -2851,7 +2851,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "",
                   "fieldConfig": {
@@ -3242,7 +3242,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_memory_MemTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_MemFree_bytes{instance=\"$node\",job=\"$job\"} - node_memory_Buffers_bytes{instance=\"$node\",job=\"$job\"} - node_memory_Cached_bytes{instance=\"$node\",job=\"$job\"} - node_memory_Slab_bytes{instance=\"$node\",job=\"$job\"} - node_memory_PageTables_bytes{instance=\"$node\",job=\"$job\"} - node_memory_SwapCached_bytes{instance=\"$node\",job=\"$job\"}",
                       "format": "time_series",
@@ -3255,7 +3255,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_memory_PageTables_bytes{instance=\"$node\",job=\"$job\"}",
                       "format": "time_series",
@@ -3268,7 +3268,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_memory_SwapCached_bytes{instance=\"$node\",job=\"$job\"}",
                       "format": "time_series",
@@ -3280,7 +3280,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_memory_Slab_bytes{instance=\"$node\",job=\"$job\"}",
                       "format": "time_series",
@@ -3293,7 +3293,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_memory_Cached_bytes{instance=\"$node\",job=\"$job\"}",
                       "format": "time_series",
@@ -3306,7 +3306,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_memory_Buffers_bytes{instance=\"$node\",job=\"$job\"}",
                       "format": "time_series",
@@ -3319,7 +3319,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_memory_MemFree_bytes{instance=\"$node\",job=\"$job\"}",
                       "format": "time_series",
@@ -3332,7 +3332,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "(node_memory_SwapTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_SwapFree_bytes{instance=\"$node\",job=\"$job\"})",
                       "format": "time_series",
@@ -3345,7 +3345,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_memory_HardwareCorrupted_bytes{instance=\"$node\",job=\"$job\"}",
                       "format": "time_series",
@@ -3362,7 +3362,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "fieldConfig": {
                     "defaults": {
@@ -3522,7 +3522,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "irate(node_network_receive_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])*8",
                       "format": "time_series",
@@ -3534,7 +3534,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "irate(node_network_transmit_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])*8",
                       "format": "time_series",
@@ -3550,7 +3550,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "",
                   "fieldConfig": {
@@ -3639,7 +3639,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "node_filesystem_size_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'} - node_filesystem_avail_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
                       "format": "time_series",
@@ -3655,7 +3655,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "",
                   "fieldConfig": {
@@ -4071,7 +4071,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "irate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\",device=~\"$diskdevices\"}[$__rate_interval])",
                       "intervalFactor": 4,
@@ -4082,7 +4082,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "irate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\",device=~\"$diskdevices\"}[$__rate_interval])",
                       "intervalFactor": 1,
@@ -4097,7 +4097,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "",
                   "fieldConfig": {
@@ -4300,7 +4300,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "irate(node_disk_read_bytes_total{instance=\"$node\",job=\"$job\",device=~\"$diskdevices\"}[$__rate_interval])",
                       "format": "time_series",
@@ -4313,7 +4313,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "irate(node_disk_written_bytes_total{instance=\"$node\",job=\"$job\",device=~\"$diskdevices\"}[$__rate_interval])",
                       "format": "time_series",
@@ -4330,7 +4330,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "description": "",
                   "fieldConfig": {
@@ -4447,7 +4447,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "expr": "irate(node_disk_io_time_seconds_total{instance=\"$node\",job=\"$job\",device=~\"$diskdevices\"} [$__rate_interval])",
                       "format": "time_series",
@@ -4465,7 +4465,7 @@ resource "helm_release" "node_exporter" {
                 {
                   "datasource": {
                     "type": "prometheus",
-                    "uid": "${datasource}"
+                    "uid": "prometheus"
                   },
                   "fieldConfig": {
                     "defaults": {
@@ -4582,7 +4582,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum by(instance) (irate(node_cpu_guest_seconds_total{instance=\"$node\",job=\"$job\", mode=\"user\"}[1m])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[1m])))",
@@ -4594,7 +4594,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "editorMode": "code",
                       "expr": "sum by(instance) (irate(node_cpu_guest_seconds_total{instance=\"$node\",job=\"$job\", mode=\"nice\"}[1m])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[1m])))",
@@ -4624,7 +4624,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -4969,7 +4969,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_Inactive_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -4981,7 +4981,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_Active_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -4997,7 +4997,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -5361,7 +5361,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_Committed_AS_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -5373,7 +5373,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_CommitLimit_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -5389,7 +5389,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -5734,7 +5734,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_Inactive_file_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -5747,7 +5747,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_Inactive_anon_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -5760,7 +5760,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_Active_file_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -5773,7 +5773,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_Active_anon_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -5790,7 +5790,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -6164,7 +6164,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_Writeback_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -6176,7 +6176,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_WritebackTmp_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -6188,7 +6188,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_Dirty_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -6204,7 +6204,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -6573,7 +6573,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_Mapped_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -6585,7 +6585,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_Shmem_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -6597,7 +6597,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_ShmemHugePages_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -6610,7 +6610,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_ShmemPmdMapped_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -6627,7 +6627,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -6972,7 +6972,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_KernelStack_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -6984,7 +6984,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_Percpu_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -7001,7 +7001,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -7360,7 +7360,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_VmallocChunk_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -7373,7 +7373,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_VmallocTotal_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -7386,7 +7386,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_VmallocUsed_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -7403,7 +7403,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -7774,7 +7774,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_AnonHugePages_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -7786,7 +7786,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_AnonPages_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -7802,7 +7802,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -8176,7 +8176,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_memory_NFS_Unstable_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -8219,7 +8219,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -8317,7 +8317,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_vmstat_pgpgin{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -8329,7 +8329,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_vmstat_pgpgout{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -8345,7 +8345,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -8443,7 +8443,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_vmstat_pswpin{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -8455,7 +8455,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_vmstat_pswpout{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -8471,7 +8471,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -8833,7 +8833,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_vmstat_pgfault{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -8845,7 +8845,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_vmstat_pgmajfault{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -8857,7 +8857,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_vmstat_pgfault{instance=\"$node\",job=\"$job\"}[$__rate_interval])  - irate(node_vmstat_pgmajfault{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -8873,7 +8873,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -9245,7 +9245,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_vmstat_oom_kill{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -9289,7 +9289,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -9391,7 +9391,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_timex_estimated_error_seconds{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -9405,7 +9405,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_timex_offset_seconds{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -9419,7 +9419,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_timex_maxerror_seconds{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -9437,7 +9437,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -9523,7 +9523,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_timex_loop_time_constant{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -9540,7 +9540,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -9642,7 +9642,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_timex_sync_status{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -9655,7 +9655,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_timex_frequency_adjustment_ratio{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -9672,7 +9672,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -9758,7 +9758,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_timex_tick_seconds{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -9771,7 +9771,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_timex_tai_offset_seconds{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -9815,7 +9815,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -9901,7 +9901,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_context_switches_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -9913,7 +9913,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_intr_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -9930,7 +9930,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -10016,7 +10016,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_load1{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -10028,7 +10028,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_load5{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -10040,7 +10040,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_load15{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -10056,7 +10056,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -10216,7 +10216,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "editorMode": "code",
                           "expr": "node_cpu_scaling_frequency_hertz{instance=\"$node\",job=\"$job\"}",
@@ -10232,7 +10232,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "editorMode": "code",
                           "expr": "avg(node_cpu_scaling_frequency_max_hertz{instance=\"$node\",job=\"$job\"})",
@@ -10248,7 +10248,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "editorMode": "code",
                           "expr": "avg(node_cpu_scaling_frequency_min_hertz{instance=\"$node\",job=\"$job\"})",
@@ -10268,7 +10268,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "https://docs.kernel.org/accounting/psi.html",
                       "fieldConfig": {
@@ -10416,7 +10416,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "editorMode": "code",
                           "expr": "rate(node_pressure_cpu_waiting_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
@@ -10430,7 +10430,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "editorMode": "code",
                           "expr": "rate(node_pressure_memory_waiting_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
@@ -10445,7 +10445,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "editorMode": "code",
                           "expr": "rate(node_pressure_memory_stalled_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
@@ -10460,7 +10460,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "editorMode": "code",
                           "expr": "rate(node_pressure_io_waiting_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
@@ -10475,7 +10475,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "editorMode": "code",
                           "expr": "rate(node_pressure_io_stalled_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
@@ -10494,7 +10494,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "Enable with --collector.interrupts argument on node-exporter",
                       "fieldConfig": {
@@ -10620,7 +10620,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_interrupts_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -10637,7 +10637,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -10722,7 +10722,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_schedstat_timeslices_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -10739,7 +10739,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -10825,7 +10825,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_entropy_available_bits{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -10841,7 +10841,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -10926,7 +10926,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(process_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -10943,7 +10943,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -11049,7 +11049,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "process_max_fds{instance=\"$node\",job=\"$job\"}",
                           "interval": "",
@@ -11061,7 +11061,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "process_open_fds{instance=\"$node\",job=\"$job\"}",
                           "interval": "",
@@ -11104,7 +11104,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -11229,7 +11229,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_hwmon_temp_celsius{instance=\"$node\",job=\"$job\"} * on(chip) group_left(chip_name) node_hwmon_chip_names{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -11242,7 +11242,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_hwmon_temp_crit_alarm_celsius{instance=\"$node\",job=\"$job\"} * on(chip) group_left(chip_name) node_hwmon_chip_names{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -11256,7 +11256,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_hwmon_temp_crit_celsius{instance=\"$node\",job=\"$job\"} * on(chip) group_left(chip_name) node_hwmon_chip_names{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -11269,7 +11269,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_hwmon_temp_crit_hyst_celsius{instance=\"$node\",job=\"$job\"} * on(chip) group_left(chip_name) node_hwmon_chip_names{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -11283,7 +11283,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_hwmon_temp_max_celsius{instance=\"$node\",job=\"$job\"} * on(chip) group_left(chip_name) node_hwmon_chip_names{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -11301,7 +11301,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -11406,7 +11406,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_cooling_device_cur_state{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -11420,7 +11420,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_cooling_device_max_state{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -11437,7 +11437,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -11522,7 +11522,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_power_supply_online{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -11567,7 +11567,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -11653,7 +11653,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_systemd_socket_accepted_connections_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -11670,7 +11670,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -11831,7 +11831,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_systemd_units{instance=\"$node\",job=\"$job\",state=\"activating\"}",
                           "format": "time_series",
@@ -11844,7 +11844,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_systemd_units{instance=\"$node\",job=\"$job\",state=\"active\"}",
                           "format": "time_series",
@@ -11857,7 +11857,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_systemd_units{instance=\"$node\",job=\"$job\",state=\"deactivating\"}",
                           "format": "time_series",
@@ -11870,7 +11870,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_systemd_units{instance=\"$node\",job=\"$job\",state=\"failed\"}",
                           "format": "time_series",
@@ -11883,7 +11883,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_systemd_units{instance=\"$node\",job=\"$job\",state=\"inactive\"}",
                           "format": "time_series",
@@ -11927,7 +11927,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "The number (after merges) of I/O requests completed per second for the device",
                       "fieldConfig": {
@@ -12326,7 +12326,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "intervalFactor": 4,
@@ -12337,7 +12337,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "intervalFactor": 1,
@@ -12352,7 +12352,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "The number of bytes read from or written to the device per second",
                       "fieldConfig": {
@@ -12751,7 +12751,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_read_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -12763,7 +12763,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_written_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -12779,7 +12779,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "The average time for requests issued to the device to be served. This includes the time spent by the requests in queue and the time spent servicing them.",
                       "fieldConfig": {
@@ -13178,7 +13178,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_read_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) / irate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "hide": false,
@@ -13191,7 +13191,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_write_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) / irate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "hide": false,
@@ -13208,7 +13208,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "The average queue length of the requests that were issued to the device",
                       "fieldConfig": {
@@ -13596,7 +13596,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_io_time_weighted_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "interval": "",
@@ -13612,7 +13612,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "The number of read and write requests merged per second that were queued to the device",
                       "fieldConfig": {
@@ -14011,7 +14011,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_reads_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "intervalFactor": 1,
@@ -14022,7 +14022,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_writes_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "intervalFactor": 1,
@@ -14037,7 +14037,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "Percentage of elapsed time during which I/O requests were issued to the device (bandwidth utilization for the device). Device saturation occurs when this value is close to 100% for devices serving requests serially.  But for devices  serving requests in parallel, such as RAID arrays and modern SSDs, this number does not reflect their performance limits.",
                       "fieldConfig": {
@@ -14425,7 +14425,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_io_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "interval": "",
@@ -14437,7 +14437,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_discard_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "interval": "",
@@ -14453,7 +14453,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "The number of outstanding requests at the instant the sample was taken. Incremented as requests are given to appropriate struct request_queue and decremented as they finish.",
                       "fieldConfig": {
@@ -14841,7 +14841,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_disk_io_now{instance=\"$node\",job=\"$job\"}",
                           "interval": "",
@@ -14857,7 +14857,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -15244,7 +15244,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_discards_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "interval": "",
@@ -15256,7 +15256,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_disk_discards_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "interval": "",
@@ -15299,7 +15299,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -15386,7 +15386,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_filesystem_avail_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
                           "format": "time_series",
@@ -15400,7 +15400,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_filesystem_free_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
                           "format": "time_series",
@@ -15413,7 +15413,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_filesystem_size_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
                           "format": "time_series",
@@ -15430,7 +15430,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -15517,7 +15517,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_filesystem_files_free{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
                           "format": "time_series",
@@ -15534,7 +15534,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -15621,7 +15621,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_filefd_maximum{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -15633,7 +15633,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_filefd_allocated{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -15649,7 +15649,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -15736,7 +15736,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_filesystem_files{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
                           "format": "time_series",
@@ -15753,7 +15753,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -15857,7 +15857,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_filesystem_readonly{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
                           "format": "time_series",
@@ -15869,7 +15869,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_filesystem_device_error{instance=\"$node\",job=\"$job\",device!~'rootfs',fstype!~'tmpfs'}",
                           "format": "time_series",
@@ -15913,7 +15913,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -16074,7 +16074,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_network_receive_packets_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -16087,7 +16087,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_network_transmit_packets_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -16104,7 +16104,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -16205,7 +16205,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_network_receive_errs_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -16217,7 +16217,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_network_transmit_errs_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -16233,7 +16233,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -16334,7 +16334,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_network_receive_drop_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -16346,7 +16346,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_network_transmit_drop_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -16362,7 +16362,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -16470,7 +16470,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_nf_conntrack_entries{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -16482,7 +16482,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_nf_conntrack_entries_limit{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -16498,7 +16498,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -16587,7 +16587,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_network_speed_bytes{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -16603,7 +16603,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -16691,7 +16691,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_network_up{operstate=\"up\",instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -16703,7 +16703,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_network_carrier{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -16745,7 +16745,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -16857,7 +16857,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Udp_InDatagrams{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -16870,7 +16870,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Udp_OutDatagrams{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -16887,7 +16887,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -16974,7 +16974,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Udp_InErrors{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -16987,7 +16987,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Udp_NoPorts{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -17000,7 +17000,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_UdpLite_InErrors{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "interval": "",
@@ -17010,7 +17010,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Udp_RcvbufErrors{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -17023,7 +17023,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Udp_SndbufErrors{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -17040,7 +17040,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -17152,7 +17152,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Tcp_InSegs{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -17166,7 +17166,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Tcp_OutSegs{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -17183,7 +17183,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -17272,7 +17272,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_TcpExt_ListenOverflows{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -17286,7 +17286,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_TcpExt_ListenDrops{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -17300,7 +17300,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_TcpExt_TCPSynRetrans{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -17313,7 +17313,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Tcp_RetransSegs{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "interval": "",
@@ -17323,7 +17323,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Tcp_InErrs{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "interval": "",
@@ -17333,7 +17333,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Tcp_OutRsts{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "interval": "",
@@ -17343,7 +17343,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "editorMode": "code",
                           "expr": "irate(node_netstat_TcpExt_TCPRcvQDrop{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
@@ -17356,7 +17356,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "editorMode": "code",
                           "expr": "irate(node_netstat_TcpExt_TCPOFOQueue{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
@@ -17373,7 +17373,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -17481,7 +17481,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_netstat_Tcp_CurrEstab{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -17495,7 +17495,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_netstat_Tcp_MaxConn{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -17513,7 +17513,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "fieldConfig": {
                         "defaults": {
@@ -17601,7 +17601,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Tcp_ActiveOpens{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -17614,7 +17614,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "irate(node_netstat_Tcp_PassiveOpens{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
                           "format": "time_series",
@@ -17658,7 +17658,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -17744,7 +17744,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_scrape_collector_duration_seconds{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -17762,7 +17762,7 @@ resource "helm_release" "node_exporter" {
                     {
                       "datasource": {
                         "type": "prometheus",
-                        "uid": "${datasource}"
+                        "uid": "prometheus"
                       },
                       "description": "",
                       "fieldConfig": {
@@ -17871,7 +17871,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_scrape_collector_success{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -17885,7 +17885,7 @@ resource "helm_release" "node_exporter" {
                         {
                           "datasource": {
                             "type": "prometheus",
-                            "uid": "${datasource}"
+                            "uid": "prometheus"
                           },
                           "expr": "node_textfile_scrape_error{instance=\"$node\",job=\"$job\"}",
                           "format": "time_series",
@@ -17949,7 +17949,7 @@ resource "helm_release" "node_exporter" {
                     },
                     "datasource": {
                       "type": "prometheus",
-                      "uid": "${datasource}"
+                      "uid": "prometheus"
                     },
                     "definition": "",
                     "hide": 0,
@@ -17974,7 +17974,7 @@ resource "helm_release" "node_exporter" {
                   {
                     "datasource": {
                       "type": "prometheus",
-                      "uid": "${datasource}"
+                      "uid": "prometheus"
                     },
                     "definition": "label_values(node_uname_info{job=\"$job\"}, instance)",
                     "hide": 0,
