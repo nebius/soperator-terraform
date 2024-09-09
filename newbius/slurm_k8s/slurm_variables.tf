@@ -33,6 +33,17 @@ variable "slurm_login_service_type" {
   }
 }
 
+variable "slurm_login_node_port" {
+  description = "Port of the host to be opened in case of use of `NodePort` service type."
+  type        = number
+  default     = 30022
+
+  validation {
+    condition     = var.slurm_login_node_port >= 30000 && var.slurm_login_node_port < 32768
+    error_message = "Invalid node port. It must be in range [30000,32768)."
+  }
+}
+
 variable "slurm_login_ssh_root_public_keys" {
   description = "Authorized keys accepted for connecting to Slurm login nodes via SSH as 'root' user."
   type        = list(string)
@@ -50,3 +61,53 @@ variable "slurm_shared_memory_size_gibibytes" {
 }
 
 # endregion Config
+
+# region NCCL benchmark
+
+variable "nccl_benchmark_enable" {
+  description = "Whether to enable NCCL benchmark CronJob to benchmark GPU performance. It won't take effect in case of 1-GPU hosts."
+  type        = bool
+  default     = true
+}
+
+variable "nccl_benchmark_schedule" {
+  description = "NCCL benchmark's CronJob schedule."
+  type        = string
+  default     = "0 */3 * * *"
+}
+
+variable "nccl_benchmark_min_threshold" {
+  description = "Minimal threshold of NCCL benchmark for GPU performance to be considered as acceptable."
+  type        = number
+  default     = 420
+}
+
+# endregion NCCL benchmark
+
+# region Telemetry
+
+variable "telemetry_enable_otel_collector" {
+  description = "Whether to enable Open Telemetry collector."
+  type        = bool
+  default     = true
+}
+
+variable "telemetry_enable_prometheus" {
+  description = "Whether to enable Prometheus."
+  type        = bool
+  default     = true
+}
+
+variable "telemetry_send_job_events" {
+  description = "Whether to send job events."
+  type        = bool
+  default     = true
+}
+
+variable "telemetry_send_otel_metrics" {
+  description = "Whether to send Open Telemetry metrics."
+  type        = bool
+  default     = true
+}
+
+# endregion Telemetry
