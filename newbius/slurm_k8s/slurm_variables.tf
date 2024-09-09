@@ -83,3 +83,31 @@ variable "nccl_benchmark_min_threshold" {
 }
 
 # endregion NCCL benchmark
+
+# region Telemetry
+
+variable "telemetry_enable_otel_collector" {
+  description = "Whether to enable Open Telemetry collector."
+  type        = bool
+  default     = true
+}
+
+variable "telemetry_enable_prometheus" {
+  description = "Whether to enable Prometheus."
+  type        = bool
+  default     = true
+}
+
+variable "telemetry_send_job_events" {
+  description = "Whether to send job events."
+  type        = bool
+  default     = true
+}
+
+variable "telemetry_send_otel_metrics" {
+  description = "Whether to send Open Telemetry metrics."
+  type        = bool
+  default     = true
+}
+
+# endregion Telemetry

@@ -203,4 +203,31 @@ slurm_login_ssh_root_public_keys = [
 
 # endregion NCCL benchmark
 
+# region Telemetry
+#-------------------------------------------------------------------------------
+#                                    Telemetry
+#-------------------------------------------------------------------------------
+
+# Whether to enable Open Telemetry collector.
+# By default, true.
+# ---
+# telemetry_enable_otel_collector = false
+
+# Whether to enable Prometheus.
+# By default, true.
+# ---
+# telemetry_enable_prometheus = false
+
+# Whether to send job events.
+# By default, true.
+# ---
+# telemetry_send_job_events = false
+
+# Whether to send Open Telemetry metrics.
+# By default, true.
+# ---
+# telemetry_send_otel_metrics = false
+
+# endregion Telemetry
+
 # endregion Slurm

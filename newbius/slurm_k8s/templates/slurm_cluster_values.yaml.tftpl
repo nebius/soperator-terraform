@@ -126,11 +126,11 @@ telemetry:
     otelCollectorHttpHost: vmsingle-slurm.monitoring-system.svc.cluster.local
     otelCollectorPath: /opentelemetry/api/v1/push
     otelCollectorPort: 8429
-    sendJobsEvents: true
-    sendOtelMetrics: true
+    sendJobsEvents: ${telemetry.send_job_events}
+    sendOtelMetrics: ${telemetry.send_otel_metrics}
   openTelemetryCollector:
-    enabled: true
+    enabled: ${telemetry.enable_otel}
     replicasOtelCollector: 1
     otelCollectorPort: 8429
   prometheus:
-    enabled: true
+    enabled: ${telemetry.enable_prometheus}

@@ -158,6 +158,13 @@ resource "helm_release" "slurm_cluster" {
         root_public_keys = var.slurm_login_ssh_root_public_keys
       }
     }
+
+    telemetry = {
+      enable_otel       = var.telemetry_enable_otel_collector
+      enable_prometheus = var.telemetry_enable_prometheus
+      send_job_events   = var.telemetry_send_job_events
+      send_otel_metrics = var.telemetry_send_otel_metrics
+    }
   })]
 
   wait          = true
