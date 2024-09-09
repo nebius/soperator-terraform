@@ -33,6 +33,17 @@ variable "slurm_login_service_type" {
   }
 }
 
+variable "slurm_login_node_port" {
+  description = "Port of the host to be opened in case of use of `NodePort` service type."
+  type        = number
+  default     = 30022
+
+  validation {
+    condition     = var.slurm_login_node_port >= 30000 && var.slurm_login_node_port < 32768
+    error_message = "Invalid node port. It must be in range [30000,32768)."
+  }
+}
+
 variable "slurm_login_ssh_root_public_keys" {
   description = "Authorized keys accepted for connecting to Slurm login nodes via SSH as 'root' user."
   type        = list(string)

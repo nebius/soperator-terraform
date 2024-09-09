@@ -152,7 +152,7 @@ resource "helm_release" "slurm_cluster" {
         size             = nebius_mk8s_v1_node_group.cpu.fixed_node_count
         service_type     = var.slurm_login_service_type
         load_balancer_ip = local.login.create_nlb_ng ? "" : regexall("[\\d\\.]+", one(nebius_vpc_v1alpha1_allocation.this).status.details.allocated_cidr)[0]
-        node_port        = 30022
+        node_port        = var.slurm_login_node_port
         root_public_keys = var.slurm_login_ssh_root_public_keys
       }
     }

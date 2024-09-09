@@ -155,6 +155,11 @@ k8s_cluster_node_group_gpu = {
 # ---
 # slurm_login_service_type = "NodePort"
 
+# Port of the host to be opened in case of use of `NodePort` service type.
+# By default, 30022.
+# ---
+# slurm_login_node_port = 30022
+
 # Authorized keys accepted for connecting to Slurm login nodes via SSH as 'root' user.
 # ---
 slurm_login_ssh_root_public_keys = [
