@@ -281,7 +281,7 @@ slurm_cluster_worker_volume_spool_size = 128 * (1024 * 1024 * 1024) # 128Gi
 ## SLURM OPERATOR CONFIGURATION
 
 ### Version of the Slurm operator. Typically, should be left default.
-slurm_operator_version = "1.10.3"
+slurm_operator_version = "1.12.1"
 
 
 
