@@ -31,6 +31,7 @@ resource "helm_release" "slurm_operator_crd" {
   ]
   name       = "slurm-operator-crd"
   namespace  = local.slurm_chart_operator
+  create_namespace = true
   repository = "https://bedag.github.io/helm-charts/"
   chart      = "raw"
   version    = "2.0.0"

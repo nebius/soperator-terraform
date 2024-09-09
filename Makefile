@@ -1,3 +1,6 @@
+SHELL = /usr/bin/env bash -o pipefail
+.SHELLFLAGS = -ec
+
 SLURM_VERSION					= 24.05.2
 UBUNTU_VERSION					= jammy
 VERSION							= $(shell cat VERSION)
@@ -9,12 +12,13 @@ RESET							= '\033[0m'
 ifeq ($(shell uname), Darwin)
     SHA_CMD = shasum -a 256
     SED_COMMAND = sed -i ''
+    USER_MAIL					= $(shell git config user.email)
 else
     SHA_CMD = sha256sum
     SED_COMMAND = sed -i
+    USER_MAIL					= $(shell git log -1 --pretty=format:'%ae')
 endif
 ifeq ($(UNSTABLE), true)
-	USER_MAIL					= $(shell git log -1 --pretty=format:'%ae')
     SHORT_SHA 					= $(shell echo -n "$(USER_MAIL)-$(VERSION)" | $(SHA_CMD) | cut -c1-8)
 	IMAGE_TAG					= $(VERSION)-$(SHORT_SHA)
 endif

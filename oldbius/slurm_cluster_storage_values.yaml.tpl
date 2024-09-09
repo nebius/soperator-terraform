@@ -34,3 +34,7 @@ scheduling:
         values:
           - "${kube_node_group_gpu.id}"
           - "${kube_node_group_non_gpu.id}"
+    tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule
