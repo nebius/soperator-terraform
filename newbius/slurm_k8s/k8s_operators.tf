@@ -34,7 +34,7 @@ resource "helm_release" "gpu-operator" {
   create_namespace = true
   namespace        = local.helm.chart.operator.gpu
 
-  values = [templatefile("${path.module}/templates/gpu_operator_values.yaml.tftpl", {
+  values = [templatefile("${path.module}/templates/helm_values/gpu_operator.yaml.tftpl", {
     repository       = local.helm.repository.marketplace
     image_prefix     = "nebius/nvidia-gpu-operator/image"
     operator_version = local.helm.version.gpu
