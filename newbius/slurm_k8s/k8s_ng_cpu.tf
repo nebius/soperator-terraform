@@ -1,6 +1,9 @@
 resource "nebius_mk8s_v1_node_group" "cpu" {
   depends_on = [
     nebius_mk8s_v1_cluster.this,
+    module.filestore.controller_spool,
+    module.filestore.jail,
+    module.filestore.jail_submount,
   ]
 
   parent_id = nebius_mk8s_v1_cluster.this.id
