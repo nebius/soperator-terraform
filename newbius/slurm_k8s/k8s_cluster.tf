@@ -15,5 +15,7 @@ resource "nebius_mk8s_v1_cluster" "this" {
     endpoints = {
       public_endpoint = {}
     }
+
+    etcd_cluster_size = 3
   }
 }
