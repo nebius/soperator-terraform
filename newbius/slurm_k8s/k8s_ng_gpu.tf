@@ -13,6 +13,8 @@ resource "nebius_mk8s_v1_node_group" "gpu" {
   depends_on = [
     nebius_mk8s_v1_cluster.this,
     nebius_compute_v1_gpu_cluster.this,
+    module.filestore.jail,
+    module.filestore.jail_submount,
   ]
 
   parent_id = nebius_mk8s_v1_cluster.this.id
