@@ -33,7 +33,7 @@ resource "helm_release" "slurm_cluster_storage" {
   create_namespace = true
   namespace        = var.slurm_cluster_name
 
-  values = [templatefile("${path.module}/templates/slurm_cluster_storage_values.yaml.tftpl", {
+  values = [templatefile("${path.module}/templates/helm_values/slurm_cluster_storage.yaml.tftpl", {
     scheduling = {
       key = module.labels.key_slurm_node_group_name
       cpu = local.consts.node_group.cpu
@@ -95,7 +95,7 @@ resource "helm_release" "slurm_cluster" {
   create_namespace = true
   namespace        = var.slurm_cluster_name
 
-  values = [templatefile("${path.module}/templates/slurm_cluster_values.yaml.tftpl", {
+  values = [templatefile("${path.module}/templates/helm_values/slurm_cluster.yaml.tftpl", {
     name = var.slurm_cluster_name
 
     k8s_node_filters = {
