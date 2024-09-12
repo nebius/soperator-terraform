@@ -101,8 +101,11 @@ Let's start with exporting your tenant and project IDs for a further use.
 #### Bucket
 
 ```bash
-nebius storage bucket create --parent-id "${NEBIUS_PROJECT_ID}" --versioning-policy 'enabled' --name 'slurm-terraform-state'
+NEBIUS_BUCKET_NAME="tfstate-slurm-k8s-$(echo -n "${NEBIUS_TENANT_ID}-${NEBIUS_PROJECT_ID}" | md5sum | awk '$0=$1')"
+nebius storage bucket create --parent-id "${NEBIUS_PROJECT_ID}" --versioning-policy 'enabled' --name "${NEBIUS_BUCKET_NAME}"
 ```
+
+> `NEBIUS_BUCKET_NAME` contains unique bucket name dedicated to the project inside your tenant. 
 
 > `--versioning-policy 'enabled'` allows you to keep track of versions made by Terraform.
 > It gives you a possibility to roll back to specified version of TF state in case your installation is broken.
