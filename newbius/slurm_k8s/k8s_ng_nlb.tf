@@ -39,7 +39,7 @@ resource "nebius_mk8s_v1_node_group" "nlb" {
 
     network_interfaces = [{
       public_ip_address = {}
-      subnet_id         = data.nebius_vpc_v1alpha1_subnet.this.id
+      subnet_id         = data.nebius_vpc_v1_subnet.this.id
     }]
   }
 }
