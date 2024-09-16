@@ -40,23 +40,24 @@ resource "helm_release" "gpu-operator" {
     operator_version = local.helm.version.gpu
 
     enable = {
-      cc_manager             = false
-      dcgm                   = true
-      dcgm_exporter          = true
-      device_plugin          = true
-      driver                 = true
-      driver_rdma            = true
-      driver_rdma_host_mofed = false
-      gfd                    = true
-      kata_manager           = false
-      mig_manager            = true
-      nfd                    = true
-      node_status_exporter   = false
-      sandbox_device_plugin  = true
-      toolkit                = true
-      vfio_manager           = true
-      vgpu_device_manager    = true
-      vgpu_manager           = false
+      cc_manager                    = false
+      dcgm                          = true
+      dcgm_exporter                 = true
+      dcgm_exporter_service_monitor = true
+      device_plugin                 = true
+      driver                        = true
+      driver_rdma                   = true
+      driver_rdma_host_mofed        = false
+      gfd                           = true
+      kata_manager                  = false
+      mig_manager                   = true
+      nfd                           = true
+      node_status_exporter          = false
+      sandbox_device_plugin         = true
+      toolkit                       = true
+      vfio_manager                  = true
+      vgpu_device_manager           = true
+      vgpu_manager                  = false
     }
   })]
 
