@@ -1,0 +1,23 @@
+prometheusOperator:
+  enabled: false
+
+alertmanager:
+  enabled: false
+
+grafana:
+  enabled: true
+  alertmanager:
+    enabled: false
+  sidecar:
+    datasources:
+      url: "http://${otel_collector.host}.:${otel_collector.port}"
+  defaultDashboardsEnabled: false
+
+kubeStateMetrics:
+  enabled: true
+
+nodeExporter:
+  enabled: true
+
+prometheus:
+  enabled: false
