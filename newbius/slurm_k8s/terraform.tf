@@ -1,8 +1,10 @@
 terraform {
+  required_version = ">=1.8.0"
+
   required_providers {
     nebius = {
       source  = "terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius"
-      version = "0.3.18"
+      version = "0.3.22"
     }
 
     null = {
@@ -10,7 +12,8 @@ terraform {
     }
 
     units = {
-      source = "dstaroff/units"
+      source  = "dstaroff/units"
+      version = ">=1.1.1"
     }
 
     helm = {

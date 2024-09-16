@@ -1,6 +1,6 @@
 resource "nebius_mk8s_v1_cluster" "this" {
   depends_on = [
-    data.nebius_vpc_v1alpha1_subnet.this,
+    data.nebius_vpc_v1_subnet.this,
   ]
 
   parent_id = data.nebius_iam_v1_project.this.id
@@ -9,7 +9,7 @@ resource "nebius_mk8s_v1_cluster" "this" {
   labels = module.labels.labels_common
 
   control_plane = {
-    subnet_id = data.nebius_vpc_v1alpha1_subnet.this.id
+    subnet_id = data.nebius_vpc_v1_subnet.this.id
 
     version = var.k8s_version
     endpoints = {
