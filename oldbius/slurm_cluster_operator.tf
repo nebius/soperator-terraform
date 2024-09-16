@@ -18,8 +18,13 @@ resource "helm_release" "slurm_operator" {
   }
 
   set {
-    name  = "opentelemetryOperator.enabled"
+    name  = "isOpenTelemetryCollectorCrdInstalled"
     value = tobool(var.k8s_cluster_operator_opentelemetry_operator_enabled)
+  }
+
+  set {
+    name  = "isPrometheusCrdInstalled"
+    value = tobool(var.k8s_monitoring_enabled)
   }
 
   wait = true
@@ -29,12 +34,12 @@ resource "helm_release" "slurm_operator_crd" {
   depends_on = [
     module.k8s_cluster,
   ]
-  name       = "slurm-operator-crd"
-  namespace  = local.slurm_chart_operator
+  name             = "slurm-operator-crd"
+  namespace        = local.slurm_chart_operator
   create_namespace = true
-  repository = "https://bedag.github.io/helm-charts/"
-  chart      = "raw"
-  version    = "2.0.0"
+  repository       = "https://bedag.github.io/helm-charts/"
+  chart            = "raw"
+  version          = "2.0.0"
   values = [
     file("${path.module}${var.path_crd_file_yaml}"),
   ]
