@@ -12,6 +12,9 @@ dcgmExporter:
   enabled: ${enable.dcgm_exporter}
   repository: "${repository}"
   image: "${image_prefix}/dcgm-exporter"
+  serviceMonitor:
+    enabled: ${enable.dcgm_exporter_service_monitor}
+    interval: 30s
 
 devicePlugin:
   enabled: ${enable.device_plugin}
