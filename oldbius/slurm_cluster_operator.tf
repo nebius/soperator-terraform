@@ -18,8 +18,13 @@ resource "helm_release" "slurm_operator" {
   }
 
   set {
-    name  = "opentelemetryOperator.enabled"
+    name  = "isOpenTelemetryCollectorCrdInstalled"
     value = tobool(var.k8s_cluster_operator_opentelemetry_operator_enabled)
+  }
+
+    set {
+    name  = "isPrometheusCrdInstalled"
+    value = tobool(var.k8s_monitoring_enabled)
   }
 
   wait = true
