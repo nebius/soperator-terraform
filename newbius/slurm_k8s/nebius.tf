@@ -45,7 +45,7 @@ variable "vpc_subnet_id" {
     error_message = "The ID of the VPC subnet must start with `vpcsubnet-`."
   }
 }
-data "nebius_vpc_v1alpha1_subnet" "this" {
+data "nebius_vpc_v1_subnet" "this" {
   id = var.vpc_subnet_id
 }
 

@@ -1,4 +1,5 @@
 resource "helm_release" "slurm_cluster_crd" {
+  count = 0
   depends_on = [
     nebius_mk8s_v1_node_group.cpu,
     nebius_mk8s_v1_node_group.gpu,
@@ -84,7 +85,7 @@ resource "helm_release" "slurm_cluster" {
     helm_release.slurm_operator,
     helm_release.slurm_cluster_crd,
     helm_release.slurm_cluster_storage,
-    nebius_vpc_v1alpha1_allocation.this,
+    nebius_vpc_v1_allocation.this,
   ]
 
   name       = local.helm.chart.slurm_cluster
@@ -153,7 +154,7 @@ resource "helm_release" "slurm_cluster" {
       login = {
         size             = nebius_mk8s_v1_node_group.cpu.fixed_node_count
         service_type     = var.slurm_login_service_type
-        load_balancer_ip = local.login.create_nlb_ng ? "" : regexall("[\\d\\.]+", one(nebius_vpc_v1alpha1_allocation.this).status.details.allocated_cidr)[0]
+        load_balancer_ip = local.login.create_nlb_ng ? "" : regexall("[\\d\\.]+", one(nebius_vpc_v1_allocation.this).status.details.allocated_cidr)[0]
         node_port        = var.slurm_login_node_port
         root_public_keys = var.slurm_login_ssh_root_public_keys
       }
@@ -171,11 +172,11 @@ resource "helm_release" "slurm_cluster" {
   wait_for_jobs = true
 }
 
-resource "nebius_vpc_v1alpha1_allocation" "this" {
+resource "nebius_vpc_v1_allocation" "this" {
   count = local.login.create_nlb_ng ? 0 : 1
 
   depends_on = [
-    data.nebius_vpc_v1alpha1_subnet.this,
+    data.nebius_vpc_v1_subnet.this,
     nebius_mk8s_v1_cluster.this,
   ]
 
@@ -191,5 +192,7 @@ resource "nebius_vpc_v1alpha1_allocation" "this" {
     })
   )
 
-  ipv4_public = {}
+  ipv4_public = {
+    subnet_id = data.nebius_vpc_v1_subnet.this.id
+  }
 }
