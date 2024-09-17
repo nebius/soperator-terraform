@@ -45,6 +45,7 @@ locals {
     slurm_cluster_login_sshd_keys_secret_name         = var.slurm_cluster_login_sshd_keys_secret_name,
     k8s_cluster_node_group_gpu                        = var.k8s_cluster_node_group_gpu,
     shared_memory_size                                = var.shared_memory_size,
+    slurm_cluster_exporter_enabled                    = var.slurm_cluster_exporter_enabled
   })
 }
 

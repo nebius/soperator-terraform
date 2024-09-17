@@ -52,6 +52,16 @@ variable "slurm_login_ssh_root_public_keys" {
 
 # endregion Login
 
+# region Exporter
+
+variable "slurm_exporter_enabled" {
+  description = "Enable or disable slurm exporter metrics"
+  type        = bool
+  default     = true
+}
+
+# endregion Exporter
+
 # region Config
 
 variable "slurm_shared_memory_size_gibibytes" {
@@ -88,12 +98,6 @@ variable "nccl_benchmark_min_threshold" {
 
 variable "telemetry_enable_otel_collector" {
   description = "Whether to enable Open Telemetry collector."
-  type        = bool
-  default     = true
-}
-
-variable "telemetry_enable_prometheus" {
-  description = "Whether to enable Prometheus."
   type        = bool
   default     = true
 }

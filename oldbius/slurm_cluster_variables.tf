@@ -232,7 +232,7 @@ variable "slurm_cluster_node_login_munge_resources" {
 variable "slurm_operator_version" {
   description = "Version of Slurm operator Helm chart."
   type        = string
-  default     = "1.13.1"
+  default     = "1.13.5"
 }
 
 variable "shared_memory_size" {
@@ -245,4 +245,10 @@ variable "path_crd_file_yaml" {
   description = "Path to the CRD file"
   type        = string
   default     = "/slurmcluster-crd.yaml"
+}
+
+variable "slurm_cluster_exporter_enabled" {
+  description = "Enable or disable slurm exporter metrics"
+  type        = bool
+  default     = true
 }
