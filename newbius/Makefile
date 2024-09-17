@@ -11,9 +11,9 @@ graph.svg: graph.viz
 
 .PHONY: graph.viz
 graph.viz:
-	cd slurm_k8s && \
+	cd installations/example && \
 	terraform graph -type plan > $@
-	mv slurm_k8s/$@ imgs/$@
+	mv installations/example/$@ imgs/$@
 
 .PHONY: graph-beautified.svg
 graph-beautified.svg: imgs/tgbeauty graph-beautified.viz
@@ -27,7 +27,6 @@ graph-beautified.viz: imgs/tgbeauty graph.viz
 	  --exclude 'var.' \
 	  --exclude 'local.' \
 	  --exclude 'module.labels.' \
-	  --exclude 'data.units' \
 	  --output-type graphviz > imgs/$@
 
 .PHONY: tooling

@@ -5,3 +5,7 @@ terraform {
     }
   }
 }
+
+module "labels" {
+  source = "../labels"
+}

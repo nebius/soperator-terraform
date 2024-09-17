@@ -1,23 +1,21 @@
-resource "nebius_compute_v1_filesystem" "jail" {
-  parent_id = var.iam_project_id
-
-  name   = local.name.filesystem.jail
-  labels = module.labels.labels_common
-
-  type             = var.jail.disk_type
-  size_bytes       = data.units_data_size.jail_storage.bytes
-  block_size_bytes = data.units_data_size.jail_block.bytes
-}
-
 resource "nebius_compute_v1_filesystem" "controller_spool" {
   parent_id = var.iam_project_id
 
-  name   = local.name.filesystem.controller_spool
-  labels = module.labels.labels_common
+  name = local.name.filesystem.controller_spool
 
   type             = var.controller_spool.disk_type
-  size_bytes       = data.units_data_size.controller_spool_storage.bytes
-  block_size_bytes = data.units_data_size.controller_spool_block.bytes
+  size_bytes       = provider::units::from_gib(var.controller_spool.size_gibibytes)
+  block_size_bytes = provider::units::from_kib(var.controller_spool.block_size_kibibytes)
+}
+
+resource "nebius_compute_v1_filesystem" "jail" {
+  parent_id = var.iam_project_id
+
+  name = local.name.filesystem.jail
+
+  type             = var.jail.disk_type
+  size_bytes       = provider::units::from_gib(var.jail.size_gibibytes)
+  block_size_bytes = provider::units::from_kib(var.jail.block_size_kibibytes)
 }
 
 resource "nebius_compute_v1_filesystem" "jail_submount" {
@@ -25,17 +23,16 @@ resource "nebius_compute_v1_filesystem" "jail_submount" {
     submount.name => {
       name    = local.name.jail_submount[submount.name]
       type    = submount.disk_type
-      storage = data.units_data_size.jail_submount_storage[submount.name]
-      block   = data.units_data_size.jail_submount_block[submount.name]
+      storage = provider::units::from_gib(submount.size_gibibytes)
+      block   = provider::units::from_kib(submount.block_size_kibibytes)
     }
   })
 
   parent_id = var.iam_project_id
 
-  name   = each.value.name
-  labels = module.labels.labels_common
+  name = each.value.name
 
   type             = each.value.type
-  size_bytes       = each.value.storage.bytes
-  block_size_bytes = each.value.block.bytes
+  size_bytes       = each.value.storage
+  block_size_bytes = each.value.block
 }

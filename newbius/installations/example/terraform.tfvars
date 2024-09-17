@@ -28,27 +28,12 @@
 # iam_project_id = "project-<YOUR-PROJECT-ID>"
 
 # ID of VPC subnet.
+# Subnet ID is being passed via .envrc file.
+# Uncomment to override.
 # ---
-vpc_subnet_id  = "vpcsubnet-<YOUR-SUBNET-ID>"
+#vpc_subnet_id = "vpcsubnet-<YOUR-SUBNET-ID>"
 
 # endregion Cloud
-
-#----------------------------------------------------------------------------------------------------------------------#
-#                                                                                                                      #
-#                                                                                                                      #
-#                                                        Common                                                        #
-#                                                                                                                      #
-#                                                                                                                      #
-#----------------------------------------------------------------------------------------------------------------------#
-# region Common
-
-# Additional labels used for all created resources.
-# ---
-# extra_labels = {
-#   "custom-label-key" = "custom-label-value"
-# }
-
-# endregion Common
 
 #----------------------------------------------------------------------------------------------------------------------#
 #                                                                                                                      #
@@ -58,6 +43,38 @@ vpc_subnet_id  = "vpcsubnet-<YOUR-SUBNET-ID>"
 #                                                                                                                      #
 #----------------------------------------------------------------------------------------------------------------------#
 # region Infrastructure
+
+#----------------------------------------------------------------------------------------------------------------------#
+#                                                                                                                      #
+#                                                        Storage                                                       #
+#                                                                                                                      #
+#----------------------------------------------------------------------------------------------------------------------#
+# region Storage
+
+# Shared filesystem to be used on controller nodes.
+# ---
+filestore_controller_spool = {
+  size_gibibytes       = 128
+  block_size_kibibytes = 4
+}
+
+# Shared filesystem to be used on controller, worker, and login nodes.
+# ---
+filestore_jail = {
+  size_gibibytes       = 2048
+  block_size_kibibytes = 4
+}
+
+# Shared filesystems to be mounted inside jail.
+# ---
+filestore_jail_submounts = [{
+  name                 = "mlperf-sd"
+  size_gibibytes       = 2048
+  block_size_kibibytes = 4
+  mount_path           = "/mlperf-sd"
+}]
+
+# endregion Storage
 
 #----------------------------------------------------------------------------------------------------------------------#
 #                                                                                                                      #
@@ -72,13 +89,12 @@ vpc_subnet_id  = "vpcsubnet-<YOUR-SUBNET-ID>"
 
 # Name of the k8s cluster.
 # ---
-# k8s_cluster_name = "slurm-k8s"
+k8s_cluster_name = "slurm-k8s"
 
 # CPU-only node group specification.
 # Look at https://docs.nebius.ai/compute/virtual-machines/types/#cpu-configurations to choose the preset.
 # ---
 k8s_cluster_node_group_cpu = {
-  size = 2
   resource = {
     platform = "cpu-e2"
     preset   = "16vcpu-64gb"
@@ -93,7 +109,6 @@ k8s_cluster_node_group_cpu = {
 # Look at https://docs.nebius.ai/compute/virtual-machines/types/#gpu-configurations to choose the preset.
 # ---
 k8s_cluster_node_group_gpu = {
-  size = 2
   resource = {
     platform = "gpu-h100-sxm"
     preset   = "8gpu-128vcpu-1600gb"
@@ -109,38 +124,6 @@ k8s_cluster_node_group_gpu = {
 
 # endregion k8s
 
-#----------------------------------------------------------------------------------------------------------------------#
-#                                                                                                                      #
-#                                                        Storage                                                       #
-#                                                                                                                      #
-#----------------------------------------------------------------------------------------------------------------------#
-# region Storage
-
-# Shared filesystem to be used on controller, worker, and login nodes.
-# ---
-# filestore_jail = {
-#   size_gibibytes       = 2048
-#   block_size_kibibytes = 32
-# }
-
-# Shared filesystem to be used on controller nodes.
-# ---
-# filestore_controller_spool = {
-#   size_gibibytes       = 128
-#   block_size_kibibytes = 4
-# }
-
-# Shared filesystems to be mounted inside jail.
-# ---
-# filestore_jail_submounts = [{
-#   name                 = "mlperf-sd"
-#   size_gibibytes       = 2048
-#   block_size_kibibytes = 32
-#   mount_path           = "/mlperf-sd"
-# }]
-
-# endregion Storage
-
 # endregion Infrastructure
 
 #----------------------------------------------------------------------------------------------------------------------#
@@ -154,20 +137,35 @@ k8s_cluster_node_group_gpu = {
 
 # Name of the Slurm cluster in k8s cluster.
 # ---
-# slurm_cluster_name = "my-amazing-slurm"
+slurm_cluster_name = "my-amazing-slurm"
+
+# Version of soperator.
+# ---
+slurm_operator_version = "1.13.5"
 
 #----------------------------------------------------------------------------------------------------------------------#
 #                                                                                                                      #
-#                                                         Login                                                        #
+#                                                         Nodes                                                        #
 #                                                                                                                      #
+#----------------------------------------------------------------------------------------------------------------------#
+# region Nodes
+
+# Count of Slurm nodes.
+# ---
+slurm_node_count = {
+  controller = 2
+  worker     = 2
+}
+
+#----------------------------------------------------------------------------------------------------------------------#
+#                                                         Login                                                        #
 #----------------------------------------------------------------------------------------------------------------------#
 # region Login
 
 # Type of the k8s service to connect to login nodes.
 # Could be either "LoadBalancer" or "NodePort".
-# By default, "LoadBalancer".
 # ---
-# slurm_login_service_type = "NodePort"
+slurm_login_service_type = "NodePort"
 
 # Port of the host to be opened in case of use of `NodePort` service type.
 # By default, 30022.
@@ -181,6 +179,8 @@ slurm_login_ssh_root_public_keys = [
 ]
 
 # endregion Login
+
+# endregion Nodes
 
 #----------------------------------------------------------------------------------------------------------------------#
 #                                                                                                                      #

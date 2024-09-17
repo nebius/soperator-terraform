@@ -1,53 +1,57 @@
-variable "slurm_cluster_name" {
+variable "name" {
   description = "Name of the Slurm cluster in k8s cluster."
   type        = string
-  default     = "slurm"
-
-  validation {
-    condition = (
-      length(var.slurm_cluster_name) >= 1 &&
-      length(var.slurm_cluster_name) <= 64 &&
-      length(regexall("^[a-z][a-z\\d\\-]*[a-z\\d]+$", var.slurm_cluster_name)) == 1
-    )
-    error_message = <<EOF
-      The Slurm cluster name must:
-      - be 1 to 64 characters long
-      - start with a letter
-      - end with a letter or digit
-      - consist of letters, digits, or hyphens (-)
-      - contain only lowercase letters
-    EOF
-  }
 }
+
+variable "operator_version" {
+  type = string
+}
+
+# region Nodes
+
+variable "node_count" {
+  description = "Count of Slurm nodes."
+  type = object({
+    controller = number
+    worker     = number
+  })
+}
+
+# region Worker
+
+variable "worker_resources" {
+  description = "Slurmd resources on worker nodes."
+  type = object({
+    cpu_cores                   = number
+    memory_gibibytes            = number
+    ephemeral_storage_gibibytes = number
+    gpus                        = number
+  })
+}
+
+# endregion Worker
 
 # region Login
 
-variable "slurm_login_service_type" {
+variable "login_service_type" {
   description = "Type of the k8s service to connect to login nodes."
   type        = string
-  default     = "LoadBalancer"
-
-  validation {
-    condition     = (contains(["LoadBalancer", "NodePort"], var.slurm_login_service_type))
-    error_message = "Invalid service type. It must be one of `LoadBalancer` or `NodePort`."
-  }
 }
 
-variable "slurm_login_node_port" {
+variable "login_node_port" {
   description = "Port of the host to be opened in case of use of `NodePort` service type."
   type        = number
-  default     = 30022
-
-  validation {
-    condition     = var.slurm_login_node_port >= 30000 && var.slurm_login_node_port < 32768
-    error_message = "Invalid node port. It must be in range [30000,32768)."
-  }
 }
 
-variable "slurm_login_ssh_root_public_keys" {
+variable "login_load_balancer_ip" {
+  description = "External IP of the LoadBalancer in case of use of `LoadBalancer` service type."
+  type        = string
+  default     = ""
+}
+
+variable "login_ssh_root_public_keys" {
   description = "Authorized keys accepted for connecting to Slurm login nodes via SSH as 'root' user."
   type        = list(string)
-  nullable    = false
 }
 
 # endregion Login
@@ -62,9 +66,35 @@ variable "slurm_exporter_enabled" {
 
 # endregion Exporter
 
+# endregion Nodes
+
+# region Filestore
+
+variable "filestores" {
+  description = "Filestores to be used in Slurm cluster."
+  type = object({
+    controller_spool = object({
+      size_gibibytes = number
+      device         = string
+    })
+    jail = object({
+      size_gibibytes = number
+      device         = string
+    })
+    jail_submounts = list(object({
+      name           = string
+      size_gibibytes = number
+      device         = string
+      mount_path     = string
+    }))
+  })
+}
+
+# endregion Filestore
+
 # region Config
 
-variable "slurm_shared_memory_size_gibibytes" {
+variable "shared_memory_size_gibibytes" {
   description = "Shared memory size for Slurm controller and worker nodes in GiB."
   type        = number
   default     = 64
@@ -72,7 +102,15 @@ variable "slurm_shared_memory_size_gibibytes" {
 
 # endregion Config
 
-# region NCCL benchmark
+# region NCCL
+
+variable "nccl_topology_type" {
+  description = "NCCL topology type."
+  type        = string
+  default     = "auto"
+}
+
+# Benchmark
 
 variable "nccl_benchmark_enable" {
   description = "Whether to enable NCCL benchmark CronJob to benchmark GPU performance. It won't take effect in case of 1-GPU hosts."
@@ -93,6 +131,8 @@ variable "nccl_benchmark_min_threshold" {
 }
 
 # endregion NCCL benchmark
+
+# endregion NCCL
 
 # region Telemetry
 

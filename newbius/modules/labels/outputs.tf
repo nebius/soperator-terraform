@@ -1,20 +1,16 @@
-output "labels_common" {
-  description = "Common labels extended with k8s cluster id, which resources belong to."
-  value = merge(
-    local.label.managed_by,
-    local.label.used_for,
-    var.custom_labels,
-  )
+output "name_node_group_cpu" {
+  description = "CPU node group name."
+  value       = local.const.name.node_group.cpu
 }
 
-output "label_managed_by" {
-  description = "Managed-by label."
-  value       = local.label.managed_by
+output "name_node_group_gpu" {
+  description = "GPU node group name."
+  value       = local.const.name.node_group.gpu
 }
 
-output "label_used_for" {
-  description = "Used-for label."
-  value       = local.label.used_for
+output "name_node_group_nlb" {
+  description = "NLB node group name."
+  value       = local.const.name.node_group.nlb
 }
 
 output "label_group_name_cpu" {
