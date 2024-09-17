@@ -1,61 +1,41 @@
 locals {
-  consts = {
-    compute = {
-      label = {
-        managed_by = "managed-by"
-        used_for   = "used-for"
-      }
+  const = {
+    domain = {
+      slurm = "slurm.nebius.ai"
+      mk8s  = "mk8s.nebius.ai"
     }
 
-    k8s = {
-      label = {
-        domain = {
-          slurm = "slurm.nebius.ai"
-          mk8s  = "mk8s.nebius.ai"
-        }
-        cluster_id   = "cluster-id"
-        cluster_name = "cluster-name"
-        group_name   = "group-name"
+    cluster_id = "cluster-id"
+    name = {
+      cluster = "cluster-name"
+      group   = "group-name"
+      node_group = {
+        cpu = "cpu"
+        gpu = "gpu"
+        nlb = "nlb"
       }
-    }
-
-    value = {
-      ng_cpu = var.ng_name_cpu
-      ng_gpu = var.ng_name_gpu
-      ng_nlb = var.ng_name_nlb
-
-      terraform = "terraform"
-      slurm     = "slurm"
     }
   }
 
   label_key = {
-    k8s_cluster_id     = "${local.consts.k8s.label.domain.mk8s}/${local.consts.k8s.label.cluster_id}"
-    k8s_cluster_name   = "${local.consts.k8s.label.domain.mk8s}/${local.consts.k8s.label.cluster_name}"
-    slurm_cluster_name = "${local.consts.k8s.label.domain.slurm}/${local.consts.k8s.label.cluster_name}"
-    slurm_group_name   = "${local.consts.k8s.label.domain.slurm}/${local.consts.k8s.label.group_name}"
+    k8s_cluster_id     = "${local.const.domain.mk8s}/${local.const.cluster_id}"
+    k8s_cluster_name   = "${local.const.domain.mk8s}/${local.const.name.cluster}"
+    slurm_cluster_name = "${local.const.domain.slurm}/${local.const.name.cluster}"
+    slurm_group_name   = "${local.const.domain.slurm}/${local.const.name.group}"
   }
 
   label = {
-    managed_by = tomap({
-      (local.consts.compute.label.managed_by) = (local.consts.value.terraform)
-    })
-
-    used_for = tomap({
-      (local.consts.compute.label.used_for) = (local.consts.value.slurm)
-    })
-
     group_name = {
       cpu = tomap({
-        (local.label_key.slurm_group_name) = (local.consts.value.ng_cpu)
+        (local.label_key.slurm_group_name) = (local.const.name.node_group.cpu)
       })
 
       gpu = tomap({
-        (local.label_key.slurm_group_name) = (local.consts.value.ng_gpu)
+        (local.label_key.slurm_group_name) = (local.const.name.node_group.gpu)
       })
 
       nlb = tomap({
-        (local.label_key.slurm_group_name) = (local.consts.value.ng_nlb)
+        (local.label_key.slurm_group_name) = (local.const.name.node_group.nlb)
       })
     }
   }

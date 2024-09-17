@@ -21,7 +21,7 @@ We'll use [service account](https://docs.nebius.ai/iam/service-accounts/manage/)
 
 Let's start with exporting your tenant and project IDs for a further use.
 
-> We suggest you to replace checks for `NEBIUS_TENANT_ID` and `NEBIUS_PROJECT_ID` in provided [`.envrc`](./.envrc) file
+> We suggest you to replace checks for `NEBIUS_TENANT_ID` and `NEBIUS_PROJECT_ID` in provided [`.envrc`](installations/example/.envrc) file
 > with the following:
 > 
 > ```bash
@@ -174,30 +174,27 @@ It can find and load variables from e.g. `.envrc` file.
 > direnv reload
 > ```
 
-
-
 ### Terraform CLI
 
 Install [Terraform CLI](https://developer.hashicorp.com/terraform/install).
 
 #### Initialization
 
-Run `terraform init` from [slurm_k8s](./slurm_k8s) directory.
+Run `terraform init` from [installations/example](./installations/example) directory.
 
 ```shell
-cd slurm_k8s
+cd installations/example
 terraform init
 ```
 
 ## Create your cluster
 
-We provide [`terraform.tfvars.example`](./slurm_k8s/terraform.tfvars.example) that you can use as a reference for your
+We provide default variables in [`terraform.tfvars`](installations/example/terraform.tfvars) file that you can use as a reference for your
 cluster configuration.
 
-1. Copy this file to `terraform.tfvars`
-2. Change some values according to your needs and cloud environment.
-3. Run `terraform plan` to make sure if provided values create resources as you want.
-4. Run `terraform apply` to create resources based on provided values. You will be prompted to check if resources
+1. Change some values according to your needs and cloud environment.
+2. Run `terraform plan` to make sure if provided values create resources as you want.
+3. Run `terraform apply` to create resources based on provided values. You will be prompted to check if resources
 correspond to your needs. Type `yes` if the configuration is correct and watch the process.
 
 Once resource creation is done, you will be able to connect to Slurm login node via SSH using provided public key as a
@@ -205,5 +202,5 @@ Once resource creation is done, you will be able to connect to Slurm login node 
 
 ```shell
 SLURM_IP='<NLB node / allocated IP address>'
-ssh -i '<Path to provided public key>' root@${SLURM_IP}
+ssh -i '<Path to provided public key>' [-p <Node port>] root@${SLURM_IP}
 ```

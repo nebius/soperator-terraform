@@ -95,8 +95,8 @@ resource "helm_release" "vm_logs_server" {
 
   values = [templatefile("${path.module}/templates/helm_values/vm_logs_server.yaml.tftpl", {
     vm_logs_service_name = local.vm_logs_server.name
-    resources = var.resources_vm_logs_server
-    create_pvcs = var.create_pvcs
+    resources            = var.resources_vm_logs_server
+    create_pvcs          = var.create_pvcs
   })]
 
   wait = true
@@ -115,8 +115,8 @@ resource "helm_release" "fb_logs_collector" {
   namespace = local.namespace.logs
 
   values = [templatefile("${path.module}/templates/helm_values/fb_logs_collector.yaml.tftpl", {
-    namespace = local.namespace.logs,
-    resources = var.resources_fb_logs_collector
+    namespace            = local.namespace.logs,
+    resources            = var.resources_fb_logs_collector
     vm_logs_service_name = local.vm_logs_server.name
   })]
 
@@ -137,10 +137,10 @@ resource "helm_release" "slurm_monitor" {
 
   values = [templatefile("${path.module}/templates/helm_values/slurm_monitor.yaml.tftpl", {
     otel_collector = local.otel_collector
-    create_pvcs = var.create_pvcs
+    create_pvcs    = var.create_pvcs
     resources = {
       vm_single = var.resources_vm_single
-      vm_agent = var.resources_vm_agent
+      vm_agent  = var.resources_vm_agent
     }
   })]
 
@@ -169,8 +169,8 @@ resource "helm_release" "dashboard" {
 
   values = [templatefile("${path.module}/templates/dashboards/${each.key}.yaml.tftpl", {
     namespace = local.namespace.monitoring
-    name = "${var.slurm_cluster_name}-${each.value}"
-    filename = "${each.value}.json"
+    name      = "${var.slurm_cluster_name}-${each.value}"
+    filename  = "${each.value}.json"
   })]
 
   wait = true

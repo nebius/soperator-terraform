@@ -1,4 +1,0 @@
-.aws_secret_access_key*
-*.tfvars
-terraform.tfstate*
-slurm_k8s/terraform_backend_override.tf
