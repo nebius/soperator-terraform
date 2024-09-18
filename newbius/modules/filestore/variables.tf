@@ -11,32 +11,65 @@ variable "k8s_cluster_name" {
 #---
 
 variable "controller_spool" {
-  description = "Specification for 'controller-spool' filestore."
+  description = "Filestore for Slurm controller's spool."
   type = object({
-    disk_type            = string
-    size_gibibytes       = number
-    block_size_kibibytes = number
+    existing = optional(object({
+      id = string
+    }))
+    spec = optional(object({
+      disk_type            = string
+      size_gibibytes       = number
+      block_size_kibibytes = number
+    }))
   })
   nullable = false
+
+  validation {
+    condition     = (var.controller_spool.existing != null && var.controller_spool.spec == null) || (var.controller_spool.existing == null && var.controller_spool.spec != null)
+    error_message = "One of `existing` or `spec` must be provided."
+  }
 }
 
 variable "jail" {
-  description = "Specification for 'jail' filestore."
+  description = "Filestore for jail."
   type = object({
-    disk_type            = string
-    size_gibibytes       = number
-    block_size_kibibytes = number
+    existing = optional(object({
+      id = string
+    }))
+    spec = optional(object({
+      disk_type            = string
+      size_gibibytes       = number
+      block_size_kibibytes = number
+    }))
   })
   nullable = false
+
+  validation {
+    condition     = (var.jail.existing != null && var.jail.spec == null) || (var.jail.existing == null && var.jail.spec != null)
+    error_message = "One of `existing` or `spec` must be provided."
+  }
 }
 
 variable "jail_submounts" {
-  description = "Specification for 'jail' submount filestores."
+  description = "Filestores for jail submounts."
   type = list(object({
-    name                 = string
-    disk_type            = string
-    size_gibibytes       = number
-    block_size_kibibytes = number
+    name = string
+    existing = optional(object({
+      id = string
+    }))
+    spec = optional(object({
+      disk_type            = string
+      size_gibibytes       = number
+      block_size_kibibytes = number
+    }))
   }))
   default = []
+
+  validation {
+    condition = length([
+      for sm in var.jail_submounts : true
+      if(sm.existing != null && sm.spec == null) || (sm.existing == null && sm.spec != null)
+    ]) == length(var.jail_submounts)
+    error_message = "All submounts must have one of `existing` or `spec` provided."
+  }
 }

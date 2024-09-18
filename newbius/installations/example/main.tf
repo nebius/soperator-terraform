@@ -10,22 +10,28 @@ module "filestore" {
   k8s_cluster_name = var.k8s_cluster_name
 
   controller_spool = {
-    disk_type            = "NETWORK_SSD"
-    size_gibibytes       = var.filestore_controller_spool.size_gibibytes
-    block_size_kibibytes = var.filestore_controller_spool.block_size_kibibytes
+    spec = {
+      disk_type            = "NETWORK_SSD"
+      size_gibibytes       = var.filestore_controller_spool.size_gibibytes
+      block_size_kibibytes = var.filestore_controller_spool.block_size_kibibytes
+    }
   }
 
   jail = {
-    disk_type            = "NETWORK_SSD"
-    size_gibibytes       = var.filestore_jail.size_gibibytes
-    block_size_kibibytes = var.filestore_jail.block_size_kibibytes
+    spec = {
+      disk_type            = "NETWORK_SSD"
+      size_gibibytes       = var.filestore_jail.size_gibibytes
+      block_size_kibibytes = var.filestore_jail.block_size_kibibytes
+    }
   }
 
   jail_submounts = [for submount in var.filestore_jail_submounts : {
-    name                 = submount.name
-    disk_type            = "NETWORK_SSD"
-    size_gibibytes       = submount.size_gibibytes
-    block_size_kibibytes = submount.block_size_kibibytes
+    name = submount.name
+    spec = {
+      disk_type            = "NETWORK_SSD"
+      size_gibibytes       = submount.size_gibibytes
+      block_size_kibibytes = submount.block_size_kibibytes
+    }
   }]
 
   providers = {
