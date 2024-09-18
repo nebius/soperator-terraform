@@ -125,14 +125,12 @@ slurmNodes:
     enabled: ${nodes.exporter.enabled}
     k8sNodeFilterName: ${k8s_node_filters.non_gpu.name}
 
+%{ if telemetry.enabled ~}
 telemetry:
   jobsTelemetry:
-    otelCollectorHttpHost: vmsingle-slurm.monitoring-system.svc.cluster.local
+    otelCollectorHttpHost: ${telemetry.metrics_collector.endpoint.http_host}
+    otelCollectorPort: ${telemetry.metrics_collector.endpoint.port}
     otelCollectorPath: /opentelemetry/api/v1/push
-    otelCollectorPort: 8429
-    sendJobsEvents: ${telemetry.send_job_events}
-    sendOtelMetrics: ${telemetry.send_otel_metrics}
-  openTelemetryCollector:
-    enabled: ${telemetry.enable_otel}
-    replicasOtelCollector: 1
-    otelCollectorPort: 8429
+    sendJobsEvents: true
+    sendOtelMetrics: true
+%{ endif }

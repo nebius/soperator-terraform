@@ -294,20 +294,8 @@ variable "nccl_benchmark_min_threshold" {
 
 # region Telemetry
 
-variable "telemetry_enable_otel_collector" {
-  description = "Whether to enable Open Telemetry collector."
-  type        = bool
-  default     = true
-}
-
-variable "telemetry_send_job_events" {
-  description = "Whether to send job events."
-  type        = bool
-  default     = true
-}
-
-variable "telemetry_send_otel_metrics" {
-  description = "Whether to send Open Telemetry metrics."
+variable "telemetry_enabled" {
+  description = "Whether to enable telemetry."
   type        = bool
   default     = true
 }

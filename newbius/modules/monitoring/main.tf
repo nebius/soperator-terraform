@@ -13,7 +13,7 @@ locals {
     }
   }
 
-  otel_collector = {
+  metrics_collector = {
     host = "vmsingle-slurm.${local.namespace.monitoring}.svc.cluster.local"
     port = 8429
   }
@@ -52,8 +52,8 @@ resource "helm_release" "prometheus_stack" {
   namespace        = local.namespace.monitoring
 
   values = [templatefile("${path.module}/templates/helm_values/prometheus.yaml.tftpl", {
-    admin_password = var.grafana_admin_password
-    otel_collector = local.otel_collector
+    admin_password    = var.grafana_admin_password
+    metrics_collector = local.metrics_collector
   })]
 
   wait = true
@@ -137,8 +137,8 @@ resource "helm_release" "slurm_monitor" {
   namespace = local.namespace.monitoring
 
   values = [templatefile("${path.module}/templates/helm_values/slurm_monitor.yaml.tftpl", {
-    otel_collector = local.otel_collector
-    create_pvcs    = var.create_pvcs
+    metrics_collector = local.metrics_collector
+    create_pvcs       = var.create_pvcs
     resources = {
       vm_single = var.resources_vm_single
       vm_agent  = var.resources_vm_agent

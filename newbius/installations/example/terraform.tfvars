@@ -240,20 +240,10 @@ slurm_login_ssh_root_public_keys = [
 #----------------------------------------------------------------------------------------------------------------------#
 # region Telemetry
 
-# Whether to enable Open Telemetry collector.
+# Whether to enable telemetry.
 # By default, true.
 # ---
-# telemetry_enable_otel_collector = false
-
-# Whether to send job events.
-# By default, true.
-# ---
-# telemetry_send_job_events = false
-
-# Whether to send Open Telemetry metrics.
-# By default, true.
-# ---
-# telemetry_send_otel_metrics = false
+# telemetry_enabled = false
 
 # Password of `admin` user of Grafana.
 # Set it to your desired password.

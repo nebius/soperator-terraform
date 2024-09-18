@@ -12,7 +12,7 @@ grafana:
     enabled: false
   sidecar:
     datasources:
-      url: "http://${otel_collector.host}.:${otel_collector.port}"
+      url: "http://${metrics_collector.host}.:${metrics_collector.port}"
   defaultDashboardsEnabled: false
 
 kubeStateMetrics:

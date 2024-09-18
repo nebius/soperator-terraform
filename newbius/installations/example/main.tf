@@ -151,9 +151,7 @@ module "slurm" {
   nccl_benchmark_schedule      = var.nccl_benchmark_schedule
   nccl_benchmark_min_threshold = var.nccl_benchmark_min_threshold
 
-  telemetry_enable_otel_collector  = var.telemetry_enable_otel_collector
-  telemetry_send_job_events        = var.telemetry_send_job_events
-  telemetry_send_otel_metrics      = var.telemetry_send_otel_metrics
+  telemetry_enabled                = var.telemetry_enabled
   telemetry_grafana_admin_password = var.telemetry_grafana_admin_password
 
   providers = {

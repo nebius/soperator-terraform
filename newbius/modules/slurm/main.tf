@@ -50,6 +50,7 @@ resource "helm_release" "slurm_cluster_storage" {
 resource "helm_release" "slurm_operator" {
   depends_on = [
     helm_release.slurm_cluster_crd,
+    module.monitoring,
   ]
 
   name       = local.helm.chart.operator.slurm
@@ -59,6 +60,11 @@ resource "helm_release" "slurm_operator" {
 
   create_namespace = true
   namespace        = local.helm.chart.operator.slurm
+
+  set {
+    name  = "isPrometheusCrdInstalled"
+    value = var.telemetry_enabled
+  }
 
   wait          = true
   wait_for_jobs = true
@@ -138,9 +144,10 @@ resource "helm_release" "slurm_cluster" {
     }
 
     telemetry = {
-      enable_otel       = var.telemetry_enable_otel_collector
-      send_job_events   = var.telemetry_send_job_events
-      send_otel_metrics = var.telemetry_send_otel_metrics
+      enabled = var.telemetry_enabled
+      metrics_collector = var.telemetry_enabled ? {
+        endpoint = one(module.monitoring).metrics_collector_endpoint
+      } : null
     }
   })]
 

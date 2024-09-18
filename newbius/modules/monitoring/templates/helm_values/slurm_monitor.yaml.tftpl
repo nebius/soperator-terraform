@@ -31,7 +31,7 @@ resources:
       name: select-all
     spec:
       remoteWrite:
-        - url: "http://${otel_collector.host}.:${otel_collector.port}/api/v1/write"
+        - url: "http://${metrics_collector.host}.:${metrics_collector.port}/api/v1/write"
       scrapeInterval: 30s
       selectAllByDefault: true
       resources:
