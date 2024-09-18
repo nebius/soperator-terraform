@@ -152,7 +152,7 @@ variable "telemetry_grafana_admin_password" {
 # region Accounting
 
 variable "mariadb_operator_namespace" {
-  description = "Whether to enable accounting."
+  description = "Namespace for MariaDB operator."
   type        = string
   default     = "mariadb-operator-system"
 }
