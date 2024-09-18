@@ -126,6 +126,8 @@ module "slurm" {
   login_load_balancer_ip     = module.k8s.login_ip
   login_ssh_root_public_keys = var.slurm_login_ssh_root_public_keys
 
+  exporter_enabled = var.slurm_exporter_enabled
+
   # TODO: MSP-2817 - use computed values of filestore sizes
   filestores = {
     controller_spool = {
@@ -150,7 +152,6 @@ module "slurm" {
   nccl_benchmark_min_threshold = var.nccl_benchmark_min_threshold
 
   telemetry_enable_otel_collector = var.telemetry_enable_otel_collector
-  telemetry_enable_prometheus     = var.telemetry_enable_prometheus
   telemetry_send_job_events       = var.telemetry_send_job_events
   telemetry_send_otel_metrics     = var.telemetry_send_otel_metrics
 

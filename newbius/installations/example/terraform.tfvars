@@ -180,19 +180,19 @@ slurm_login_ssh_root_public_keys = [
 
 # endregion Login
 
-# endregion Nodes
-
 #----------------------------------------------------------------------------------------------------------------------#
-#                                                                                                                      #
-#                                                         Exporter                                                        #
-#                                                                                                                      #
+#                                                       Exporter                                                       #
 #----------------------------------------------------------------------------------------------------------------------#
 # region Exporter
-# Whether to enable Slurm Exporter.
+
+# Whether to enable Slurm metrics exporter.
 # By default, true.
 # ---
 # slurm_exporter_enabled = false
+
 # endregion Exporter
+
+# endregion Nodes
 
 #----------------------------------------------------------------------------------------------------------------------#
 #                                                                                                                      #
@@ -244,11 +244,6 @@ slurm_login_ssh_root_public_keys = [
 # By default, true.
 # ---
 # telemetry_enable_otel_collector = false
-
-# Whether to enable Prometheus.
-# By default, true.
-# ---
-# telemetry_enable_prometheus = false
 
 # Whether to send job events.
 # By default, true.

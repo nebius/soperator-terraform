@@ -132,11 +132,13 @@ resource "helm_release" "slurm_cluster" {
         node_port        = var.login_node_port
         root_public_keys = var.login_ssh_root_public_keys
       }
+      exporter = {
+        enabled = var.exporter_enabled
+      }
     }
 
     telemetry = {
       enable_otel       = var.telemetry_enable_otel_collector
-      enable_prometheus = var.telemetry_enable_prometheus
       send_job_events   = var.telemetry_send_job_events
       send_otel_metrics = var.telemetry_send_otel_metrics
     }

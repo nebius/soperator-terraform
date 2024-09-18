@@ -58,8 +58,8 @@ variable "login_ssh_root_public_keys" {
 
 # region Exporter
 
-variable "slurm_exporter_enabled" {
-  description = "Enable or disable slurm exporter metrics"
+variable "exporter_enabled" {
+  description = "Whether to enable Slurm metrics exporter."
   type        = bool
   default     = true
 }
