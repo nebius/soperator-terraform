@@ -232,7 +232,7 @@ variable "slurm_cluster_node_login_munge_resources" {
 variable "slurm_operator_version" {
   description = "Version of Slurm operator Helm chart."
   type        = string
-  default     = "1.13.5"
+  default     = "1.13.5-02f41426"
 }
 
 variable "shared_memory_size" {
