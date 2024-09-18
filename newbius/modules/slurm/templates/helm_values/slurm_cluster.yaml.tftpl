@@ -121,6 +121,10 @@ slurmNodes:
         %{~ endfor ~}
       %{~ endif ~}
 
+  exporter:
+    enabled: ${nodes.exporter.enabled}
+    k8sNodeFilterName: ${k8s_node_filters.non_gpu.name}
+
 telemetry:
   jobsTelemetry:
     otelCollectorHttpHost: vmsingle-slurm.monitoring-system.svc.cluster.local
@@ -132,5 +136,3 @@ telemetry:
     enabled: ${telemetry.enable_otel}
     replicasOtelCollector: 1
     otelCollectorPort: 8429
-  prometheus:
-    enabled: ${telemetry.enable_prometheus}

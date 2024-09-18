@@ -248,6 +248,16 @@ variable "slurm_login_ssh_root_public_keys" {
 
 # endregion Login
 
+# region Exporter
+
+variable "slurm_exporter_enabled" {
+  description = "Whether to enable Slurm metrics exporter."
+  type        = bool
+  default     = true
+}
+
+# endregion Exporter
+
 # endregion Nodes
 
 # region Config
