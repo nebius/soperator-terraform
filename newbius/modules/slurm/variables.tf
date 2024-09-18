@@ -148,3 +148,13 @@ variable "telemetry_grafana_admin_password" {
 }
 
 # endregion Telemetry
+
+# region Accounting
+
+variable "mariadb_operator_namespace" {
+  description = "Whether to enable accounting."
+  type        = string
+  default     = "mariadb-operator-system"
+}
+
+# endregion Accounting
