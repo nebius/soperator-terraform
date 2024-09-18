@@ -70,6 +70,44 @@ resource "helm_release" "slurm_operator" {
   wait_for_jobs = true
 }
 
+resource "helm_release" "mariadb-operator" {
+  name             = local.helm.chart.operator.mariadb
+  repository       = local.helm.repository.mariadb
+  chart            = local.helm.chart.operator.mariadb
+  create_namespace = true
+  namespace        = var.mariadb_operator_namespace
+
+  wait          = true
+  wait_for_jobs = true
+
+  set {
+    name  = "metrics.enabled"
+    value = var.telemetry_enabled
+  }
+  set {
+    name  = "metrics.serviceMonitor.enabled"
+    value = var.telemetry_enabled
+  }
+  set {
+    name  = "metrics.serviceMonitor.interval"
+    value = "30s"
+  }
+  set {
+    name  = "metrics.serviceMonitor.scrapeTimeout"
+    value = "25s"
+  }
+  set {
+    name  = "serviceAccount.enabled"
+    value = true
+  }
+
+  set {
+    name  = "cert.certManager.enabled"
+    value = var.telemetry_enabled
+  }
+
+}
+
 resource "helm_release" "slurm_cluster" {
   depends_on = [
     helm_release.slurm_operator,
