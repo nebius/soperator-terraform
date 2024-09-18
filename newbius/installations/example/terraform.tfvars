@@ -54,9 +54,18 @@
 # Shared filesystem to be used on controller nodes.
 # ---
 filestore_controller_spool = {
-  size_gibibytes       = 128
-  block_size_kibibytes = 4
+  spec = {
+    size_gibibytes       = 128
+    block_size_kibibytes = 4
+  }
 }
+# Or use existing filestore.
+# ---
+# filestore_controller_spool = {
+#   existing = {
+#     id = "computefilesystem-<YOUR-FILESTORE-ID>"
+#   }
+# }
 
 # Shared filesystem to be used on controller, worker, and login nodes.
 # ---
@@ -64,15 +73,33 @@ filestore_jail = {
   size_gibibytes       = 2048
   block_size_kibibytes = 4
 }
+# Or use existing filestore.
+# ---
+# filestore_jail = {
+#   existing = {
+#     id = "computefilesystem-<YOUR-FILESTORE-ID>"
+#   }
+# }
 
 # Shared filesystems to be mounted inside jail.
 # ---
 filestore_jail_submounts = [{
-  name                 = "mlperf-sd"
-  size_gibibytes       = 2048
-  block_size_kibibytes = 4
-  mount_path           = "/mlperf-sd"
+  name       = "mlperf-sd"
+  mount_path = "/mlperf-sd"
+  spec = {
+    size_gibibytes       = 2048
+    block_size_kibibytes = 4
+  }
 }]
+# Or use existing filestores.
+# ---
+# filestore_jail_submounts = [{
+#   name                 = "mlperf-sd"
+#   mount_path           = "/mlperf-sd"
+#   existing = {
+#     id = "computefilesystem-<YOUR-FILESTORE-ID>"
+#   }
+# }]
 
 # endregion Storage
 
