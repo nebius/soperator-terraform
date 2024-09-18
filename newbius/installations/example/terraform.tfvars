@@ -255,6 +255,11 @@ slurm_login_ssh_root_public_keys = [
 # ---
 # telemetry_send_otel_metrics = false
 
+# Password of `admin` user of Grafana.
+# Set it to your desired password.
+# ---
+# telemetry_grafana_admin_password = ""
+
 # endregion Telemetry
 
 # endregion Slurm

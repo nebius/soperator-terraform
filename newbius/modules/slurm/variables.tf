@@ -154,4 +154,9 @@ variable "telemetry_send_otel_metrics" {
   default     = true
 }
 
+variable "telemetry_grafana_admin_password" {
+  description = "Password of `admin` user of Grafana."
+  type        = string
+}
+
 # endregion Telemetry
