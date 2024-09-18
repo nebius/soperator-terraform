@@ -41,16 +41,15 @@ digraph {
 		"[root] var.nccl_benchmark_min_threshold" [label = "var.nccl_benchmark_min_threshold", shape = "note"]
 		"[root] var.nccl_benchmark_schedule" [label = "var.nccl_benchmark_schedule", shape = "note"]
 		"[root] var.slurm_cluster_name" [label = "var.slurm_cluster_name", shape = "note"]
+		"[root] var.slurm_exporter_enabled" [label = "var.slurm_exporter_enabled", shape = "note"]
 		"[root] var.slurm_login_node_port" [label = "var.slurm_login_node_port", shape = "note"]
 		"[root] var.slurm_login_service_type" [label = "var.slurm_login_service_type", shape = "note"]
 		"[root] var.slurm_login_ssh_root_public_keys" [label = "var.slurm_login_ssh_root_public_keys", shape = "note"]
 		"[root] var.slurm_node_count" [label = "var.slurm_node_count", shape = "note"]
 		"[root] var.slurm_operator_version" [label = "var.slurm_operator_version", shape = "note"]
 		"[root] var.slurm_shared_memory_size_gibibytes" [label = "var.slurm_shared_memory_size_gibibytes", shape = "note"]
-		"[root] var.telemetry_enable_otel_collector" [label = "var.telemetry_enable_otel_collector", shape = "note"]
-		"[root] var.telemetry_enable_prometheus" [label = "var.telemetry_enable_prometheus", shape = "note"]
-		"[root] var.telemetry_send_job_events" [label = "var.telemetry_send_job_events", shape = "note"]
-		"[root] var.telemetry_send_otel_metrics" [label = "var.telemetry_send_otel_metrics", shape = "note"]
+		"[root] var.telemetry_enabled" [label = "var.telemetry_enabled", shape = "note"]
+		"[root] var.telemetry_grafana_admin_password" [label = "var.telemetry_grafana_admin_password", shape = "note"]
 		"[root] var.vpc_subnet_id" [label = "var.vpc_subnet_id", shape = "note"]
 		"[root] data.nebius_iam_v1_project.this (expand)" -> "[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"]"
 		"[root] data.nebius_iam_v1_project.this (expand)" -> "[root] var.iam_project_id (validation)"
@@ -198,10 +197,10 @@ digraph {
 		"[root] module.nvidia_operators.local.helm (expand)" -> "[root] module.nvidia_operators (expand)"
 		"[root] module.slurm (close)" -> "[root] module.slurm.helm_release.slurm_cluster (expand)"
 		"[root] module.slurm (close)" -> "[root] module.slurm.module.labels (close)"
-		"[root] module.slurm (close)" -> "[root] module.slurm.module.monitoring (close)"
 		"[root] module.slurm (expand)" -> "[root] module.k8s (close)"
 		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.helm_release.slurm_cluster_storage (expand)"
 		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.helm_release.slurm_operator (expand)"
+		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.var.exporter_enabled (expand)"
 		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.var.login_load_balancer_ip (expand)"
 		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.var.login_node_port (expand)"
 		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.var.login_service_type (expand)"
@@ -212,10 +211,6 @@ digraph {
 		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.var.nccl_topology_type (expand)"
 		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.var.node_count (expand)"
 		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.var.shared_memory_size_gibibytes (expand)"
-		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.var.telemetry_enable_otel_collector (expand)"
-		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.var.telemetry_enable_prometheus (expand)"
-		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.var.telemetry_send_job_events (expand)"
-		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.var.telemetry_send_otel_metrics (expand)"
 		"[root] module.slurm.helm_release.slurm_cluster (expand)" -> "[root] module.slurm.var.worker_resources (expand)"
 		"[root] module.slurm.helm_release.slurm_cluster_crd (expand)" -> "[root] module.slurm.local.helm (expand)"
 		"[root] module.slurm.helm_release.slurm_cluster_crd (expand)" -> "[root] module.slurm.var.operator_version (expand)"
@@ -229,6 +224,7 @@ digraph {
 		"[root] module.slurm.helm_release.slurm_cluster_storage (expand)" -> "[root] module.slurm.var.operator_version (expand)"
 		"[root] module.slurm.helm_release.slurm_cluster_storage (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/helm\"]"
 		"[root] module.slurm.helm_release.slurm_operator (expand)" -> "[root] module.slurm.helm_release.slurm_cluster_crd (expand)"
+		"[root] module.slurm.helm_release.slurm_operator (expand)" -> "[root] module.slurm.module.monitoring (close)"
 		"[root] module.slurm.local.helm (expand)" -> "[root] module.slurm (expand)"
 		"[root] module.slurm.module.labels (close)" -> "[root] module.slurm.module.labels.output.key_k8s_cluster_id (expand)"
 		"[root] module.slurm.module.labels (close)" -> "[root] module.slurm.module.labels.output.key_k8s_cluster_name (expand)"
@@ -256,7 +252,8 @@ digraph {
 		"[root] module.slurm.module.labels.output.name_node_group_nlb (expand)" -> "[root] module.slurm.module.labels.local.const (expand)"
 		"[root] module.slurm.module.monitoring (close)" -> "[root] module.slurm.module.monitoring.helm_release.dashboard (expand)"
 		"[root] module.slurm.module.monitoring (close)" -> "[root] module.slurm.module.monitoring.helm_release.slurm_monitor (expand)"
-		"[root] module.slurm.module.monitoring (expand)" -> "[root] module.slurm (expand)"
+		"[root] module.slurm.module.monitoring (close)" -> "[root] module.slurm.module.monitoring.output.metrics_collector_endpoint (expand)"
+		"[root] module.slurm.module.monitoring (expand)" -> "[root] module.slurm.var.telemetry_enabled (expand)"
 		"[root] module.slurm.module.monitoring.helm_release.certificate_manager (expand)" -> "[root] module.slurm.module.monitoring (expand)"
 		"[root] module.slurm.module.monitoring.helm_release.certificate_manager (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/helm\"]"
 		"[root] module.slurm.module.monitoring.helm_release.dashboard (expand)" -> "[root] module.slurm.module.monitoring.helm_release.fb_logs_collector (expand)"
@@ -264,7 +261,8 @@ digraph {
 		"[root] module.slurm.module.monitoring.helm_release.fb_logs_collector (expand)" -> "[root] module.slurm.module.monitoring.helm_release.vm_logs_server (expand)"
 		"[root] module.slurm.module.monitoring.helm_release.fb_logs_collector (expand)" -> "[root] module.slurm.module.monitoring.var.resources_fb_logs_collector (expand)"
 		"[root] module.slurm.module.monitoring.helm_release.prometheus_stack (expand)" -> "[root] module.slurm.module.monitoring.helm_release.certificate_manager (expand)"
-		"[root] module.slurm.module.monitoring.helm_release.prometheus_stack (expand)" -> "[root] module.slurm.module.monitoring.local.otel_collector (expand)"
+		"[root] module.slurm.module.monitoring.helm_release.prometheus_stack (expand)" -> "[root] module.slurm.module.monitoring.local.metrics_collector (expand)"
+		"[root] module.slurm.module.monitoring.helm_release.prometheus_stack (expand)" -> "[root] module.slurm.module.monitoring.var.grafana_admin_password (expand)"
 		"[root] module.slurm.module.monitoring.helm_release.slurm_monitor (expand)" -> "[root] module.slurm.module.monitoring.helm_release.vm_operator (expand)"
 		"[root] module.slurm.module.monitoring.helm_release.slurm_monitor (expand)" -> "[root] module.slurm.module.monitoring.var.create_pvcs (expand)"
 		"[root] module.slurm.module.monitoring.helm_release.slurm_monitor (expand)" -> "[root] module.slurm.module.monitoring.var.resources_vm_agent (expand)"
@@ -276,11 +274,14 @@ digraph {
 		"[root] module.slurm.module.monitoring.helm_release.vm_operator (expand)" -> "[root] module.slurm.module.monitoring.helm_release.prometheus_stack (expand)"
 		"[root] module.slurm.module.monitoring.helm_release.vm_operator (expand)" -> "[root] module.slurm.module.monitoring.local.repository (expand)"
 		"[root] module.slurm.module.monitoring.helm_release.vm_operator (expand)" -> "[root] module.slurm.module.monitoring.var.resources_vm_operator (expand)"
+		"[root] module.slurm.module.monitoring.local.metrics_collector (expand)" -> "[root] module.slurm.module.monitoring.local.namespace (expand)"
 		"[root] module.slurm.module.monitoring.local.namespace (expand)" -> "[root] module.slurm.module.monitoring (expand)"
-		"[root] module.slurm.module.monitoring.local.otel_collector (expand)" -> "[root] module.slurm.module.monitoring.local.namespace (expand)"
 		"[root] module.slurm.module.monitoring.local.repository (expand)" -> "[root] module.slurm.module.monitoring (expand)"
 		"[root] module.slurm.module.monitoring.local.vm_logs_server (expand)" -> "[root] module.slurm.module.monitoring (expand)"
+		"[root] module.slurm.module.monitoring.output.metrics_collector_endpoint (expand)" -> "[root] module.slurm.module.monitoring.local.metrics_collector (expand)"
 		"[root] module.slurm.module.monitoring.var.create_pvcs (expand)" -> "[root] module.slurm.module.monitoring (expand)"
+		"[root] module.slurm.module.monitoring.var.grafana_admin_password (expand)" -> "[root] module.slurm.module.monitoring (expand)"
+		"[root] module.slurm.module.monitoring.var.grafana_admin_password (expand)" -> "[root] module.slurm.var.telemetry_grafana_admin_password (expand)"
 		"[root] module.slurm.module.monitoring.var.resources_fb_logs_collector (expand)" -> "[root] module.slurm.module.monitoring (expand)"
 		"[root] module.slurm.module.monitoring.var.resources_vm_agent (expand)" -> "[root] module.slurm.module.monitoring (expand)"
 		"[root] module.slurm.module.monitoring.var.resources_vm_logs_server (expand)" -> "[root] module.slurm.module.monitoring (expand)"
@@ -288,6 +289,8 @@ digraph {
 		"[root] module.slurm.module.monitoring.var.resources_vm_single (expand)" -> "[root] module.slurm.module.monitoring (expand)"
 		"[root] module.slurm.module.monitoring.var.slurm_cluster_name (expand)" -> "[root] module.slurm.module.monitoring (expand)"
 		"[root] module.slurm.module.monitoring.var.slurm_cluster_name (expand)" -> "[root] module.slurm.var.name (expand)"
+		"[root] module.slurm.var.exporter_enabled (expand)" -> "[root] module.slurm (expand)"
+		"[root] module.slurm.var.exporter_enabled (expand)" -> "[root] var.slurm_exporter_enabled"
 		"[root] module.slurm.var.filestores (expand)" -> "[root] module.slurm (expand)"
 		"[root] module.slurm.var.login_load_balancer_ip (expand)" -> "[root] module.slurm (expand)"
 		"[root] module.slurm.var.login_node_port (expand)" -> "[root] module.slurm (expand)"
@@ -307,19 +310,13 @@ digraph {
 		"[root] module.slurm.var.operator_version (expand)" -> "[root] module.slurm (expand)"
 		"[root] module.slurm.var.operator_version (expand)" -> "[root] var.slurm_operator_version"
 		"[root] module.slurm.var.shared_memory_size_gibibytes (expand)" -> "[root] module.slurm (expand)"
-		"[root] module.slurm.var.telemetry_enable_otel_collector (expand)" -> "[root] module.slurm (expand)"
-		"[root] module.slurm.var.telemetry_enable_otel_collector (expand)" -> "[root] var.telemetry_enable_otel_collector"
-		"[root] module.slurm.var.telemetry_enable_prometheus (expand)" -> "[root] module.slurm (expand)"
-		"[root] module.slurm.var.telemetry_enable_prometheus (expand)" -> "[root] var.telemetry_enable_prometheus"
-		"[root] module.slurm.var.telemetry_send_job_events (expand)" -> "[root] module.slurm (expand)"
-		"[root] module.slurm.var.telemetry_send_job_events (expand)" -> "[root] var.telemetry_send_job_events"
-		"[root] module.slurm.var.telemetry_send_otel_metrics (expand)" -> "[root] module.slurm (expand)"
-		"[root] module.slurm.var.telemetry_send_otel_metrics (expand)" -> "[root] var.telemetry_send_otel_metrics"
+		"[root] module.slurm.var.telemetry_enabled (expand)" -> "[root] module.slurm (expand)"
+		"[root] module.slurm.var.telemetry_enabled (expand)" -> "[root] var.telemetry_enabled"
+		"[root] module.slurm.var.telemetry_grafana_admin_password (expand)" -> "[root] module.slurm (expand)"
+		"[root] module.slurm.var.telemetry_grafana_admin_password (expand)" -> "[root] var.telemetry_grafana_admin_password"
 		"[root] module.slurm.var.worker_resources (expand)" -> "[root] module.slurm (expand)"
 		"[root] provider[\"registry.terraform.io/hashicorp/helm\"] (close)" -> "[root] module.nvidia_operators.helm_release.gpu-operator (expand)"
 		"[root] provider[\"registry.terraform.io/hashicorp/helm\"] (close)" -> "[root] module.slurm.helm_release.slurm_cluster (expand)"
-		"[root] provider[\"registry.terraform.io/hashicorp/helm\"] (close)" -> "[root] module.slurm.module.monitoring.helm_release.dashboard (expand)"
-		"[root] provider[\"registry.terraform.io/hashicorp/helm\"] (close)" -> "[root] module.slurm.module.monitoring.helm_release.slurm_monitor (expand)"
 		"[root] provider[\"registry.terraform.io/hashicorp/helm\"]" -> "[root] module.k8s.output.control_plane (expand)"
 		"[root] provider[\"registry.terraform.io/hashicorp/helm\"]" -> "[root] var.iam_token"
 		"[root] provider[\"terraform-provider-nebius.storage.ai.nebius.cloud/nebius/nebius\"] (close)" -> "[root] module.k8s.nebius_mk8s_v1_node_group.cpu (expand)"
