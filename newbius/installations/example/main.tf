@@ -59,6 +59,7 @@ module "k8s" {
   iam_project_id = data.nebius_iam_v1_project.this.id
   vpc_subnet_id  = data.nebius_vpc_v1_subnet.this.id
 
+  k8s_version = var.k8s_version
   name               = var.k8s_cluster_name
   slurm_cluster_name = var.slurm_cluster_name
 
@@ -160,6 +161,8 @@ module "slurm" {
       mount_path     = submount.mount_path
     }]
   }
+
+  shared_memory_size_gibibytes = var.slurm_shared_memory_size_gibibytes
 
   nccl_topology_type           = var.k8s_cluster_node_group_gpu.resource.platform == "gpu-h100-sxm" ? "H100 GPU cluster" : "auto"
   nccl_benchmark_enable        = var.nccl_benchmark_enable
