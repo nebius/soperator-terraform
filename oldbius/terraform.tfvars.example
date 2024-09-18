@@ -281,7 +281,7 @@ slurm_cluster_worker_volume_spool_size = 128 * (1024 * 1024 * 1024) # 128Gi
 ## SLURM OPERATOR CONFIGURATION
 
 ### Version of the Slurm operator. Typically, should be left default.
-slurm_operator_version = "1.13.1"
+slurm_operator_version = "1.13.5"
 
 
 
@@ -403,6 +403,10 @@ slurm_cluster_node_login_munge_resources = {
   ephemeral_storage_bytes = 4 * (1024 * 1024 * 1024) # 4Gi
 }
 
+
+
+## SLURM EXPORTER CONFIGURATION
+slurm_cluster_exporter_enabled = true
 
 
 ## PERIODIC GPU BENCHMARK CONFIGURATION

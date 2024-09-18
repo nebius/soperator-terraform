@@ -45,6 +45,12 @@ sync-version: ## Sync versions from file
 	@terraform fmt oldbius/slurm_cluster_variables.tf
 	@# endregion oldbius/slurm_cluster_variables.tf
 
+	@# region oldbius/slurm_cluster_operator.tf
+	@echo 'Syncing oldbius/slurm_cluster_operator.tf'
+	@$(SED_COMMAND) -E 's/slurm *= *"[0-9]+.[0-9]+.[0-9]+[^ ]*"/slurm = "$(IMAGE_TAG)"/' oldbius/slurm_cluster_operator.tf
+	@terraform fmt oldbius/slurm_cluster_operator.tf
+	@# endregion oldbius/slurm_cluster_operator.tf
+
 	@# region newbius/slurm_k8s/locals.tf
 	@echo 'Syncing newbius/slurm_k8s/locals.tf'
 	@$(SED_COMMAND) -E 's/slurm *= *"[0-9]+.[0-9]+.[0-9]+[^ ]*"/slurm = "$(IMAGE_TAG)"/' newbius/slurm_k8s/locals.tf
