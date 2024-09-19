@@ -47,5 +47,9 @@ resource "nebius_mk8s_v1_node_group" "cpu" {
         id = submount.id
       }
     }])
+
+    network_interfaces = [{
+      subnet_id = var.vpc_subnet_id
+    }]
   }
 }
