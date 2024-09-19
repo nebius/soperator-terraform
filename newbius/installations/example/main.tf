@@ -10,22 +10,37 @@ module "filestore" {
   k8s_cluster_name = var.k8s_cluster_name
 
   controller_spool = {
-    disk_type            = "NETWORK_SSD"
-    size_gibibytes       = var.filestore_controller_spool.size_gibibytes
-    block_size_kibibytes = var.filestore_controller_spool.block_size_kibibytes
+    spec = var.filestore_controller_spool.spec != null ? {
+      disk_type            = "NETWORK_SSD"
+      size_gibibytes       = var.filestore_controller_spool.spec.size_gibibytes
+      block_size_kibibytes = var.filestore_controller_spool.spec.block_size_kibibytes
+    } : null
+    existing = var.filestore_controller_spool.existing != null ? {
+      id = var.filestore_controller_spool.existing.id
+    } : null
   }
 
   jail = {
-    disk_type            = "NETWORK_SSD"
-    size_gibibytes       = var.filestore_jail.size_gibibytes
-    block_size_kibibytes = var.filestore_jail.block_size_kibibytes
+    spec = var.filestore_jail.spec != null ? {
+      disk_type            = "NETWORK_SSD"
+      size_gibibytes       = var.filestore_jail.spec.size_gibibytes
+      block_size_kibibytes = var.filestore_jail.spec.block_size_kibibytes
+    } : null
+    existing = var.filestore_jail.existing != null ? {
+      id = var.filestore_jail.existing.id
+    } : null
   }
 
   jail_submounts = [for submount in var.filestore_jail_submounts : {
-    name                 = submount.name
-    disk_type            = "NETWORK_SSD"
-    size_gibibytes       = submount.size_gibibytes
-    block_size_kibibytes = submount.block_size_kibibytes
+    name = submount.name
+    spec = submount.spec != null ? {
+      disk_type            = "NETWORK_SSD"
+      size_gibibytes       = submount.spec.size_gibibytes
+      block_size_kibibytes = submount.spec.block_size_kibibytes
+    } : null
+    existing = submount.existing != null ? {
+      id = submount.existing.id
+    } : null
   }]
 
   providers = {
@@ -44,6 +59,7 @@ module "k8s" {
   iam_project_id = data.nebius_iam_v1_project.this.id
   vpc_subnet_id  = data.nebius_vpc_v1_subnet.this.id
 
+  k8s_version        = var.k8s_version
   name               = var.k8s_cluster_name
   slurm_cluster_name = var.slurm_cluster_name
 
@@ -131,20 +147,22 @@ module "slurm" {
   # TODO: MSP-2817 - use computed values of filestore sizes
   filestores = {
     controller_spool = {
-      size_gibibytes = var.filestore_controller_spool.size_gibibytes
+      size_gibibytes = module.filestore.controller_spool.size_gibibytes
       device         = module.filestore.controller_spool.mount_tag
     }
     jail = {
-      size_gibibytes = var.filestore_jail.size_gibibytes
+      size_gibibytes = module.filestore.jail.size_gibibytes
       device         = module.filestore.jail.mount_tag
     }
     jail_submounts = [for submount in var.filestore_jail_submounts : {
       name           = submount.name
-      size_gibibytes = submount.size_gibibytes
+      size_gibibytes = module.filestore.jail_submounts[submount.name].size_gibibytes
       device         = module.filestore.jail_submounts[submount.name].mount_tag
       mount_path     = submount.mount_path
     }]
   }
+
+  shared_memory_size_gibibytes = var.slurm_shared_memory_size_gibibytes
 
   nccl_topology_type           = var.k8s_cluster_node_group_gpu.resource.platform == "gpu-h100-sxm" ? "H100 GPU cluster" : "auto"
   nccl_benchmark_enable        = var.nccl_benchmark_enable

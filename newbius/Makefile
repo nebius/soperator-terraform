@@ -1,5 +1,11 @@
 SHELL = /bin/bash
 
+ifeq ($(shell uname), Darwin)
+    SED_COMMAND = sed -i ''
+else
+    SED_COMMAND = sed -i
+endif
+
 all: graph
 
 .PHONY: graph
@@ -24,10 +30,8 @@ graph-beautified.svg: imgs/tgbeauty graph-beautified.viz
 graph-beautified.viz: imgs/tgbeauty graph.viz
 	cat imgs/graph.viz \
 	| ./imgs/tgbeauty \
-	  --exclude 'var.' \
-	  --exclude 'local.' \
-	  --exclude 'module.labels.' \
 	  --output-type graphviz > imgs/$@
+	$(SED_COMMAND) -E 's/rankdir=TB/rankdir=RL/' imgs/$@
 
 .PHONY: tooling
 tooling: imgs/tgbeauty

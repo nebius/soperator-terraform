@@ -43,27 +43,63 @@ data "nebius_vpc_v1_subnet" "this" {
 variable "filestore_controller_spool" {
   description = "Shared filesystem to be used on controller nodes."
   type = object({
-    size_gibibytes       = number
-    block_size_kibibytes = number
+    existing = optional(object({
+      id = string
+    }))
+    spec = optional(object({
+      size_gibibytes       = number
+      block_size_kibibytes = number
+    }))
   })
+  nullable = false
+
+  validation {
+    condition     = (var.filestore_controller_spool.existing != null && var.filestore_controller_spool.spec == null) || (var.filestore_controller_spool.existing == null && var.filestore_controller_spool.spec != null)
+    error_message = "One of `existing` or `spec` must be provided."
+  }
 }
 
 variable "filestore_jail" {
   description = "Shared filesystem to be used on controller, worker, and login nodes."
   type = object({
-    size_gibibytes       = number
-    block_size_kibibytes = number
+    existing = optional(object({
+      id = string
+    }))
+    spec = optional(object({
+      size_gibibytes       = number
+      block_size_kibibytes = number
+    }))
   })
+  nullable = false
+
+  validation {
+    condition     = (var.filestore_jail.existing != null && var.filestore_jail.spec == null) || (var.filestore_jail.existing == null && var.filestore_jail.spec != null)
+    error_message = "One of `existing` or `spec` must be provided."
+  }
 }
 
 variable "filestore_jail_submounts" {
   description = "Shared filesystems to be mounted inside jail."
   type = list(object({
-    name                 = string
-    size_gibibytes       = number
-    block_size_kibibytes = number
-    mount_path           = string
+    name       = string
+    mount_path = string
+    existing = optional(object({
+      id = string
+    }))
+    spec = optional(object({
+      disk_type            = string
+      size_gibibytes       = number
+      block_size_kibibytes = number
+    }))
   }))
+
+  validation {
+    condition = length([
+      for sm in var.filestore_jail_submounts : true
+      if(sm.existing != null && sm.spec == null) || (sm.existing == null && sm.spec != null)
+    ]) == length(var.filestore_jail_submounts)
+    error_message = "All submounts must have one of `existing` or `spec` provided."
+  }
 }
 
 # endregion Storage

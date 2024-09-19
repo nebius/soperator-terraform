@@ -46,6 +46,7 @@ locals {
         ),
         "${local.const.filesystem.jail_submount_prefix}-${submount.name}"
       ])
+      if submount.spec != null
     }
   }
 }
