@@ -59,8 +59,8 @@ sync-version: ## Sync versions from file
 
 	@# region newbius/installations/msp-slurm-test/main.tf
 	@echo 'Syncing newbius/installations/msp-slurm-test/main.tf'
-	@$(SED_COMMAND) -E 's/operator_version *= *"[0-9]+.[0-9]+.[0-9]+[^ ]*"/operator_version = "$(IMAGE_TAG)"/' newbius/installations/msp-slurm-test/main.tf | true
-	@terraform fmt newbius/installations/msp-slurm-test/main.tf | true
+	@$(SED_COMMAND) -E 's/operator_version *= *"[0-9]+.[0-9]+.[0-9]+[^ ]*"/operator_version = "$(IMAGE_TAG)"/' newbius/installations/msp-slurm-test/main.tf >/dev/null 2>&1 || true
+	@terraform fmt newbius/installations/msp-slurm-test/main.tf >/dev/null 2>&1 || true
 	@# endregion newbius/installations/msp-slurm-test/main.tf
 
 .PHONY: release-terraform
