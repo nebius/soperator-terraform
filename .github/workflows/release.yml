@@ -5,13 +5,23 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   build:
+    permissions:
+      contents: write  # for softprops/action-gh-release to create GitHub release
     runs-on: self-hosted
 
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
+        with:
+          egress-policy: audit
+
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
       - name: Run all
         run: |
@@ -25,7 +35,7 @@ jobs:
           echo "FILE_VERSION=$(cat VERSION | tr '.' '_' | tr '-' '_')" >> $GITHUB_ENV
 
       - name: Create GitHub Release and Upload terraform tarball
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@c062e08bd532815e2082a85e87e3ef29c3e6d191 # v2.0.8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
