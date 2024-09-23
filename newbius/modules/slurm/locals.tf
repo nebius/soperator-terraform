@@ -1,7 +1,7 @@
 locals {
   helm = {
     repository = {
-      slurm   = "oci://cr.ai.nebius.cloud/crnefnj17i4kqgt3up94"
+      slurm   = "oci://ghcr.io/nebius"
       mariadb = "https://helm.mariadb.com/mariadb-operator"
     }
 
