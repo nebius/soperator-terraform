@@ -105,7 +105,7 @@ resource "helm_release" "slurm_operator" {
   namespace        = local.helm.chart.operator.slurm
 
   set {
-    name  = "isPrometheusCrdInstalled"
+    name  = "controllerManager.manager.env.isPrometheusCrdInstalled"
     value = var.telemetry_enabled
   }
 
