@@ -13,17 +13,17 @@ resource "helm_release" "slurm_operator" {
   create_namespace = true
 
   set {
-    name  = "watchNamespaces"
+    name  = "controllerManager.manager.env.watchNamespaces"
     value = "*"
   }
 
   set {
-    name  = "isOpenTelemetryCollectorCrdInstalled"
+    name  = "controllerManager.manager.env.isOpenTelemetryCollectorCrdInstalled"
     value = tobool(var.k8s_cluster_operator_opentelemetry_operator_enabled)
   }
 
   set {
-    name  = "isPrometheusCrdInstalled"
+    name  = "controllerManager.manager.env.isPrometheusCrdInstalled"
     value = tobool(var.k8s_monitoring_enabled)
   }
 
@@ -53,7 +53,7 @@ locals {
     version = {
       network = "24.4.0"
       gpu     = "v24.3.0"
-      slurm   = "1.13.5-02f41426"
+      slurm   = "1.14.1"
     }
   }
 }

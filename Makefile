@@ -63,6 +63,12 @@ sync-version: ## Sync versions from file
 	@terraform fmt newbius/installations/msp-slurm-test/main.tf >/dev/null 2>&1 || true
 	@# endregion newbius/installations/msp-slurm-test/main.tf
 
+	@# region newbius/installations/msp-slurm-prod/main.tf
+	@echo 'Syncing newbius/installations/msp-slurm-prod/main.tf'
+	@$(SED_COMMAND) -E 's/operator_version *= *"[0-9]+.[0-9]+.[0-9]+[^ ]*"/operator_version = "$(IMAGE_TAG)"/' newbius/installations/msp-slurm-prod/main.tf >/dev/null 2>&1 || true
+	@terraform fmt newbius/installations/msp-slurm-prod/main.tf >/dev/null 2>&1 || true
+	@# endregion newbius/installations/msp-slurm-prod/main.tf
+
 .PHONY: release-terraform
 release-terraform: sync-version
 	@echo "Packing new terraform tarball"

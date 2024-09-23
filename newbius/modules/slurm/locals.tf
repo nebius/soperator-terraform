@@ -15,5 +15,10 @@ locals {
         mariadb = "mariadb-operator"
       }
     }
+
+    version = {
+      slurm   = var.operator_version
+      mariadb = "0.31.0"
+    }
   }
 }

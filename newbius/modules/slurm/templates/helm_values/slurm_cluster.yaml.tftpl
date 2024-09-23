@@ -124,6 +124,9 @@ slurmNodes:
   exporter:
     enabled: ${nodes.exporter.enabled}
     k8sNodeFilterName: ${k8s_node_filters.non_gpu.name}
+    volumes:
+      jail:
+        volumeSourceName: "jail"
 
 %{ if telemetry.enabled ~}
 telemetry:

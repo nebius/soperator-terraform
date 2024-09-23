@@ -1,8 +1,50 @@
+resource "helm_release" "mariadb_operator" {
+  # TODO: Install MariaDB conditionally when accounting is set via vars
+  count = 0
+
+  name       = local.helm.chart.operator.mariadb
+  repository = local.helm.repository.mariadb
+  chart      = local.helm.chart.operator.mariadb
+  version    = local.helm.version.mariadb
+
+  create_namespace = true
+  namespace        = var.mariadb_operator_namespace
+
+  set {
+    name  = "metrics.enabled"
+    value = var.telemetry_enabled
+  }
+  set {
+    name  = "metrics.serviceMonitor.enabled"
+    value = var.telemetry_enabled
+  }
+  set {
+    name  = "metrics.serviceMonitor.interval"
+    value = "30s"
+  }
+  set {
+    name  = "metrics.serviceMonitor.scrapeTimeout"
+    value = "25s"
+  }
+  set {
+    name  = "serviceAccount.enabled"
+    value = true
+  }
+
+  set {
+    name  = "cert.certManager.enabled"
+    value = var.telemetry_enabled
+  }
+
+  wait          = true
+  wait_for_jobs = true
+}
+
 resource "helm_release" "slurm_cluster_crd" {
   name       = local.helm.chart.slurm_operator_crds
   repository = local.helm.repository.slurm
   chart      = local.helm.chart.slurm_operator_crds
-  version    = var.operator_version
+  version    = local.helm.version.slurm
 
   create_namespace = true
   namespace        = local.helm.chart.operator.slurm
@@ -15,7 +57,7 @@ resource "helm_release" "slurm_cluster_storage" {
   name       = local.helm.chart.slurm_cluster_storage
   repository = local.helm.repository.slurm
   chart      = local.helm.chart.slurm_cluster_storage
-  version    = var.operator_version
+  version    = local.helm.version.slurm
 
   create_namespace = true
   namespace        = var.name
@@ -50,75 +92,37 @@ resource "helm_release" "slurm_cluster_storage" {
 resource "helm_release" "slurm_operator" {
   depends_on = [
     helm_release.slurm_cluster_crd,
+    helm_release.mariadb_operator,
     module.monitoring,
   ]
 
   name       = local.helm.chart.operator.slurm
   repository = local.helm.repository.slurm
   chart      = local.helm.chart.operator.slurm
-  version    = var.operator_version
+  version    = local.helm.version.slurm
 
   create_namespace = true
   namespace        = local.helm.chart.operator.slurm
 
   set {
-    name  = "isPrometheusCrdInstalled"
+    name  = "controllerManager.manager.env.isPrometheusCrdInstalled"
     value = var.telemetry_enabled
   }
 
   wait          = true
   wait_for_jobs = true
-}
-
-resource "helm_release" "mariadb-operator" {
-  name             = local.helm.chart.operator.mariadb
-  repository       = local.helm.repository.mariadb
-  chart            = local.helm.chart.operator.mariadb
-  create_namespace = true
-  namespace        = var.mariadb_operator_namespace
-
-  wait          = true
-  wait_for_jobs = true
-
-  set {
-    name  = "metrics.enabled"
-    value = var.telemetry_enabled
-  }
-  set {
-    name  = "metrics.serviceMonitor.enabled"
-    value = var.telemetry_enabled
-  }
-  set {
-    name  = "metrics.serviceMonitor.interval"
-    value = "30s"
-  }
-  set {
-    name  = "metrics.serviceMonitor.scrapeTimeout"
-    value = "25s"
-  }
-  set {
-    name  = "serviceAccount.enabled"
-    value = true
-  }
-
-  set {
-    name  = "cert.certManager.enabled"
-    value = var.telemetry_enabled
-  }
-
 }
 
 resource "helm_release" "slurm_cluster" {
   depends_on = [
     helm_release.slurm_operator,
-    helm_release.slurm_cluster_crd,
     helm_release.slurm_cluster_storage,
   ]
 
   name       = local.helm.chart.slurm_cluster
   repository = local.helm.repository.slurm
   chart      = local.helm.chart.slurm_cluster
-  version    = var.operator_version
+  version    = local.helm.version.slurm
 
   create_namespace = true
   namespace        = var.name

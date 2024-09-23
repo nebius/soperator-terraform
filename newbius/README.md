@@ -21,6 +21,7 @@ We'll use [service account](https://docs.nebius.ai/iam/service-accounts/manage/)
 
 Let's start with exporting your tenant and project IDs for a further use.
 
+> [!TIP]
 > We suggest you to replace checks for `NEBIUS_TENANT_ID` and `NEBIUS_PROJECT_ID` in provided [`.envrc`](installations/example/.envrc) file
 > with the following:
 > 
@@ -105,8 +106,10 @@ NEBIUS_BUCKET_NAME="tfstate-slurm-k8s-$(echo -n "${NEBIUS_TENANT_ID}-${NEBIUS_PR
 nebius storage bucket create --parent-id "${NEBIUS_PROJECT_ID}" --versioning-policy 'enabled' --name "${NEBIUS_BUCKET_NAME}"
 ```
 
+> [!NOTE]
 > `NEBIUS_BUCKET_NAME` contains unique bucket name dedicated to the project inside your tenant. 
 
+> [!NOTE]
 > `--versioning-policy 'enabled'` allows you to keep track of versions made by Terraform.
 > It gives you a possibility to roll back to specified version of TF state in case your installation is broken.
 
@@ -128,6 +131,7 @@ To load variables from `.envrc` file, you can use `direnv` or you can simply cal
 source .envrc
 ```
 
+> [!TIP]
 > If you have your access token expired, you can simply re-source `.envrc`
 > ```bash
 > source .envrc
@@ -166,6 +170,7 @@ It can find and load variables from e.g. `.envrc` file.
    IAM token is present
    ```
 
+> [!TIP]
 > If you have your access token expired, you can switch directories back and forth to trigger unloading/loading of
 > `.envrc` file, or just simply call `direnv reload`
 > ```bash
@@ -196,6 +201,13 @@ cluster configuration.
 2. Run `terraform plan` to make sure if provided values create resources as you want.
 3. Run `terraform apply` to create resources based on provided values. You will be prompted to check if resources
 correspond to your needs. Type `yes` if the configuration is correct and watch the process.
+
+> [!IMPORTANT]
+> If you encounter errors like:
+> ```
+> Error: failed to install <*>: customresourcedefinitions.apiextensions.k8s.io is forbidden: User "<USER>" cannot create resource "customresourcedefinitions" in API group "apiextensions.k8s.io" at the cluster scope
+> ```
+> Try to re-run `terraform apply` until they're gone.
 
 Once resource creation is done, you will be able to connect to Slurm login node via SSH using provided public key as a
 `root` user.
