@@ -1,8 +1,9 @@
 locals {
-  consts = {
+  const = {
     filesystem = {
-      jail             = "jail"
-      controller_spool = "controller-spool"
+      jail                 = "jail"
+      controller_spool     = "controller-spool"
+      jail_submount_prefix = "jail-submount"
     }
   }
 
@@ -13,11 +14,11 @@ locals {
           substr(
             var.k8s_cluster_name,
             0,
-            64 - (length(local.consts.filesystem.jail) + 1)
+            64 - (length(local.const.filesystem.jail) + 1)
           ),
           "-"
         ),
-        local.consts.filesystem.jail
+        local.const.filesystem.jail
       ])
 
       controller_spool = join("-", [
@@ -25,11 +26,11 @@ locals {
           substr(
             var.k8s_cluster_name,
             0,
-            64 - (length(local.consts.filesystem.controller_spool) + 1)
+            64 - (length(local.const.filesystem.controller_spool) + 1)
           ),
           "-"
         ),
-        local.consts.filesystem.controller_spool
+        local.const.filesystem.controller_spool
       ])
     }
 
@@ -39,12 +40,13 @@ locals {
           substr(
             var.k8s_cluster_name,
             0,
-            64 - (length("jail-submount-${submount.name}") + 1)
+            64 - (length("${local.const.filesystem.jail_submount_prefix}-${submount.name}") + 1)
           ),
           "-"
         ),
-        "jail-submount-${submount.name}"
+        "${local.const.filesystem.jail_submount_prefix}-${submount.name}"
       ])
+      if submount.spec != null
     }
   }
 }

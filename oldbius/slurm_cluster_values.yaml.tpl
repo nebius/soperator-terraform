@@ -104,6 +104,7 @@ slurmNodes:
   worker:
     size: ${slurm_cluster_node_worker_count}
     k8sNodeFilterName: "${slurm_cluster_k8s_node_filters.gpu}"
+    cgroupVersion: v1
     slurmd:
       resources:
         cpu: "${ceil(slurm_cluster_node_worker_slurmd_resources.cpu_cores * unit_core)}m"
@@ -168,6 +169,10 @@ slurmNodes:
       %{ else }
       jailSubMounts: []
       %{ endif }
+  exporter:
+    enabled: "${slurm_cluster_exporter_enabled}"
+    k8sNodeFilterName: "${slurm_cluster_k8s_node_filters.non_gpu}"
+
 telemetry:
   jobsTelemetry:
     otelCollectorHttpHost: "${otelCollectorHttpHost}"

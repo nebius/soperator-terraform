@@ -13,29 +13,65 @@ resource "helm_release" "slurm_operator" {
   create_namespace = true
 
   set {
-    name  = "watchNamespaces"
+    name  = "controllerManager.manager.env.watchNamespaces"
     value = "*"
   }
 
   set {
-    name  = "opentelemetryOperator.enabled"
+    name  = "controllerManager.manager.env.isOpenTelemetryCollectorCrdInstalled"
     value = tobool(var.k8s_cluster_operator_opentelemetry_operator_enabled)
   }
 
+  set {
+    name  = "controllerManager.manager.env.isPrometheusCrdInstalled"
+    value = tobool(var.k8s_monitoring_enabled)
+  }
+
   wait = true
+}
+
+locals {
+  helm = {
+    repository = {
+      marketplace = "cr.nemax.nebius.cloud/yc-marketplace"
+      nvidia      = "oci://cr.nemax.nebius.cloud/yc-marketplace/nebius"
+      slurm       = "oci://cr.ai.nebius.cloud/crnefnj17i4kqgt3up94"
+    }
+
+    chart = {
+      slurm_cluster         = "slurm-cluster"
+      slurm_cluster_storage = "slurm-cluster-storage"
+      slurm_operator_crds   = "slurm-operator-crds"
+
+      operator = {
+        network = "network-operator"
+        gpu     = "gpu-operator"
+        slurm   = "slurm-operator"
+      }
+    }
+
+    version = {
+      network = "24.4.0"
+      gpu     = "v24.3.0"
+      slurm   = "1.14.1"
+    }
+  }
 }
 
 resource "helm_release" "slurm_operator_crd" {
   depends_on = [
     module.k8s_cluster,
   ]
-  name       = "slurm-operator-crd"
-  namespace  = local.slurm_chart_operator
+  name             = "slurm-operator-crd"
+  namespace        = local.slurm_chart_operator
+  repository       = local.helm.repository.slurm
+  chart            = local.helm.chart.slurm_operator_crds
+  version          = local.helm.version.slurm
   create_namespace = true
-  repository = "https://bedag.github.io/helm-charts/"
-  chart      = "raw"
-  version    = "2.0.0"
   values = [
     file("${path.module}${var.path_crd_file_yaml}"),
   ]
+
+  wait          = true
+  wait_for_jobs = true
 }
