@@ -127,6 +127,12 @@ You can also set it within `terraform.tfvars`, but it's not secure, and we do no
 
 To load variables from `.envrc` file, you can use `direnv` or you can simply call
 
+Install md5sum 
+
+```bash
+brew install coreutils
+```
+
 ```bash
 source .envrc
 ```
