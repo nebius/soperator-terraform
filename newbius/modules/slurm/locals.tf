@@ -1,17 +1,17 @@
 locals {
   helm = {
     repository = {
-      slurm   = "oci://ghcr.io/nebius"
+      slurm   = "oci://ghcr.io/nebius/soperator"
       mariadb = "https://helm.mariadb.com/mariadb-operator"
     }
 
     chart = {
-      slurm_cluster         = "helm-slurm-cluster"
-      slurm_cluster_storage = "helm-slurm-cluster-storage"
-      slurm_operator_crds   = "helm-soperator-crds"
+      slurm_cluster         = "slurm-cluster"
+      slurm_cluster_storage = "slurm-cluster-storage"
+      slurm_operator_crds   = "soperator-crds"
 
       operator = {
-        slurm   = "helm-soperator"
+        slurm   = "soperator"
         mariadb = "mariadb-operator"
       }
     }
