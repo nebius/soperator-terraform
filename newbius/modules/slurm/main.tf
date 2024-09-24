@@ -43,11 +43,11 @@ resource "helm_release" "mariadb_operator" {
 resource "helm_release" "slurm_cluster_crd" {
   name       = local.helm.chart.slurm_operator_crds
   repository = local.helm.repository.slurm
-  chart      = local.helm.chart.slurm_operator_crds
+  chart      = "helm-${local.helm.chart.slurm_operator_crds}"
   version    = local.helm.version.slurm
 
   create_namespace = true
-  namespace        = local.helm.chart.operator.slurm
+  namespace        = "${local.helm.chart.operator.slurm}-system"
 
   wait          = true
   wait_for_jobs = true
@@ -56,7 +56,7 @@ resource "helm_release" "slurm_cluster_crd" {
 resource "helm_release" "slurm_cluster_storage" {
   name       = local.helm.chart.slurm_cluster_storage
   repository = local.helm.repository.slurm
-  chart      = local.helm.chart.slurm_cluster_storage
+  chart      = "helm-${local.helm.chart.slurm_cluster_storage}"
   version    = local.helm.version.slurm
 
   create_namespace = true
@@ -98,11 +98,11 @@ resource "helm_release" "slurm_operator" {
 
   name       = local.helm.chart.operator.slurm
   repository = local.helm.repository.slurm
-  chart      = local.helm.chart.operator.slurm
+  chart      = "helm-${local.helm.chart.operator.slurm}"
   version    = local.helm.version.slurm
 
   create_namespace = true
-  namespace        = local.helm.chart.operator.slurm
+  namespace        = "${local.helm.chart.operator.slurm}-system"
 
   set {
     name  = "controllerManager.manager.env.isPrometheusCrdInstalled"
@@ -121,7 +121,7 @@ resource "helm_release" "slurm_cluster" {
 
   name       = local.helm.chart.slurm_cluster
   repository = local.helm.repository.slurm
-  chart      = local.helm.chart.slurm_cluster
+  chart      = "helm-${local.helm.chart.slurm_cluster}"
   version    = local.helm.version.slurm
 
   create_namespace = true

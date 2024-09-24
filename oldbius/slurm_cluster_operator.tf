@@ -39,38 +39,33 @@ locals {
     }
 
     chart = {
-      slurm_cluster         = "slurm-cluster"
-      slurm_cluster_storage = "slurm-cluster-storage"
-      slurm_operator_crds   = "slurm-operator-crds"
+      slurm_cluster         = "helm-slurm-cluster"
+      slurm_cluster_storage = "helm-slurm-cluster-storage"
+      slurm_operator_crds   = "helm-soperator-crds"
 
       operator = {
         network = "network-operator"
         gpu     = "gpu-operator"
-        slurm   = "slurm-operator"
+        slurm   = "helm-soperator"
       }
     }
 
     version = {
       network = "24.4.0"
       gpu     = "v24.3.0"
-      slurm   = "1.14.1"
+      slurm   = "1.14.2"
     }
   }
 }
 
 resource "helm_release" "slurm_operator_crd" {
-  depends_on = [
-    module.k8s_cluster,
-  ]
-  name             = "slurm-operator-crd"
-  namespace        = local.slurm_chart_operator
-  repository       = local.helm.repository.slurm
-  chart            = local.helm.chart.slurm_operator_crds
-  version          = local.helm.version.slurm
+  name       = local.helm.chart.slurm_operator_crds
+  repository = local.helm.repository.slurm
+  chart      = local.helm.chart.slurm_operator_crds
+  version    = local.helm.version.slurm
+
   create_namespace = true
-  values = [
-    file("${path.module}${var.path_crd_file_yaml}"),
-  ]
+  namespace        = local.helm.chart.operator.slurm
 
   wait          = true
   wait_for_jobs = true
