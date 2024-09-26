@@ -154,13 +154,13 @@ k8s_cluster_node_group_gpu = {
 # SSH user credentials for accessing k8s nodes.
 # By default, empty list.
 # ---
-k8s_cluster_node_ssh_access_users = [{
-  name = "user1"
-  public_keys = [
-    "user1 key1",
-    "user1 key2",
-  ]
-}]
+# k8s_cluster_node_ssh_access_users = [{
+#   name = "user1"
+#   public_keys = [
+#     "user1 key1",
+#     "user1 key2",
+#   ]
+# }]
 
 # endregion k8s
 
