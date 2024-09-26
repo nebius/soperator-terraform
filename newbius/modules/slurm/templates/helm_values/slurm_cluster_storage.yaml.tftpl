@@ -5,6 +5,12 @@ volume:
   controllerSpool:
     size: ${volume.controller_spool.size}
     filestoreDeviceName: ${volume.controller_spool.device}
+  accounting:
+    enabled: ${volume.accounting_storage.enabled}
+    %{~ if volume.accounting_storage.enabled ~}
+    size: ${volume.accounting_storage.size}
+    filestoreDeviceName: ${volume.accounting_storage.device}
+    %{~ endif ~}
   %{~ if length(volume.jail_submounts) > 0 ~}
   jailSubMounts:
     %{~ for sub_mount in volume.jail_submounts ~}

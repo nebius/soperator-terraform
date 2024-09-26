@@ -354,4 +354,14 @@ variable "telemetry_grafana_admin_password" {
 
 # endregion Telemetry
 
+# region Accounting
+
+variable "accounting_enabled" {
+  description = "Whether to enable accounting."
+  type        = bool
+  default     = false
+}
+
+# endregion Accounting
+
 # endregion Slurm

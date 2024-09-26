@@ -20,6 +20,17 @@ module "filestore" {
     } : null
   }
 
+  accounting_storage = {
+    spec = var.filestore_accounting_storage.spec != null ? {
+      disk_type            = "NETWORK_SSD"
+      size_gibibytes       = var.filestore_accounting_storage.spec.size_gibibytes
+      block_size_kibibytes = var.filestore_accounting_storage.spec.block_size_kibibytes
+    } : null
+    existing = var.filestore_accounting_storage.existing != null ? {
+      id = var.filestore_accounting_storage.existing.id
+    } : null
+  }
+
   jail = {
     spec = var.filestore_jail.spec != null ? {
       disk_type            = "NETWORK_SSD"
@@ -88,6 +99,10 @@ module "k8s" {
       id        = submount.id
       mount_tag = submount.mount_tag
     }]
+    accounting_storage = coalesce({
+      id        = module.filestore.accounting_storage.id
+      mount_tag = module.filestore.accounting_storage.mount_tag
+    }, null)
   }
 
   create_nlb = local.create_nlb
@@ -144,7 +159,8 @@ module "slurm" {
   login_load_balancer_ip     = module.k8s.login_ip
   login_ssh_root_public_keys = var.slurm_login_ssh_root_public_keys
 
-  exporter_enabled = var.slurm_exporter_enabled
+  exporter_enabled   = var.slurm_exporter_enabled
+  accounting_enabled = var.accounting_enabled
 
   # TODO: MSP-2817 - use computed values of filestore sizes
   filestores = {
@@ -162,6 +178,10 @@ module "slurm" {
       device         = module.filestore.jail_submounts[submount.name].mount_tag
       mount_path     = submount.mount_path
     }]
+    accounting_storage = coalesce({
+      size_gibibytes = module.filestore.accounting_storage.size_gibibytes
+      device         = module.filestore.accounting_storage.mount_tag
+    }, null)
   }
 
   shared_memory_size_gibibytes = var.slurm_shared_memory_size_gibibytes

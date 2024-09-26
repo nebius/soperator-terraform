@@ -64,6 +64,25 @@ periodicChecks:
       thresholdMoreThan: ${ncclBenchmark.min_threshold}
 
 slurmNodes:
+  accounting:
+    enabled: ${nodes.accounting.enabled}
+    k8sNodeFilterName: ${k8s_node_filters.non_gpu.name}
+    mariadbOperator:
+      enabled: ${nodes.accounting.mariadbOperator.enabled}
+      %{~ if nodes.accounting.enabled ~}
+      metrics:
+        enabled: ${nodes.accounting.mariadbOperator.metricsEnabled}
+      storage:
+        ephemeral: false
+        volumeClaimTemplate:
+          accessModes:
+            - ReadWriteMany
+          resources:
+            requests:
+              storage: ${nodes.accounting.mariadbOperator.storage_size}Gi
+          volumeName: accounting-pv
+        storageClassName: slurm-local-pv
+      %{~ endif ~}
   controller:
     size: ${nodes.controller.size}
     k8sNodeFilterName: ${k8s_node_filters.non_gpu.name}

@@ -4,6 +4,7 @@ locals {
       jail                 = "jail"
       controller_spool     = "controller-spool"
       jail_submount_prefix = "jail-submount"
+      accounting_storage   = "accounting-storage"
     }
   }
 
@@ -31,6 +32,17 @@ locals {
           "-"
         ),
         local.const.filesystem.controller_spool
+      ])
+      accounting_storage = join("-", [
+        trimsuffix(
+          substr(
+            var.k8s_cluster_name,
+            0,
+            64 - (length(local.const.filesystem.accounting_storage) + 1)
+          ),
+          "-"
+        ),
+        local.const.filesystem.accounting_storage
       ])
     }
 

@@ -25,7 +25,9 @@ variable "controller_spool" {
   nullable = false
 
   validation {
-    condition     = (var.controller_spool.existing != null && var.controller_spool.spec == null) || (var.controller_spool.existing == null && var.controller_spool.spec != null)
+    condition = (
+      var.controller_spool.existing != null && var.controller_spool.spec == null
+    ) || (var.controller_spool.existing == null && var.controller_spool.spec != null)
     error_message = "One of `existing` or `spec` must be provided."
   }
 }
@@ -45,7 +47,9 @@ variable "jail" {
   nullable = false
 
   validation {
-    condition     = (var.jail.existing != null && var.jail.spec == null) || (var.jail.existing == null && var.jail.spec != null)
+    condition = (
+      var.jail.existing != null && var.jail.spec == null
+    ) || (var.jail.existing == null && var.jail.spec != null)
     error_message = "One of `existing` or `spec` must be provided."
   }
 }
@@ -71,5 +75,28 @@ variable "jail_submounts" {
       if(sm.existing != null && sm.spec == null) || (sm.existing == null && sm.spec != null)
     ]) == length(var.jail_submounts)
     error_message = "All submounts must have one of `existing` or `spec` provided."
+  }
+}
+
+variable "accounting_storage" {
+  description = "Filestore for Slurm accounting storage."
+  type = object({
+    existing = optional(object({
+      id = string
+    }))
+    spec = optional(object({
+      disk_type            = string
+      size_gibibytes       = number
+      block_size_kibibytes = number
+    }))
+  })
+  nullable = true
+
+  validation {
+    condition = var.accounting_storage != null ? (
+      (var.accounting_storage.existing != null && var.accounting_storage.spec == null) ||
+      (var.accounting_storage.existing == null && var.accounting_storage.spec != null)
+    ) : true
+    error_message = "One of `existing` or `spec` must be provided."
   }
 }
