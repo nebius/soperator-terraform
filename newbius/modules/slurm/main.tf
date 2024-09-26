@@ -174,7 +174,6 @@ resource "helm_release" "slurm_cluster" {
         mariadbOperator = {
           metricsEnabled = var.telemetry_enabled
           enabled        = var.accounting_enabled
-          image          = "docker-registry1.mariadb.com/library/mariadb:11.4.3"
           storage_size   = var.accounting_enabled ? var.filestores.accounting_storage.size_gibibytes : 0
         }
       }
