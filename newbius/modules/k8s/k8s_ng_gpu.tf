@@ -88,7 +88,10 @@ resource "nebius_mk8s_v1_node_group" "gpu" {
     }])
 
     network_interfaces = [{
+      public_ip_address = local.node_ssh_access.enabled ? {} : null
       subnet_id = var.vpc_subnet_id
     }]
+
+    cloud_init_user_data = local.node_ssh_access.enabled ? local.node_ssh_access.cloud_init_data : null
   }
 }

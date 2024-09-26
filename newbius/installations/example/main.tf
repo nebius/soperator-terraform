@@ -92,6 +92,8 @@ module "k8s" {
 
   create_nlb = local.create_nlb
 
+  node_ssh_access_users = var.k8s_cluster_node_ssh_access_users
+
   providers = {
     nebius = nebius
     units  = units

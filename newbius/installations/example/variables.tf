@@ -87,7 +87,6 @@ variable "filestore_jail_submounts" {
       id = string
     }))
     spec = optional(object({
-      disk_type            = string
       size_gibibytes       = number
       block_size_kibibytes = number
     }))
@@ -205,6 +204,16 @@ variable "k8s_cluster_node_group_gpu" {
       - Preset must be one of `8gpu-128vcpu-1600gb` or `1gpu-20vcpu-200gb`
     EOF
   }
+}
+
+variable "k8s_cluster_node_ssh_access_users" {
+  description = "SSH user credentials for accessing k8s nodes."
+  type = list(object({
+    name        = string
+    public_keys = list(string)
+  }))
+  nullable = false
+  default  = []
 }
 
 # endregion k8s
