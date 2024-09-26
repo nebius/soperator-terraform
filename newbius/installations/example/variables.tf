@@ -87,7 +87,6 @@ variable "filestore_jail_submounts" {
       id = string
     }))
     spec = optional(object({
-      disk_type            = string
       size_gibibytes       = number
       block_size_kibibytes = number
     }))

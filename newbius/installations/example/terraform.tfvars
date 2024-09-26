@@ -70,8 +70,10 @@ filestore_controller_spool = {
 # Shared filesystem to be used on controller, worker, and login nodes.
 # ---
 filestore_jail = {
-  size_gibibytes       = 2048
-  block_size_kibibytes = 4
+  spec = {
+    size_gibibytes       = 2048
+    block_size_kibibytes = 4
+  }
 }
 # Or use existing filestore.
 # ---
