@@ -34,6 +34,8 @@ resource "nebius_mk8s_v1_node_group" "nlb" {
       public_ip_address = {}
       subnet_id         = var.vpc_subnet_id
     }]
+
+    cloud_init_user_data = local.node_ssh_access.enabled ? local.node_ssh_access.cloud_init_data : null
   }
 }
 

@@ -206,6 +206,16 @@ variable "k8s_cluster_node_group_gpu" {
   }
 }
 
+variable "k8s_cluster_node_ssh_access_users" {
+  description = "SSH user credentials for accessing k8s nodes."
+  type = list(object({
+    name        = string
+    public_keys = list(string)
+  }))
+  nullable = false
+  default  = []
+}
+
 # endregion k8s
 
 # endregion Infrastructure
