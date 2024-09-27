@@ -79,7 +79,7 @@ variable "jail_submounts" {
 }
 
 variable "accounting" {
-  description = "Filestore for Slurm accounting storage."
+  description = "Filestore for Slurm accounting database."
   type = object({
     existing = optional(object({
       id = string
