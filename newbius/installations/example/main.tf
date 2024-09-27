@@ -20,16 +20,16 @@ module "filestore" {
     } : null
   }
 
-  accounting_storage = {
-    spec = var.filestore_accounting_storage.spec != null ? {
+  accounting = var.accounting_enabled ? {
+    spec = var.filestore_accounting.spec != null ? {
       disk_type            = "NETWORK_SSD"
-      size_gibibytes       = var.filestore_accounting_storage.spec.size_gibibytes
-      block_size_kibibytes = var.filestore_accounting_storage.spec.block_size_kibibytes
+      size_gibibytes       = var.filestore_accounting.spec.size_gibibytes
+      block_size_kibibytes = var.filestore_accounting.spec.block_size_kibibytes
     } : null
-    existing = var.filestore_accounting_storage.existing != null ? {
-      id = var.filestore_accounting_storage.existing.id
+    existing = var.filestore_accounting.existing != null ? {
+      id = var.filestore_accounting.existing.id
     } : null
-  }
+  }: null
 
   jail = {
     spec = var.filestore_jail.spec != null ? {
@@ -99,10 +99,10 @@ module "k8s" {
       id        = submount.id
       mount_tag = submount.mount_tag
     }]
-    accounting_storage = coalesce({
-      id        = module.filestore.accounting_storage.id
-      mount_tag = module.filestore.accounting_storage.mount_tag
-    }, null)
+    accounting = var.accounting_enabled ? {
+      id        = module.filestore.accounting.id
+      mount_tag = module.filestore.accounting.mount_tag
+    } : null
   }
 
   create_nlb = local.create_nlb
@@ -178,10 +178,10 @@ module "slurm" {
       device         = module.filestore.jail_submounts[submount.name].mount_tag
       mount_path     = submount.mount_path
     }]
-    accounting_storage = coalesce({
-      size_gibibytes = module.filestore.accounting_storage.size_gibibytes
-      device         = module.filestore.accounting_storage.mount_tag
-    }, null)
+    accounting = var.accounting_enabled ? {
+      size_gibibytes = module.filestore.accounting.size_gibibytes
+      device         = module.filestore.accounting.mount_tag
+    } : null
   }
 
   shared_memory_size_gibibytes = var.slurm_shared_memory_size_gibibytes

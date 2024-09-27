@@ -6,10 +6,10 @@ volume:
     size: ${volume.controller_spool.size}
     filestoreDeviceName: ${volume.controller_spool.device}
   accounting:
-    enabled: ${volume.accounting_storage.enabled}
-    %{~ if volume.accounting_storage.enabled ~}
-    size: ${volume.accounting_storage.size}
-    filestoreDeviceName: ${volume.accounting_storage.device}
+    enabled: ${volume.accounting.enabled}
+    %{~ if volume.accounting.enabled ~}
+    size: ${volume.accounting.size}
+    filestoreDeviceName: ${volume.accounting.device}
     %{~ endif ~}
   %{~ if length(volume.jail_submounts) > 0 ~}
   jailSubMounts:

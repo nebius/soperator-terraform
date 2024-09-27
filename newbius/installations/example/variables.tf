@@ -101,6 +101,25 @@ variable "filestore_jail_submounts" {
   }
 }
 
+variable "filestore_accounting" {
+  description = "Shared filesystem to be used on controller nodes."
+  type = object({
+    existing = optional(object({
+      id = string
+    }))
+    spec = optional(object({
+      size_gibibytes       = number
+      block_size_kibibytes = number
+    }))
+  })
+  nullable = false
+
+  validation {
+    condition     = (var.filestore_accounting.existing != null && var.filestore_accounting.spec == null) || (var.filestore_controller_spool.existing == null && var.filestore_controller_spool.spec != null)
+    error_message = "One of `existing` or `spec` must be provided."
+  }
+}
+
 # endregion Storage
 
 # region k8s

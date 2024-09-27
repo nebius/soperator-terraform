@@ -87,7 +87,7 @@ variable "filestores" {
       device         = string
       mount_path     = string
     }))
-    accounting_storage = optional(object({
+    accounting = optional(object({
       size_gibibytes = number
       device         = string
     }))
@@ -165,6 +165,11 @@ variable "accounting_enabled" {
   description = "Whether to enable accounting."
   type        = bool
   default     = false
+}
+
+variable "slurmdbd_config" {
+  type = map(any)
+  default = {}
 }
 
 # endregion Accounting

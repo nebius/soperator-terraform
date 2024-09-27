@@ -81,10 +81,10 @@ resource "helm_release" "slurm_cluster_storage" {
         size   = "${submount.size_gibibytes}Gi"
         device = submount.device
       }]
-      accounting_storage = var.accounting_enabled ? {
+      accounting = var.accounting_enabled ? {
         enabled = true
-        size    = var.accounting_enabled ? "${var.filestores.accounting_storage.size_gibibytes}Gi" : 0
-        device  = var.filestores.accounting_storage.device
+        size    = "${var.filestores.accounting.size_gibibytes}Gi"
+        device  = var.filestores.accounting.device
       } : { enabled = false }
     }
   })]
@@ -174,8 +174,10 @@ resource "helm_release" "slurm_cluster" {
         mariadbOperator = {
           metricsEnabled = var.telemetry_enabled
           enabled        = var.accounting_enabled
-          storage_size   = var.accounting_enabled ? var.filestores.accounting_storage.size_gibibytes : 0
+          storage_size   = var.accounting_enabled ? var.filestores.accounting.size_gibibytes : 0
         }
+        slurmdbdConfig = var.slurmdbd_config
+
       }
       controller = {
         size = var.node_count.controller

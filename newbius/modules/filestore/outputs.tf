@@ -15,7 +15,7 @@ output "jail_submounts" {
   }
 }
 
-output "accounting_storage" {
+output "accounting" {
   description = "Accounting storage filestore."
-  value       = local.accounting_storage
+  value       = local.accounting
 }

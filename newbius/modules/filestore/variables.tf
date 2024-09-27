@@ -78,7 +78,7 @@ variable "jail_submounts" {
   }
 }
 
-variable "accounting_storage" {
+variable "accounting" {
   description = "Filestore for Slurm accounting storage."
   type = object({
     existing = optional(object({
@@ -93,9 +93,9 @@ variable "accounting_storage" {
   nullable = true
 
   validation {
-    condition = var.accounting_storage != null ? (
-      (var.accounting_storage.existing != null && var.accounting_storage.spec == null) ||
-      (var.accounting_storage.existing == null && var.accounting_storage.spec != null)
+    condition = var.accounting != null ? (
+      (var.accounting.existing != null && var.accounting.spec == null) ||
+      (var.accounting.existing == null && var.accounting.spec != null)
     ) : true
     error_message = "One of `existing` or `spec` must be provided."
   }
