@@ -109,6 +109,22 @@ nebius storage bucket create --parent-id "${NEBIUS_PROJECT_ID}" --versioning-pol
 > `--versioning-policy 'enabled'` allows you to keep track of versions made by Terraform.
 > It gives you a possibility to roll back to specified version of TF state in case your installation is broken.
 
+#### md5sum
+
+We use `md5sum` utility to generate unique S3 bucket IDs.
+
+`md5sum` is often pre-installed on most of Unix-like OSs. Ensure that you have it installed on your machine.
+
+```bash
+which md5sum 
+```
+
+> [!TIP]
+> To install `md5sum` on macOS, you have to install GNU coreutils that includes it.
+> ```bash
+> brew install coreutils
+> ```
+
 ### Environment
 
 You have to have IAM token for auth with **Nebius CLI** and **Nebius Terraform provider**.
@@ -122,12 +138,6 @@ Setting `TF_VAR_iam_token` env var to some value is a way to pass this variable 
 You can also set it within `terraform.tfvars`, but it's not secure, and we do not recommend to do that.
 
 To load variables from `.envrc` file, you can use `direnv` or you can simply call
-
-Install md5sum 
-
-```bash
-brew install coreutils
-```
 
 ```bash
 source .envrc
