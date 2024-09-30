@@ -101,6 +101,25 @@ variable "filestore_jail_submounts" {
   }
 }
 
+variable "filestore_accounting" {
+  description = "Shared filesystem to be used on controller nodes."
+  type = object({
+    existing = optional(object({
+      id = string
+    }))
+    spec = optional(object({
+      size_gibibytes       = number
+      block_size_kibibytes = number
+    }))
+  })
+  nullable = false
+
+  validation {
+    condition     = (var.filestore_accounting.existing != null && var.filestore_accounting.spec == null) || (var.filestore_accounting.existing == null && var.filestore_accounting.spec != null)
+    error_message = "One of `existing` or `spec` must be provided."
+  }
+}
+
 # endregion Storage
 
 # region k8s
@@ -353,5 +372,15 @@ variable "telemetry_grafana_admin_password" {
 }
 
 # endregion Telemetry
+
+# region Accounting
+
+variable "accounting_enabled" {
+  description = "Whether to enable accounting."
+  type        = bool
+  default     = false
+}
+
+# endregion Accounting
 
 # endregion Slurm

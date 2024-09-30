@@ -46,11 +46,19 @@ resource "nebius_mk8s_v1_node_group" "cpu" {
       existing_filesystem = {
         id = submount.id
       }
-    }])
+      }], var.filestores.accounting != null ? [
+      {
+        attach_mode = "READ_WRITE"
+        mount_tag   = var.filestores.accounting.mount_tag
+        existing_filesystem = {
+          id = var.filestores.accounting.id
+        }
+      }
+    ] : [])
 
     network_interfaces = [{
       public_ip_address = local.node_ssh_access.enabled ? {} : null
-      subnet_id = var.vpc_subnet_id
+      subnet_id         = var.vpc_subnet_id
     }]
 
     cloud_init_user_data = local.node_ssh_access.enabled ? local.node_ssh_access.cloud_init_data : null

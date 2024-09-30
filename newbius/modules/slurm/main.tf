@@ -1,6 +1,5 @@
 resource "helm_release" "mariadb_operator" {
-  # TODO: Install MariaDB conditionally when accounting is set via vars
-  count = 0
+  count = var.accounting_enabled ? 1 : 0
 
   name       = local.helm.chart.operator.mariadb
   repository = local.helm.repository.mariadb
@@ -82,6 +81,11 @@ resource "helm_release" "slurm_cluster_storage" {
         size   = "${submount.size_gibibytes}Gi"
         device = submount.device
       }]
+      accounting = var.accounting_enabled ? {
+        enabled = true
+        size    = "${var.filestores.accounting.size_gibibytes}Gi"
+        device  = var.filestores.accounting.device
+      } : { enabled = false }
     }
   })]
 
@@ -107,6 +111,11 @@ resource "helm_release" "slurm_operator" {
   set {
     name  = "controllerManager.manager.env.isPrometheusCrdInstalled"
     value = var.telemetry_enabled
+  }
+
+  set {
+    name  = "controllerManager.manager.env.isMariadbCrdInstalled"
+    value = var.accounting_enabled
   }
 
   wait          = true
@@ -160,6 +169,16 @@ resource "helm_release" "slurm_cluster" {
     }
 
     nodes = {
+      accounting = {
+        enabled = var.accounting_enabled
+        mariadbOperator = {
+          metricsEnabled = var.telemetry_enabled
+          enabled        = var.accounting_enabled
+          storage_size   = var.accounting_enabled ? var.filestores.accounting.size_gibibytes : 0
+        }
+        slurmdbdConfig = var.slurmdbd_config
+
+      }
       controller = {
         size = var.node_count.controller
       }
@@ -183,6 +202,7 @@ resource "helm_release" "slurm_cluster" {
       exporter = {
         enabled = var.exporter_enabled
       }
+
     }
 
     telemetry = {

@@ -87,6 +87,10 @@ variable "filestores" {
       device         = string
       mount_path     = string
     }))
+    accounting = optional(object({
+      size_gibibytes = number
+      device         = string
+    }))
   })
 }
 
@@ -155,6 +159,17 @@ variable "mariadb_operator_namespace" {
   description = "Namespace for MariaDB operator."
   type        = string
   default     = "mariadb-operator-system"
+}
+
+variable "accounting_enabled" {
+  description = "Whether to enable accounting."
+  type        = bool
+  default     = false
+}
+
+variable "slurmdbd_config" {
+  type = map(any)
+  default = {}
 }
 
 # endregion Accounting

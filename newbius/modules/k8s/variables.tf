@@ -83,6 +83,10 @@ variable "filestores" {
       id        = string
       mount_tag = string
     }))
+    accounting = optional(object({
+      id        = string
+      mount_tag = string
+    }))
   })
 }
 

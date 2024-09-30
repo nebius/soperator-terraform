@@ -105,3 +105,36 @@ locals {
     }),
   )
 }
+locals {
+  accounting_needed = var.accounting != null
+}
+
+resource "nebius_compute_v1_filesystem" "accounting" {
+  count = local.accounting_needed ? (var.accounting.spec != null ? 1 : 0) : 0
+
+  parent_id = var.iam_project_id
+
+  name = local.name.filesystem.accounting
+
+  type             = var.accounting.spec.disk_type
+  size_bytes       = provider::units::from_gib(var.accounting.spec.size_gibibytes)
+  block_size_bytes = provider::units::from_kib(var.accounting.spec.block_size_kibibytes)
+}
+data "nebius_compute_v1_filesystem" "accounting" {
+  count = local.accounting_needed ? (var.accounting.existing != null ? 1 : 0) : 0
+
+  id = var.accounting.existing.id
+}
+locals {
+  accounting = local.accounting_needed ? {
+    id = try(
+      one(nebius_compute_v1_filesystem.accounting).id,
+      one(data.nebius_compute_v1_filesystem.accounting).id,
+    )
+    size_gibibytes = floor(provider::units::to_gib(try(
+      one(nebius_compute_v1_filesystem.accounting).status.size_bytes,
+      one(data.nebius_compute_v1_filesystem.accounting).status.size_bytes,
+    )))
+    mount_tag = local.const.filesystem.accounting
+  } : {}
+}
