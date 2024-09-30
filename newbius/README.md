@@ -4,10 +4,6 @@
 
 <img src="./imgs/graph-beautified.svg" width="100%" height="auto">
 
-### Detailed
-
-<img src="./imgs/graph.svg" width="100%" height="auto">
-
 ## Prerequisites
 
 ### Nebius CLI
