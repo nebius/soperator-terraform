@@ -115,7 +115,7 @@ variable "filestore_accounting" {
   nullable = false
 
   validation {
-    condition     = (var.filestore_accounting.existing != null && var.filestore_accounting.spec == null) || (var.filestore_controller_spool.existing == null && var.filestore_controller_spool.spec != null)
+    condition     = (var.filestore_accounting.existing != null && var.filestore_accounting.spec == null) || (var.filestore_accounting.existing == null && var.filestore_accounting.spec != null)
     error_message = "One of `existing` or `spec` must be provided."
   }
 }
