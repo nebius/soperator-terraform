@@ -226,5 +226,5 @@ Once resource creation is done, you will be able to connect to Slurm login node 
 
 ```shell
 SLURM_IP='<NLB node / allocated IP address>'
-ssh -i '<Path to provided public key>' [-p <Node port>] root@${SLURM_IP}
+ssh -i '<Path to private key for provided public key>' [-p <Node port>] root@${SLURM_IP}
 ```
