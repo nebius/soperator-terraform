@@ -1,8 +1,13 @@
 # Terraform operator for Slurm
 
-## Resource dependency graph
+## Architecture 
 
-<img src="./imgs/graph-beautified.svg" width="100%" height="auto">
+<img src="./imgs/graph-manual.svg" width="100%" height="auto" alt="High-level architecture chart">
+
+<details>
+<summary>Detailed</summary>
+<img src="./imgs/graph-beautified.svg" width="100%" height="auto" alt="Detailed architecture chart">
+</details>
 
 ## Prerequisites
 
