@@ -233,3 +233,282 @@ Once resource creation is done, you will be able to connect to Slurm login node 
 SLURM_IP='<NLB node / allocated IP address>'
 ssh -i '<Path to private key for provided public key>' [-p <Node port>] root@${SLURM_IP}
 ```
+
+### Check it out
+
+Take a look on the list of Slurm workers:
+
+```bash
+sinfo -Nl
+```
+
+Make sure they all are in `idle` state.
+
+In order to connect to a specific worker, use the following command:
+
+```bash
+srun -w <worker-name> -Z --pty bash
+```
+
+- The `-Z` option states not to allocate any resources;
+- The `--pty` option is to launch bash with terminal mode.
+
+Now you can check how it executes compute jobs.
+
+We offer two kind of checks:
+- [Quick](#quickly-check-the-slurm-cluster);
+- [Long](#run-mlcommons-stable-diffusion-benchmark).
+
+Additionally, you can [try out the special features](#try-out-special-features) Soperator provides.
+
+#### Quickly check the Slurm cluster
+
+There is a [test](../test) directory.
+Enter it and run the script that uploads several batch job scripts to your cluster:
+
+```bash
+./prepare_for_quickcheck.sh -u root -k <Path to private key for provided public key> -a ${SLURM_IP}
+```
+
+Within an SSH session to the Slurm cluster, execute:
+
+```bash
+cd /quickcheck
+
+sbatch hello.sh
+tail -f outputs/hello.out
+
+sbatch nccl.sh
+tail -f outputs/nccl.out
+
+sbatch enroot.sh
+tail -f outputs/enroot.out
+```
+
+<details>
+  <summary>What do these checks do?</summary>
+
+- `hello.sh`
+
+  Performs basic checks of the Slurm cluster.
+  Jobs can be executed and resources can be allocated.
+
+- `nccl.sh`
+
+  Executes NCCL test "all_reduce_perf" twice:
+  - Using NVLink;
+  - Using Infiniband.
+
+- `enroot.sh`
+
+  Launches jobs inside enroot containers (using pyxis plugin).
+</details>
+
+#### Run MLCommons Stable Diffusion benchmark
+
+If you are going to run the MLCommons Stable Diffusion benchmark, you will probably need large storage for it.
+
+<details>
+<summary>Creating storage for Stable Diffusion benchmark</summary>
+
+You can create with this Terraform recipe, as in provided [terraform.tfvars](installations/example):
+
+```terraform
+# Shared filesystems to be mounted inside jail.
+# ---
+filestore_jail_submounts = [{
+  name       = "mlperf-sd"
+  mount_path = "/mlperf-sd"
+  spec = {
+    size_gibibytes       = 2048
+    block_size_kibibytes = 4
+  }
+}]
+```
+
+Or, you can use the same filestore for multiple clusters.
+In order to do this, create it on your own with the Nebius CLI
+
+```bash
+nebius compute filesystem create \
+  --parent-id "${NEBIUS_PROJECT_ID}" \
+  --name 'shared-mlperf-sd' \
+  --type 'network_ssd' \
+  --size-bytes 2199023255552
+```
+
+And provide its ID to the recipe as follows:
+
+```terraform
+# Shared filesystems to be mounted inside jail.
+# ---
+filestore_jail_submounts = [{
+  name       = "mlperf-sd"
+  mount_path = "/mlperf-sd"
+  existing = {
+    id = "<ID of created filestore>"
+  }
+}]
+```
+
+It will attach the storage to your cluster at `/mlperf-sd` directory.
+</details>
+
+Enter the [test](../test) directory and run the script that uploads several batch job scripts to your cluster:
+
+```bash
+./prepare_for_mlperf_sd.sh -u root -k <Path to private key for provided public key> -a ${SLURM_IP}
+```
+
+Within an SSH session to the Slurm cluster, execute:
+
+```bash
+cd /opt/mlperf-sd
+./prepare_env.sh
+```
+
+This script clones the MLCommons git repository, configures it for our cluster setup and schedules a Slurm job for
+downloading datasets and checkpoints.
+
+> ![NOTE]
+> The actual working directory for this benchmark is located at the root level - `/mlperf-sd`.
+> 
+> ```cd
+> /mlperf-sd
+> ```
+
+Wait until the job finishes. You can track the progress by running:
+
+```bash
+watch squeue
+```
+
+Or checking the `aws_download.log` output:
+
+```bash
+tail -f aws_download.log
+```
+
+Once it's done, start the benchmark:
+
+```bash
+cd /mlperf-sd/training/stable_diffusion
+./scripts/slurm/sbatch.sh
+```
+
+You can see the benchmark output in the log file created in `./nogit/logs` directory.
+
+If your setup consists of 2 worker nodes with 8 H100 GPU on each, you can compare it with the reference log file:
+`./nogit/logs/reference_02x08x08_1720163290.out`
+
+Also, you can execute
+
+```bash
+./parselog -f nogit/logs/your_log_file
+```
+
+In order to parse your log file and calculate the result.
+
+<details>
+<summary>Usage example</summary>
+
+>```bash
+>./parselog -f nogit/logs/reference_02x08x08_1720163290.out -g 2xH100
+>```
+>```text
+> interval |     steps     |     duration     
+>----------+---------------+-------------------
+>        1 |      0-100    |  23.62s (23618ms)
+>        2 |    100-200    |  20.54s (20536ms)
+>        3 |    200-300    |  20.54s (20538ms)
+>        4 |    300-400    |  20.06s (20059ms)
+>        5 |    400-500    |  20.28s (20282ms)
+>        6 |    500-600    |  19.97s (19966ms)
+>        7 |    600-700    |  20.01s (20012ms)
+>        8 |    700-800    |  20.00s (19999ms)
+>        9 |    800-900    |  20.17s (20166ms)
+>       10 |    900-1000   |  19.95s (19945ms)
+>----------+---------------+-------------------
+> AVG: 20.51s <= 21.38s (target for 2xH100 GPU)
+> min: 19.95s
+> max: 23.62s
+>```
+</details>
+
+### Try out special features
+
+#### Shared root filesystem
+
+You can create a new user on a login node and have it appear on all nodes in the cluster.
+There's a wrapper script `createuser`, which:
+- Creates a new user & group;
+- Adds they to sudoers;
+- Creates a home directory with the specified public SSH key.
+
+<details>
+<summary>Usage example</summary>
+
+>```bash
+> createuser pierre
+>```
+>```text
+> Adding user `pierre' ...
+> Adding new group `pierre' (1004) ...
+> Adding new user `pierre' (1004) with group `pierre' ...
+> Creating home directory `/home/pierre' ...
+> Copying files from `/etc/skel' ...
+> New password: ********
+> Retype new password: ********
+> passwd: password updated successfully
+> Changing the user information for pierre
+> Enter the new value, or press ENTER for the default
+> 	Full Name []: Pierre Dunn
+> 	Room Number []: 123
+> 	Work Phone []:
+> 	Home Phone []:
+> 	Other []: Slurm expert
+> Is the information correct? [Y/n] y
+> Enter the SSH public key, or press ENTER to avoid creating a key:
+> ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKzxkjzPQ4EyZSjan4MLGFSA18idpZicoKW7HC4YmwgN pierre.dunn@gmail.com
+>```
+</details>
+
+You can also check how new packages are installed into the shared filesystem:
+
+```bash
+# Install the package on the login node
+apt update && apt install -y neofetch
+
+# Run it on a worker node
+srun neofetch
+```
+
+#### Periodic GPU health checks
+
+The NCCL tests are launched from the `<cluster-name>-nccl-benchmark` K8s CronJob.
+
+You can trigger this job manually if you don't want to wait until the next execution time.
+
+If everything is OK with GPUs on your nodes, the launch of CronJob will finish successfully.
+
+In order to simulate GPU performance issues on one of the nodes, you can launch another NCCL test with half of available
+GPUs just before triggering the CronJob:
+
+```bash
+srun -w worker-0 -Z --gpus=4 bash -c "/usr/bin/all_reduce_perf -b 512M -e 16G -f 2 -g 4"
+```
+
+> ![NOTE]
+> We set the `-Z` option here, so it will ignore GPUs allocated in concurrent jobs.
+
+After that, `worker-0` should become drained:
+
+```bash
+sinfo -Nl
+```
+
+You can see the verbose details in the Reason field of this node description:
+
+```bash
+scontrol show node worker-0
+```
