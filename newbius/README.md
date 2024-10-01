@@ -43,11 +43,16 @@ These checks are implemented as usual Slurm jobs - they stay in the same queue w
 
 ## Prerequisites
 
+## Get your own copy
+
+In order to not mess with example recipe, make your own copy of [example directory](installations/example).
+Following steps will be described as you work in terminal within that new directory.
+
 ### Nebius CLI
 
 Install and initialize [Nebius CLI](https://docs.nebius.ai/cli/install).
 
-### Keeping state in Storage
+### Keeping state in remote Storage
 
 In order to store Terraform state remotely in Nebius Object Storage, Terraform must be able to connect to it.
 We'll use [service account](https://docs.nebius.ai/iam/service-accounts/manage/) for that purpose.
@@ -168,8 +173,8 @@ You have to have IAM token for auth with **Nebius CLI** and **Nebius Terraform p
 
 In order to do that, we provide `.envrc` file that gets access token from Nebius IAM.
 It exposes following environment variables:
-- `NEBIUS_IAM_TOKEN` for `nebius` tool
-- `TF_VAR_iam_token` for being used in Terraform
+- `NEBIUS_IAM_TOKEN` for `nebius` tool;
+- `TF_VAR_iam_token` for being used in Terraform.
 
 Setting `TF_VAR_iam_token` env var to some value is a way to pass this variable to Terraform from environment.
 You can also set it within `terraform.tfvars`, but it's not secure, and we do not recommend to do that.
@@ -232,23 +237,31 @@ It can find and load variables from e.g. `.envrc` file.
 
 Install [Terraform CLI](https://developer.hashicorp.com/terraform/install).
 
-#### Initialization
-
-Run `terraform init` from [installations/example](./installations/example) directory.
-
-```shell
-cd installations/example
-terraform init
-```
+> ![IMPORTANT]
+> The minimum version of Terraform needed for this recipe is `1.8.0`.
 
 ## Create your cluster
 
-We provide default variables in [`terraform.tfvars`](installations/example/terraform.tfvars) file that you can use as a reference for your
-cluster configuration.
+### Initialization
 
-1. Change some values according to your needs and cloud environment.
-2. Run `terraform plan` to make sure if provided values create resources as you want.
-3. Run `terraform apply` to create resources based on provided values. You will be prompted to check if resources
+Execute:
+
+```shell
+terraform init
+```
+
+This command will download all referenced providers and modules.
+
+### Fill out terraform variables
+
+We provide default variables in [`terraform.tfvars`](installations/example/terraform.tfvars) file that you can use as a
+reference for your cluster configuration.
+All variables there are comprehensively commented, and you'll probably leave most of them with pre-set values.
+
+### Creating resources
+
+1. Run `terraform plan` to make sure if provided values create resources as you want.
+2. Run `terraform apply` to create resources based on provided values. You will be prompted to check if resources
 correspond to your needs. Type `yes` if the configuration is correct and watch the process.
 
 > [!IMPORTANT]
@@ -258,8 +271,9 @@ correspond to your needs. Type `yes` if the configuration is correct and watch t
 > ```
 > Try to re-run `terraform apply` until they're gone.
 
-Once resource creation is done, you will be able to connect to Slurm login node via SSH using provided public key as a
-`root` user.
+When it finishes, connect to the K8S cluster and wait until the `slurm.nebius.ai/SlurmCluster` becomes `Available`.
+
+Once it's available, you will be able to connect to Slurm login node via SSH using provided public key as a `root` user.
 
 ```shell
 SLURM_IP='<NLB node / allocated IP address>'
@@ -318,7 +332,7 @@ tail -f outputs/enroot.out
 ```
 
 <details>
-  <summary>What do these checks do?</summary>
+<summary>What do these checks do?</summary>
 
 - `hello.sh`
 
