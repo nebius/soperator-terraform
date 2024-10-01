@@ -237,7 +237,7 @@ It can find and load variables from e.g. `.envrc` file.
 
 Install [Terraform CLI](https://developer.hashicorp.com/terraform/install).
 
-> ![IMPORTANT]
+> [!IMPORTANT]
 > The minimum version of Terraform needed for this recipe is `1.8.0`.
 
 ## Create your cluster
@@ -416,7 +416,7 @@ cd /opt/mlperf-sd
 This script clones the MLCommons git repository, configures it for our cluster setup and schedules a Slurm job for
 downloading datasets and checkpoints.
 
-> ![NOTE]
+> [!NOTE]
 > The actual working directory for this benchmark is located at the root level - `/mlperf-sd`.
 > 
 > ```cd
@@ -544,7 +544,7 @@ GPUs just before triggering the CronJob:
 srun -w worker-0 -Z --gpus=4 bash -c "/usr/bin/all_reduce_perf -b 512M -e 16G -f 2 -g 4"
 ```
 
-> ![NOTE]
+> [!NOTE]
 > We set the `-Z` option here, so it will ignore GPUs allocated in concurrent jobs.
 
 After that, `worker-0` should become drained:
