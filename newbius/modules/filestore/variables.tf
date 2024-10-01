@@ -91,6 +91,7 @@ variable "accounting" {
     }))
   })
   nullable = true
+  default  = null
 
   validation {
     condition = var.accounting != null ? (

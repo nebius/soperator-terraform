@@ -292,4 +292,45 @@ slurm_login_ssh_root_public_keys = [
 
 # endregion Telemetry
 
+#----------------------------------------------------------------------------------------------------------------------#
+#                                                                                                                      #
+#                                                       Accounting                                                     #
+#                                                                                                                      #
+#----------------------------------------------------------------------------------------------------------------------#
+# region Accounting
+
+# Whether to enable Accounting.
+# By default, false.
+# ---
+# accounting_enabled = false
+
+# Slurmdbd.conf configuration. See https://slurm.schedmd.com/slurmdbd.conf.html.Not all options are supported.
+# slurmdbd_config = {
+#   archiveEvents     = "yes"
+#   archiveJobs       = "yes"
+#   archiveSteps      = "yes"
+#   archiveSuspend    = "yes"
+#   archiveResv       = "yes"
+#   archiveUsage      = "yes"
+#   archiveTXN        = "yes"
+#   debugLevel        = "info"
+#   tcpTimeout        = "120"
+#   purgeEventAfter   = "1month"
+#   purgeJobAfter     = "1month"
+#   purgeStepAfter    = "1month"
+#   purgeSuspendAfter = "12month"
+#   purgeResvAfter    = "1month"
+# }
+
+# Slurm.conf accounting configuration. See https://slurm.schedmd.com/slurm.conf.html. Not all options are supported.
+# slurm_accounting_config = {
+#   accountingStorageTRES      = "gres/gpu,license/iop1"
+#   accountingStoreFlags       = "job_comment,job_env,job_extra,job_script,no_stdio"
+#   acctGatherInterconnectType = "acct_gather_interconnect/ofed"
+#   jobAcctGatherType          = "jobacct_gather/cgroup"
+#   jobAcctGatherFrequency     = 30
+# }
+
+# endregion Telemetry
+
 # endregion Slurm
