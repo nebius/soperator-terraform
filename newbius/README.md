@@ -1,4 +1,36 @@
-# Terraform operator for Slurm
+# Terraform recipe to create Slurm cluster on K8s in Nebius
+
+## Overview
+
+This solution allows you to create a Slurm cluster in Kubernetes with a single terraform apply.
+
+Running Slurm in Kubernetes using this operator brings several features and possibilities.
+
+### Easy scaling
+
+You can scale the Slurm cluster up or down without the need to bootstrap new nodes from scratch.
+
+### High availability
+
+K8s provides some self-healing out of the box: Slurm nodes represented as K8S pods are automatically restarted in case
+of problems.
+
+### Shared root filesystem
+
+When users interact with Slurm, they see a single shared persistent storage as the root directory on each Slurm node.
+This frees users from the Slurm requirement that is very difficult to achieve: all nodes must be identical. Because of
+the storage, users don't need to manually synchronise all software versions and Linux UIDs & GIDs among the nodes.
+
+### Protection against accidental Slurm breakage
+
+Users connect to login nodes and execute jobs on worker nodes not on the system where Slurm daemons are running, but in
+a special isolated environment from which it's almost impossible to accidentally break Slurm.
+In addition, GPU drivers and libraries are mounted from K8s nodes so users can't irreversibly break them.
+
+### Periodic GPU health checks
+
+NCCL tests are periodically launched on all Slurm workers, and nodes that show unsatisfactory results are drained.
+These checks are implemented as usual Slurm jobs - they stay in the same queue with users' workload and don't interfere it.
 
 ## Architecture 
 
