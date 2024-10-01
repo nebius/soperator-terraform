@@ -381,6 +381,19 @@ variable "accounting_enabled" {
   default     = false
 }
 
+variable "slurmdbd_config" {
+  description = "Slurmdbd.conf configuration. See https://slurm.schedmd.com/slurmdbd.conf.html.Not all options are supported."
+  type    = map(any)
+  default = {}
+}
+
+variable "slurm_accounting_config" {
+  description = "Slurm.conf accounting configuration. See https://slurm.schedmd.com/slurm.conf.html. Not all options are supported."
+  type    = map(any)
+  default = {}
+}
+
+
 # endregion Accounting
 
 # endregion Slurm

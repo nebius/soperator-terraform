@@ -29,7 +29,7 @@ module "filestore" {
     existing = var.filestore_accounting.existing != null ? {
       id = var.filestore_accounting.existing.id
     } : null
-  }: null
+  } : null
 
   jail = {
     spec = var.filestore_jail.spec != null ? {
@@ -159,8 +159,10 @@ module "slurm" {
   login_load_balancer_ip     = module.k8s.login_ip
   login_ssh_root_public_keys = var.slurm_login_ssh_root_public_keys
 
-  exporter_enabled   = var.slurm_exporter_enabled
-  accounting_enabled = var.accounting_enabled
+  exporter_enabled        = var.slurm_exporter_enabled
+  accounting_enabled      = var.accounting_enabled
+  slurmdbd_config         = var.slurmdbd_config
+  slurm_accounting_config = var.slurm_accounting_config
 
   # TODO: MSP-2817 - use computed values of filestore sizes
   filestores = {
