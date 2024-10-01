@@ -381,6 +381,16 @@ variable "accounting_enabled" {
   default     = false
 }
 
+variable "slurmdbd_config" {
+  type    = map(any)
+  default = {}
+}
+
+variable "slurm_accounting_config" {
+  type    = map(any)
+  default = {}
+}
+
 # endregion Accounting
 
 # endregion Slurm

@@ -177,6 +177,7 @@ resource "helm_release" "slurm_cluster" {
           storage_size   = var.accounting_enabled ? var.filestores.accounting.size_gibibytes : 0
         }
         slurmdbdConfig = var.slurmdbd_config
+        slurmConfig    = var.slurm_accounting_config
 
       }
       controller = {

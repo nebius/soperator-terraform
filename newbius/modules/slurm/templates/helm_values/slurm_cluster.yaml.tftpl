@@ -89,6 +89,12 @@ slurmNodes:
       ${key}: "${value}"
       %{~ endfor ~}
     %{~ endif ~}
+    %{~ if nodes.accounting.enabled &&  length(nodes.accounting.slurmConfig) > 0 ~}
+    slurmConfig:
+      %{~ for key, value in nodes.accounting.slurmConfig ~}
+      ${key}: "${value}"
+      %{~ endfor ~}
+    %{~ endif ~}
   controller:
     size: ${nodes.controller.size}
     k8sNodeFilterName: ${k8s_node_filters.non_gpu.name}

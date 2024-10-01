@@ -168,7 +168,12 @@ variable "accounting_enabled" {
 }
 
 variable "slurmdbd_config" {
-  type = map(any)
+  type    = map(any)
+  default = {}
+}
+
+variable "slurm_accounting_config" {
+  type    = map(any)
   default = {}
 }
 
