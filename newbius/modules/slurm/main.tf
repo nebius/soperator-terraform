@@ -1,6 +1,10 @@
 resource "helm_release" "mariadb_operator" {
   count = var.accounting_enabled ? 1 : 0
 
+  depends_on = [
+    module.monitoring,
+  ]
+
   name       = local.helm.chart.operator.mariadb
   repository = local.helm.repository.mariadb
   chart      = local.helm.chart.operator.mariadb
