@@ -37,6 +37,12 @@ resource "nebius_mk8s_v1_node_group" "nlb" {
 
     cloud_init_user_data = local.node_ssh_access.enabled ? local.node_ssh_access.cloud_init_data : null
   }
+
+  lifecycle {
+    ignore_changes = [
+      labels,
+    ]
+  }
 }
 
 resource "nebius_vpc_v1_allocation" "this" {
@@ -57,6 +63,12 @@ resource "nebius_vpc_v1_allocation" "this" {
 
   ipv4_public = {
     subnet_id = var.vpc_subnet_id
+  }
+
+  lifecycle {
+    ignore_changes = [
+      labels,
+    ]
   }
 }
 

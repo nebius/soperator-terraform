@@ -8,6 +8,12 @@ resource "nebius_compute_v1_filesystem" "controller_spool" {
   type             = var.controller_spool.spec.disk_type
   size_bytes       = provider::units::from_gib(var.controller_spool.spec.size_gibibytes)
   block_size_bytes = provider::units::from_kib(var.controller_spool.spec.block_size_kibibytes)
+
+  lifecycle {
+    ignore_changes = [
+      labels,
+    ]
+  }
 }
 data "nebius_compute_v1_filesystem" "controller_spool" {
   count = var.controller_spool.existing != null ? 1 : 0
@@ -38,6 +44,12 @@ resource "nebius_compute_v1_filesystem" "jail" {
   type             = var.jail.spec.disk_type
   size_bytes       = provider::units::from_gib(var.jail.spec.size_gibibytes)
   block_size_bytes = provider::units::from_kib(var.jail.spec.block_size_kibibytes)
+
+  lifecycle {
+    ignore_changes = [
+      labels,
+    ]
+  }
 }
 data "nebius_compute_v1_filesystem" "jail" {
   count = var.jail.existing != null ? 1 : 0
@@ -76,6 +88,12 @@ resource "nebius_compute_v1_filesystem" "jail_submount" {
   type             = each.value.type
   size_bytes       = each.value.storage
   block_size_bytes = each.value.block
+
+  lifecycle {
+    ignore_changes = [
+      labels,
+    ]
+  }
 }
 data "nebius_compute_v1_filesystem" "jail_submount" {
   for_each = tomap({ for submount in var.jail_submounts :

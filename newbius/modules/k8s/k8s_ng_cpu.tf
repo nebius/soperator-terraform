@@ -63,4 +63,10 @@ resource "nebius_mk8s_v1_node_group" "cpu" {
 
     cloud_init_user_data = local.node_ssh_access.enabled ? local.node_ssh_access.cloud_init_data : null
   }
+
+  lifecycle {
+    ignore_changes = [
+      labels,
+    ]
+  }
 }

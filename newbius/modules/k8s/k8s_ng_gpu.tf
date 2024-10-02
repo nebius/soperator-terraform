@@ -34,6 +34,12 @@ resource "nebius_compute_v1_gpu_cluster" "this" {
   name = local.gpu.cluster.name
 
   infiniband_fabric = var.node_group_gpu.gpu_cluster.infiniband_fabric
+
+  lifecycle {
+    ignore_changes = [
+      labels,
+    ]
+  }
 }
 
 resource "nebius_mk8s_v1_node_group" "gpu" {
@@ -93,5 +99,11 @@ resource "nebius_mk8s_v1_node_group" "gpu" {
     }]
 
     cloud_init_user_data = local.node_ssh_access.enabled ? local.node_ssh_access.cloud_init_data : null
+  }
+
+  lifecycle {
+    ignore_changes = [
+      labels,
+    ]
   }
 }
