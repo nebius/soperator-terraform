@@ -81,6 +81,7 @@ slurmNodes:
             requests:
               storage: ${nodes.accounting.mariadbOperator.storage_size}Gi
           volumeName: accounting-pv
+          storageClassName: slurm-local-pv
         storageClassName: slurm-local-pv
       %{~ endif ~}
     %{~ if nodes.accounting.enabled &&  length(nodes.accounting.slurmdbdConfig) > 0 ~}

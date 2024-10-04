@@ -1,6 +1,10 @@
 resource "helm_release" "mariadb_operator" {
   count = var.accounting_enabled ? 1 : 0
 
+  depends_on = [
+    module.monitoring,
+  ]
+
   name       = local.helm.chart.operator.mariadb
   repository = local.helm.repository.mariadb
   chart      = local.helm.chart.operator.mariadb
@@ -107,6 +111,11 @@ resource "helm_release" "slurm_operator" {
 
   create_namespace = true
   namespace        = "${local.helm.chart.operator.slurm}-system"
+
+  set {
+    name = "fullnameOverride"
+    value = local.helm.chart.operator.slurm
+  }
 
   set {
     name  = "controllerManager.manager.env.isPrometheusCrdInstalled"

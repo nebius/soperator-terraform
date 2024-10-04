@@ -102,7 +102,7 @@ variable "filestore_jail_submounts" {
 }
 
 variable "filestore_accounting" {
-  description = "Shared filesystem to be used on controller nodes."
+  description = "Shared filesystem to be used for accounting DB"
   type = object({
     existing = optional(object({
       id = string
@@ -112,10 +112,14 @@ variable "filestore_accounting" {
       block_size_kibibytes = number
     }))
   })
-  nullable = false
+  default  = null
+  nullable = true
 
   validation {
-    condition     = (var.filestore_accounting.existing != null && var.filestore_accounting.spec == null) || (var.filestore_accounting.existing == null && var.filestore_accounting.spec != null)
+    condition = var.filestore_accounting != null ? (
+      (var.filestore_accounting.existing != null && var.filestore_accounting.spec == null) ||
+      (var.filestore_accounting.existing == null && var.filestore_accounting.spec != null)
+    ) : true
     error_message = "One of `existing` or `spec` must be provided."
   }
 }
@@ -383,14 +387,14 @@ variable "accounting_enabled" {
 
 variable "slurmdbd_config" {
   description = "Slurmdbd.conf configuration. See https://slurm.schedmd.com/slurmdbd.conf.html.Not all options are supported."
-  type    = map(any)
-  default = {}
+  type        = map(any)
+  default     = {}
 }
 
 variable "slurm_accounting_config" {
   description = "Slurm.conf accounting configuration. See https://slurm.schedmd.com/slurm.conf.html. Not all options are supported."
-  type    = map(any)
-  default = {}
+  type        = map(any)
+  default     = {}
 }
 
 

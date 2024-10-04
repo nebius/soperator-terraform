@@ -13,4 +13,10 @@ resource "nebius_mk8s_v1_cluster" "this" {
 
     etcd_cluster_size = var.etcd_cluster_size
   }
+
+  lifecycle {
+    ignore_changes = [
+      labels,
+    ]
+  }
 }

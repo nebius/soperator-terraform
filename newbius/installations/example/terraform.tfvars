@@ -103,6 +103,24 @@ filestore_jail_submounts = [{
 #   }
 # }]
 
+# Shared filesystem to be used for accounting DB.
+# By default, null.
+# Required if accounting_enabled is true.
+# ---
+# filestore_accounting = {
+#   spec = {
+#     size_gibibytes       = 512
+#     block_size_kibibytes = 4
+#   }
+# }
+# Or use existing filestore.
+# ---
+# filestore_accounting = {
+#   existing = {
+#     id = "computefilesystem-<YOUR-FILESTORE-ID>"
+#   }
+# }
+
 # endregion Storage
 
 #----------------------------------------------------------------------------------------------------------------------#
@@ -331,6 +349,6 @@ slurm_login_ssh_root_public_keys = [
 #   jobAcctGatherFrequency     = 30
 # }
 
-# endregion Telemetry
+# endregion Accounting
 
 # endregion Slurm
