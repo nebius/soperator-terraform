@@ -3,6 +3,6 @@
 terraform_backend_override.tf
 
 # Internal use
-msp-slurm-e2e
+msp-slurm-sandbox
 msp-slurm-prod
 msp-slurm-test
