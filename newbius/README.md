@@ -303,7 +303,8 @@ Now you can check how it executes compute jobs.
 
 We offer two kind of checks:
 - [Quick](#quickly-check-the-slurm-cluster);
-- [Long](#run-mlcommons-stable-diffusion-benchmark).
+- [MLCommons Stable Diffusion](#run-mlcommons-stable-diffusion-benchmark).
+- [MLCommons GPT3](#run-mlcommons-gpt3-benchmark).
 
 Additionally, you can [try out the special features](#try-out-special-features) Soperator provides.
 
@@ -480,6 +481,84 @@ In order to parse your log file and calculate the result.
 > max: 23.62s
 >```
 </details>
+
+#### Run MLCommons GPT3 benchmark
+
+If you are going to run the MLCommons GPT3 benchmark, you will probably need large storage for it.
+
+<details>
+<summary>Creating storage for GPT3 benchmark</summary>
+
+You can create with this Terraform recipe, as in provided [terraform.tfvars](installations/example):
+
+```terraform
+# Shared filesystems to be mounted inside jail.
+# ---
+filestore_jail_submounts = [{
+  name       = "mlperf-gpt3"
+  mount_path = "/gpt3"
+  spec = {
+    size_gibibytes       = 8192
+    block_size_kibibytes = 4
+  }
+}]
+```
+
+Or, you can use the same filestore for multiple clusters.
+In order to do this, create it on your own with the Nebius CLI
+
+```bash
+nebius compute filesystem create \
+  --parent-id "${NEBIUS_PROJECT_ID}" \
+  --name 'shared-mlperf-gpt3' \
+  --type 'network_ssd' \
+  --size-bytes 8796093022208
+```
+
+And provide its ID to the recipe as follows:
+
+```terraform
+# Shared filesystems to be mounted inside jail.
+# ---
+filestore_jail_submounts = [{
+  name       = "mlperf-gpt3"
+  mount_path = "/gpt3"
+  existing = {
+    id = "<ID of created filestore>"
+  }
+}]
+```
+
+It will attach the storage to your cluster at `/gpt3` directory.
+</details>
+
+Enter the [test](../test) directory and run the script that uploads several batch job scripts to your cluster:
+
+```bash
+./prepare_for_mlperf_gpt3.sh -u root -k <Path to private key for provided public key> -a ${SLURM_IP}
+```
+
+Within an SSH session to the Slurm cluster, execute:
+
+```bash
+cd /opt/mlperf-gpt3
+./init.sh
+```
+
+This script:
+- Clones the necessary parts from MLCommons git repository, and configures it for our cluster setup;
+- Downloads dataset;
+- Downloads checkpoint;
+- Creates a Run script.
+
+Once initialisation is done, start the benchmark:
+
+> [!NOTE]
+> The actual working directory for this benchmark is located at the root level - `/gpt3`.
+
+```bash
+cd /gpt3 && ./run.sh
+```
 
 ### Try out special features
 
