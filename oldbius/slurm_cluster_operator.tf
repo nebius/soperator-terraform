@@ -53,7 +53,7 @@ locals {
     version = {
       network = "24.4.0"
       gpu     = "v24.3.0"
-      slurm   = "1.14.2"
+      slurm   = "1.14.4"
     }
   }
 }

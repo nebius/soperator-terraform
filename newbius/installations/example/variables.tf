@@ -87,7 +87,6 @@ variable "filestore_jail_submounts" {
       id = string
     }))
     spec = optional(object({
-      disk_type            = string
       size_gibibytes       = number
       block_size_kibibytes = number
     }))
@@ -99,6 +98,29 @@ variable "filestore_jail_submounts" {
       if(sm.existing != null && sm.spec == null) || (sm.existing == null && sm.spec != null)
     ]) == length(var.filestore_jail_submounts)
     error_message = "All submounts must have one of `existing` or `spec` provided."
+  }
+}
+
+variable "filestore_accounting" {
+  description = "Shared filesystem to be used for accounting DB"
+  type = object({
+    existing = optional(object({
+      id = string
+    }))
+    spec = optional(object({
+      size_gibibytes       = number
+      block_size_kibibytes = number
+    }))
+  })
+  default  = null
+  nullable = true
+
+  validation {
+    condition = var.filestore_accounting != null ? (
+      (var.filestore_accounting.existing != null && var.filestore_accounting.spec == null) ||
+      (var.filestore_accounting.existing == null && var.filestore_accounting.spec != null)
+    ) : true
+    error_message = "One of `existing` or `spec` must be provided."
   }
 }
 
@@ -205,6 +227,16 @@ variable "k8s_cluster_node_group_gpu" {
       - Preset must be one of `8gpu-128vcpu-1600gb` or `1gpu-20vcpu-200gb`
     EOF
   }
+}
+
+variable "k8s_cluster_node_ssh_access_users" {
+  description = "SSH user credentials for accessing k8s nodes."
+  type = list(object({
+    name        = string
+    public_keys = list(string)
+  }))
+  nullable = false
+  default  = []
 }
 
 # endregion k8s
@@ -344,5 +376,28 @@ variable "telemetry_grafana_admin_password" {
 }
 
 # endregion Telemetry
+
+# region Accounting
+
+variable "accounting_enabled" {
+  description = "Whether to enable accounting."
+  type        = bool
+  default     = false
+}
+
+variable "slurmdbd_config" {
+  description = "Slurmdbd.conf configuration. See https://slurm.schedmd.com/slurmdbd.conf.html.Not all options are supported."
+  type        = map(any)
+  default     = {}
+}
+
+variable "slurm_accounting_config" {
+  description = "Slurm.conf accounting configuration. See https://slurm.schedmd.com/slurm.conf.html. Not all options are supported."
+  type        = map(any)
+  default     = {}
+}
+
+
+# endregion Accounting
 
 # endregion Slurm

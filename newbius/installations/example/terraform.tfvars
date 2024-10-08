@@ -70,8 +70,10 @@ filestore_controller_spool = {
 # Shared filesystem to be used on controller, worker, and login nodes.
 # ---
 filestore_jail = {
-  size_gibibytes       = 2048
-  block_size_kibibytes = 4
+  spec = {
+    size_gibibytes       = 2048
+    block_size_kibibytes = 4
+  }
 }
 # Or use existing filestore.
 # ---
@@ -100,6 +102,24 @@ filestore_jail_submounts = [{
 #     id = "computefilesystem-<YOUR-FILESTORE-ID>"
 #   }
 # }]
+
+# Shared filesystem to be used for accounting DB.
+# By default, null.
+# Required if accounting_enabled is true.
+# ---
+# filestore_accounting = {
+#   spec = {
+#     size_gibibytes       = 512
+#     block_size_kibibytes = 4
+#   }
+# }
+# Or use existing filestore.
+# ---
+# filestore_accounting = {
+#   existing = {
+#     id = "computefilesystem-<YOUR-FILESTORE-ID>"
+#   }
+# }
 
 # endregion Storage
 
@@ -149,6 +169,17 @@ k8s_cluster_node_group_gpu = {
   }
 }
 
+# SSH user credentials for accessing k8s nodes.
+# By default, empty list.
+# ---
+# k8s_cluster_node_ssh_access_users = [{
+#   name = "user1"
+#   public_keys = [
+#     "user1 key1",
+#     "user1 key2",
+#   ]
+# }]
+
 # endregion k8s
 
 # endregion Infrastructure
@@ -168,7 +199,7 @@ slurm_cluster_name = "my-amazing-slurm"
 
 # Version of soperator.
 # ---
-slurm_operator_version = "1.14.2"
+slurm_operator_version = "1.14.4"
 
 #----------------------------------------------------------------------------------------------------------------------#
 #                                                                                                                      #
@@ -278,5 +309,46 @@ slurm_login_ssh_root_public_keys = [
 # telemetry_grafana_admin_password = ""
 
 # endregion Telemetry
+
+#----------------------------------------------------------------------------------------------------------------------#
+#                                                                                                                      #
+#                                                       Accounting                                                     #
+#                                                                                                                      #
+#----------------------------------------------------------------------------------------------------------------------#
+# region Accounting
+
+# Whether to enable Accounting.
+# By default, false.
+# ---
+# accounting_enabled = false
+
+# Slurmdbd.conf configuration. See https://slurm.schedmd.com/slurmdbd.conf.html.Not all options are supported.
+# slurmdbd_config = {
+#   archiveEvents     = "yes"
+#   archiveJobs       = "yes"
+#   archiveSteps      = "yes"
+#   archiveSuspend    = "yes"
+#   archiveResv       = "yes"
+#   archiveUsage      = "yes"
+#   archiveTXN        = "yes"
+#   debugLevel        = "info"
+#   tcpTimeout        = "120"
+#   purgeEventAfter   = "1month"
+#   purgeJobAfter     = "1month"
+#   purgeStepAfter    = "1month"
+#   purgeSuspendAfter = "12month"
+#   purgeResvAfter    = "1month"
+# }
+
+# Slurm.conf accounting configuration. See https://slurm.schedmd.com/slurm.conf.html. Not all options are supported.
+# slurm_accounting_config = {
+#   accountingStorageTRES      = "gres/gpu,license/iop1"
+#   accountingStoreFlags       = "job_comment,job_env,job_extra,job_script,no_stdio"
+#   acctGatherInterconnectType = "acct_gather_interconnect/ofed"
+#   jobAcctGatherType          = "jobacct_gather/cgroup"
+#   jobAcctGatherFrequency     = 30
+# }
+
+# endregion Accounting
 
 # endregion Slurm

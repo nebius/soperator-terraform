@@ -13,7 +13,7 @@ resource "helm_release" "network_operator" {
   wait_for_jobs = true
 }
 
-resource "helm_release" "gpu-operator" {
+resource "helm_release" "gpu_operator" {
   depends_on = [
     helm_release.network_operator
   ]

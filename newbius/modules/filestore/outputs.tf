@@ -14,3 +14,8 @@ output "jail_submounts" {
     submount.name => local.jail_submount[submount.name]
   }
 }
+
+output "accounting" {
+  description = "Accounting storage filestore."
+  value       = local.accounting
+}

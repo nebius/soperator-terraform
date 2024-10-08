@@ -7,6 +7,7 @@ VERSION							= $(shell cat VERSION)
 IMAGE_TAG						= $(VERSION)
 GREEN							= '\033[0;32m'
 RESET							= '\033[0m'
+DOCKER_REGISTRY_NAME			= soperator
 
 
 ifeq ($(shell uname), Darwin)
@@ -21,6 +22,7 @@ endif
 ifeq ($(UNSTABLE), true)
     SHORT_SHA 					= $(shell echo -n "$(USER_MAIL)-$(VERSION)" | $(SHA_CMD) | cut -c1-8)
 	IMAGE_TAG					= $(VERSION)-$(SHORT_SHA)
+	DOCKER_REGISTRY_NAME		= soperator-unstable
 endif
 
 TARBALL							= "slurm_operator_tf_$(shell echo "${IMAGE_TAG}" | tr '-' '_' | tr '.' '_').tar.gz"
@@ -50,6 +52,10 @@ sync-version: ## Sync versions from file
 	@$(SED_COMMAND) -E 's/slurm *= *"[0-9]+.[0-9]+.[0-9]+[^ ]*"/slurm = "$(IMAGE_TAG)"/' oldbius/slurm_cluster_operator.tf
 	@terraform fmt oldbius/slurm_cluster_operator.tf
 	@# endregion oldbius/slurm_cluster_operator.tf
+
+	@# region newbius/modules/slurm/locals.tf
+	@$(SED_COMMAND) "s|\(oci://cr.eu-north1.nebius.cloud/\)[^\"]*|\1$(DOCKER_REGISTRY_NAME)|" newbius/modules/slurm/locals.tf
+	@# endregion newbius/modules/slurm/locals.tf
 
 	@# region newbius/installations/example/terraform.tfvars
 	@echo 'Syncing newbius/installations/example/terraform.tfvars'

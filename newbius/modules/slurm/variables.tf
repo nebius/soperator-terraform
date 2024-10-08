@@ -87,6 +87,10 @@ variable "filestores" {
       device         = string
       mount_path     = string
     }))
+    accounting = optional(object({
+      size_gibibytes = number
+      device         = string
+    }))
   })
 }
 
@@ -155,6 +159,24 @@ variable "mariadb_operator_namespace" {
   description = "Namespace for MariaDB operator."
   type        = string
   default     = "mariadb-operator-system"
+}
+
+variable "accounting_enabled" {
+  description = "Whether to enable accounting."
+  type        = bool
+  default     = false
+}
+
+variable "slurmdbd_config" {
+  description = "Slurmdbd.conf configuration. See https://slurm.schedmd.com/slurmdbd.conf.html.Not all options are supported."
+  type        = map(any)
+  default     = {}
+}
+
+variable "slurm_accounting_config" {
+  description = "Slurm.conf accounting configuration. See https://slurm.schedmd.com/slurm.conf.html. Not all options are supported."
+  type        = map(any)
+  default     = {}
 }
 
 # endregion Accounting
