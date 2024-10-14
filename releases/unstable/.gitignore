@@ -1,4 +1,5 @@
 terraform/
 test/
+newbius/
 *.tar.gz
 .env
