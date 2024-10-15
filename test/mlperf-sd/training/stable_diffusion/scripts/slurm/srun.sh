@@ -51,9 +51,10 @@ srun \
     --container-writable \
     --container-mounts="${MOUNTS}" \
     --container-workdir="${WORKDIR}" \
+    --container-name="mlperf_sd" \
     --ntasks-per-node="${GPUS_PER_NODE}" \
-    --cpus-per-task=16 \
-    --mem-per-cpu="8G" \
+    --cpus-per-task=8 \
+    --mem-per-cpu="4G" \
     --nodes="${NUM_NODES}" \
     bash -c  "./run_and_time.sh \
     		--export NCCL_TOPO_FILE,HF_HUB_OFFLINE,NCCL_DEBUG \
